@@ -63,8 +63,8 @@ dict(
 <thead><tr><th>Période</th><th>Failles corrigées</th><th>Failles qui restent ouvertes</th></tr></thead>
 <tbody>
 <tr><td>Jusqu'au 31/12/2026</td><td>Cycle de correctifs standard.</td><td>Selon le cycle de SAP.</td></tr>
-<tr><td>2027</td><td>Gravité élevée ou critique (score CVSS de 7 ou plus), selon les informations publiées.</td><td>Gravité moyenne et faible.</td></tr>
-<tr><td>2028</td><td>Aucune, selon les informations publiées.</td><td>Toutes les nouvelles failles.</td></tr>
+<tr><td>2027</td><td>Gravité élevée ou critique (score CVSS de 7 ou plus).</td><td>Gravité moyenne et faible.</td></tr>
+<tr><td>2028</td><td>Aucune.</td><td>Toutes les nouvelles failles.</td></tr>
 </tbody></table></div>
 <p>Source : """ + SRC_CSM + """. Analyse des notes SAP 3486924 et 3763590, recoupée avec InfoSol et NTT DATA.</p>
 <p>Le score CVSS (Common Vulnerability Scoring System) note la gravité d'une faille de 0 à 10. Un score de 7 à 8,9 est qualifié d'élevé, de 9 à 10 de critique.</p>
@@ -72,9 +72,9 @@ dict(
 <h2>Comment l'écrire dans un registre des risques</h2>
 <ul>
 <li><strong>Actif concerné :</strong> la plateforme SAP BusinessObjects 4.3 et les données qu'elle expose.</li>
-<li><strong>Événement :</strong> exploitation d'une faille non corrigée (moyenne ou faible en 2027, toute faille en 2028, si les informations publiées se confirment).</li>
+<li><strong>Événement :</strong> exploitation d'une faille non corrigée (moyenne ou faible en 2027, toute faille en 2028).</li>
 <li><strong>Facteurs aggravants :</strong> plateforme accessible depuis internet ou par de nombreux comptes, données sensibles, comptes inactifs jamais supprimés.</li>
-<li><strong>Échéance de décision :</strong> avant le 31 décembre 2026 pour choisir la voie, avant fin 2027 au plus tard pour ne pas entrer en 2028 sans correctif, si les informations publiées se confirment.</li>
+<li><strong>Échéance de décision :</strong> avant le 31 décembre 2026 pour choisir la voie, avant fin 2027 au plus tard pour ne pas entrer en 2028 sans correctif.</li>
 </ul>
 
 <h2>Mesures compensatoires à examiner</h2>
@@ -308,6 +308,7 @@ dict(
 <dt>SAP BusinessObjects BI (SAP BO, BO)</dt><dd>Plateforme décisionnelle de SAP qui regroupe la création, la planification et la diffusion de rapports et de tableaux de bord.</dd>
 <dt>BI 4.3</dt><dd>Version de la plateforme dont la maintenance standard s'arrête le 31 décembre 2026.</dd>
 <dt>BI 2025</dt><dd>Version suivante, dont la maintenance standard va jusqu'au 31 décembre 2027.</dd>
+<dt>BI 2027</dt><dd>Version attendue au premier trimestre 2027, dont la maintenance standard irait jusqu'au quatrième trimestre 2029 selon Wiiisdom (<a href="/sap-businessobjects-bi-2027/">détail</a>).</dd>
 <dt>Maintenance standard</dt><dd>Régime normal de support et de correctifs prévu par le contrat de maintenance de l'éditeur.</dd>
 <dt>Maintenance spécifique client</dt><dd>Régime appliqué après la fin de la maintenance standard : correctifs de sécurité graves seulement en 2027, aucun en 2028, sans engagement de délai (<a href="/maintenance-specifique-client-sap-businessobjects/">détail</a>).</dd>
 <dt>CVSS</dt><dd>Common Vulnerability Scoring System : note de 0 à 10 qui mesure la gravité d'une faille de sécurité. À partir de 7, la faille est qualifiée d'élevée.</dd>

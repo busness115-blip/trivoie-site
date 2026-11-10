@@ -5,11 +5,12 @@ SRC_CSM = '<a href="https://clintvosloo.com/sap-customer-specific-maintenance-bi
 SRC_EOL = '<a href="https://wiiisdom.com/blog/sap-bi-end-of-life-stages/" rel="noopener">dates de fin de maintenance SAP BI (Wiiisdom)</a>'
 SRC_2025 = '<a href="https://wiiisdom.com/blog/sap-businessobjects-bi-2025/" rel="noopener">SAP BusinessObjects BI 2025 : composants et univers (Wiiisdom)</a>'
 SRC_DEP = '<a href="https://dallasmarks.com/getting-ready-for-sap-businessobjects-4-3-support-pack-4/" rel="noopener">notes SAP 2801797 et 2914654 (Dallas Marks)</a>'
+SRC_2027 = '<a href="https://wiiisdom.com/fr/blog/sap-bi-dates-de-fin-de-vie/" rel="noopener">dates de fin de vie SAP BI (Wiiisdom)</a> et <a href="https://dallasmarks.com/toy-story-5-and-bi-2027/" rel="noopener">annonce de BI 2027 (Dallas Marks)</a>'
 SRC_PAM = '<a href="https://support.sap.com/en/release-upgrade-maintenance.html" rel="noopener">Product Availability Matrix SAP</a>'
 
 SOURCES_BLOCK = """<section class="sources"><h2>Sources</h2><ul>
-<li>%s</li><li>%s</li><li>%s</li><li>%s</li><li>%s</li></ul>
-<p>Les dates et règles de maintenance peuvent évoluer. Vérifiez-les dans le portail SAP (Product Availability Matrix et notes citées) avant toute décision.</p></section>""" % (SRC_CSM, SRC_EOL, SRC_2025, SRC_DEP, SRC_PAM)
+<li>%s</li><li>%s</li><li>%s</li><li>%s</li><li>%s</li><li>%s</li></ul>
+<p>Les dates et règles de maintenance peuvent évoluer. Vérifiez-les dans le portail SAP (Product Availability Matrix et notes citées) avant toute décision.</p></section>""" % (SRC_CSM, SRC_EOL, SRC_2025, SRC_2027, SRC_DEP, SRC_PAM)
 
 PAGES = [
 # ---------------------------------------------------------------------------------------------
@@ -27,9 +28,10 @@ dict(
 <tr><td>31 décembre 2026</td><td>Fin de la maintenance standard de la version 4.3.</td></tr>
 <tr><td>2027</td><td>Maintenance spécifique client : seuls les correctifs de sécurité jugés graves (score CVSS de 7 ou plus) sont livrés pendant les 12 premiers mois.</td></tr>
 <tr><td>2028</td><td>Plus aucun correctif, patch ni support package n'est livré pour la version 4.3.</td></tr>
-<tr><td>Fin 2027</td><td>Fin de la maintenance standard de SAP BusinessObjects BI 2025, la version suivante.</td></tr>
+<tr><td>Premier trimestre 2027</td><td>Sortie prévue de SAP BusinessObjects BI 2027, la version qui suit BI 2025.</td></tr>
+<tr><td>Fin 2027</td><td>Fin de la maintenance standard de SAP BusinessObjects BI 2025.</td></tr>
 </tbody></table></div>
-<p>Sources : """ + SRC_CSM + """ et """ + SRC_EOL + """. Ces dates concordent entre plusieurs analyses indépendantes : Wiiisdom, C. Vosloo, InfoSol et NTT DATA. Les conditions détaillées figurent dans les notes SAP 3486924 et 3763590.</p>
+<p>Sources : """ + SRC_CSM + """ et """ + SRC_EOL + """. Ces dates concordent entre plusieurs analyses indépendantes : Wiiisdom, C. Vosloo, InfoSol et NTT DATA. Les conditions détaillées figurent dans les notes SAP 3486924 et 3763590. Pour BI 2027 : """ + SRC_2027 + """. Selon Wiiisdom, sa maintenance standard irait jusqu'au quatrième trimestre 2029.</p>
 
 <h2>Ce que change la maintenance spécifique client</h2>
 <p>Après le 31 décembre 2026, les clients qui restent en 4.3 passent en maintenance spécifique client (Customer-Specific Maintenance). Selon les notes SAP 3486924 et 3763590, analysées par C. Vosloo :</p>
@@ -48,7 +50,7 @@ dict(
 <h2>Les trois options</h2>
 <ol>
 <li><strong>Rester en 4.3</strong> sous maintenance spécifique client, en acceptant la couverture réduite et en prévoyant des mesures de sécurité complémentaires.</li>
-<li><strong>Monter en SAP BusinessObjects BI 2025</strong>, ce qui donne un an de maintenance standard supplémentaire (jusqu'au 31 décembre 2027) et impose de traiter les univers UNV et les contenus obsolètes.</li>
+<li><strong>Monter en SAP BusinessObjects BI 2025</strong>, ce qui donne un an de maintenance standard supplémentaire (jusqu'au 31 décembre 2027) et impose de traiter les univers UNV et les contenus obsolètes. SAP prévoit ensuite BI 2027 au premier trimestre 2027 : rester chez SAP revient à monter de version environ tous les deux ans.</li>
 <li><strong>Sortir de BusinessObjects</strong> vers une autre plateforme décisionnelle, ce qui demande un inventaire précis de ce qui est réellement utilisé.</li>
 </ol>
 <p>Le détail des critères de choix est dans <a href="/bi-2025-ou-sortir-de-businessobjects/">BI 2025 ou sortir de BusinessObjects : comment choisir</a>.</p>
@@ -74,7 +76,7 @@ dict(
  faqs=[
   ("Quand la maintenance de SAP BusinessObjects 4.3 s'arrête-t-elle ?", "La maintenance standard de SAP BusinessObjects BI 4.3 s'arrête le 31 décembre 2026. Ensuite, la maintenance spécifique client ne livre en 2027 que les correctifs de sécurité jugés graves (CVSS 7 ou plus), puis plus aucun correctif à partir de 2028."),
   ("Que se passe-t-il si je reste en 4.3 après 2026 ?", "Votre plateforme continue de fonctionner, mais la couverture se réduit : correctifs de sécurité graves seulement en 2027, sans engagement de délai, nouveaux problèmes facturables, puis plus aucun correctif à partir de 2028. Les frais de maintenance de votre contrat continuent de s'appliquer. Votre contrat et votre interlocuteur SAP précisent les conditions applicables à votre cas."),
-  ("Jusqu'à quand SAP BusinessObjects BI 2025 est-il maintenu ?", "La maintenance standard de SAP BusinessObjects BI 2025 va jusqu'au 31 décembre 2027, soit un an de plus que la 4.3. Les correctifs de sécurité de BI 2025 sont ensuite prévus jusqu'au quatrième trimestre 2028 (Wiiisdom)."),
+  ("Jusqu'à quand SAP BusinessObjects BI 2025 est-il maintenu ?", "La maintenance standard de SAP BusinessObjects BI 2025 va jusqu'au 31 décembre 2027, soit un an de plus que la 4.3. Les correctifs de sécurité de BI 2025 sont ensuite prévus jusqu'au quatrième trimestre 2028 (Wiiisdom). La version suivante, BI 2027, est attendue au premier trimestre 2027."),
   ("Faut-il migrer avant le 31 décembre 2026 ?", "Pas nécessairement. L'urgence est de décider : un diagnostic chiffré prend 10 jours ouvrés et permet de choisir en connaissance de cause plutôt que de subir la maintenance spécifique client."),
  ],
  related=["bi-2025-ou-sortir-de-businessobjects","diagnostic-sortie-businessobjects"],
@@ -92,14 +94,14 @@ dict(
 <thead><tr><th>Voie</th><th>Ce qu'elle apporte</th><th>Ce qu'il faut regarder</th></tr></thead>
 <tbody>
 <tr><td>Rester en 4.3</td><td>Aucun projet technique immédiat.</td><td>Couverture réduite à partir de 2027 et plus aucun correctif à partir de 2028.</td></tr>
-<tr><td>Monter en BI 2025</td><td>Un an de maintenance standard de plus (jusqu'au 31 décembre 2027).</td><td>Conversion des univers UNV en UNX, contenus obsolètes, tests de non-régression, nouvelle décision à préparer dès 2027.</td></tr>
+<tr><td>Monter en BI 2025</td><td>Un an de maintenance standard de plus (jusqu'au 31 décembre 2027).</td><td>Conversion des univers UNV en UNX, contenus obsolètes, tests de non-régression, puis une nouvelle montée de version (BI 2027, attendue au premier trimestre 2027) à prévoir pour rester en maintenance standard.</td></tr>
 <tr><td>Sortir de BusinessObjects</td><td>Une plateforme décidée pour les années suivantes, un parc nettoyé.</td><td>Inventaire de l'usage réel, refonte des rapports utiles, formation, période de double exploitation.</td></tr>
 </tbody></table></div>
 <p>Sources : """ + SRC_CSM + """, """ + SRC_2025 + """.</p>
 
 <h2>Les critères qui décident</h2>
 <h3>1. L'horizon</h3>
-<p>BI 2025 ne repousse l'échéance que d'un an (31 décembre 2027). Si la plateforme doit durer plusieurs années, la montée en BI 2025 peut n'être qu'une étape, ce qui compte dans le coût total.</p>
+<p>BI 2025 ne repousse l'échéance que d'un an (31 décembre 2027). SAP prévoit ensuite BI 2027 au premier trimestre 2027, dont la maintenance standard irait jusqu'au quatrième trimestre 2029 selon Wiiisdom. Rester chez SAP, c'est donc entrer dans un cycle : une montée de version environ tous les deux ans, chacune avec sa recette. C'est ce coût répété qu'il faut comparer à une migration.</p>
 <h3>2. L'état du parc</h3>
 <p>Le nombre d'univers UNV, de contenus obsolètes et de documents réellement utilisés change complètement l'effort d'une montée de version comme d'une migration. Un parc dont une grande partie n'est plus ouverte par personne se migre moins cher une fois nettoyé.</p>
 <h3>3. L'usage réel</h3>
@@ -116,7 +118,7 @@ dict(
 <p>Le <a href="/diagnostic-sortie-businessobjects/">Diagnostic Sortie BO</a> compare les trois voies pour votre plateforme : coût, délai, risque et prérequis, en 10 jours ouvrés, à prix fixe. Trivoie est un service d'AM DATA, qui n'est revendeur ni de SAP ni de Microsoft et ne perçoit aucune commission d'éditeur.</p>
 """,
  faqs=[
-  ("Vaut-il mieux monter en BI 2025 ou migrer vers une autre solution ?", "Cela dépend de l'état du parc, de l'usage réel, de l'horizon souhaité et du budget. BI 2025 ne donne qu'un an de maintenance standard supplémentaire, jusqu'au 31 décembre 2027. Un diagnostic chiffré compare les options pour une plateforme précise."),
+  ("Vaut-il mieux monter en BI 2025 ou migrer vers une autre solution ?", "Cela dépend de l'état du parc, de l'usage réel, de l'horizon souhaité et du budget. BI 2025 ne donne qu'un an de maintenance standard supplémentaire, jusqu'au 31 décembre 2027, et SAP prévoit BI 2027 au premier trimestre 2027 : rester chez SAP implique une montée de version environ tous les deux ans. Un diagnostic chiffré compare les options pour une plateforme précise."),
   ("Que faut-il faire des univers UNV ?", "Les univers UNV ne sont plus pris en charge après la 4.3. Pour monter en BI 2025, ils doivent être convertis en UNX et les documents qui les utilisent doivent être retestés."),
   ("Peut-on réduire le coût d'une migration ?", "Oui, en décommissionnant d'abord ce qui n'est plus utilisé : comptes inactifs, documents jamais ouverts, contenus obsolètes. Un inventaire précis est le préalable."),
  ],

@@ -12,6 +12,18 @@ for _f in sorted(glob.glob(os.path.join(os.path.dirname(os.path.abspath(__file__
     _ns = {}
     exec(compile(open(_f, encoding="utf-8").read(), _f, "exec"), _ns)
     PAGES.append(_ns["PAGE"])
+# Maillage interne vers les pages ajoutées
+EXTRA_RELATED = {
+    "fin-maintenance-sap-businessobjects-4-3": ["sap-businessobjects-bi-2027", "migration-businessobjects-power-bi"],
+    "bi-2025-ou-sortir-de-businessobjects": ["sap-businessobjects-bi-2027", "alternatives-sap-businessobjects", "migration-businessobjects-power-bi"],
+    "diagnostic-sortie-businessobjects": ["audit-sap-businessobjects", "consultant-sap-businessobjects"],
+    "nettoyer-parc-businessobjects-documents-inutilises": ["audit-sap-businessobjects", "migration-businessobjects-power-bi"],
+    "checklist-migration-sap-businessobjects": ["migration-businessobjects-power-bi", "alternatives-sap-businessobjects"],
+    "convertir-univers-unv-en-unx": ["sap-businessobjects-bi-2027"],
+    "questions-a-poser-prestataire-migration-businessobjects": ["consultant-sap-businessobjects", "audit-sap-businessobjects"],
+}
+for _p in PAGES:
+    _p["related"] = _p["related"] + [x for x in EXTRA_RELATED.get(_p["slug"], []) if x not in _p["related"]]
 MONTHS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"]
 def fr_date(iso):
     y, m, d = iso.split("-")
@@ -333,6 +345,7 @@ Sitemap: %s/sitemap.xml
               "- La maintenance standard de SAP BusinessObjects BI 4.3 s'arrête le 31 décembre 2026.",
               "- À partir du 1er janvier 2027, maintenance spécifique client : correctifs de sécurité de score CVSS 7 ou plus seulement pendant 12 mois (notes SAP 3486924 et 3763590) ; à partir de 2028, plus aucun correctif.",
               "- La maintenance standard de SAP BusinessObjects BI 2025 va jusqu'au 31 décembre 2027.",
+              "- SAP BusinessObjects BI 2027 est attendu au premier trimestre 2027 (Wiiisdom, Dallas Marks) ; sa maintenance standard irait jusqu'au quatrième trimestre 2029 selon Wiiisdom.",
               "- Les univers UNV ne sont plus pris en charge après la 4.3 et doivent être convertis en UNX pour monter en BI 2025.",
               "", "## Contact", "", "- %s" % EMAIL, "- AM DATA, 32 rue Boyer, 75020 Paris, SIREN 939 133 781", ""]
     write("/llms.txt", "\n".join(lines))

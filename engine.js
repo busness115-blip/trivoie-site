@@ -108,7 +108,7 @@
         "La version " + d.version + " n'est plus en maintenance standard. Vérifiez sa situation exacte dans la PAM SAP avant toute décision.", "pam");
     } else if (d.version === "2025") {
       add("CSM-03", "attention", 10, "Maintenance standard de BI 2025 jusqu'au 31 décembre 2027",
-        "BI 2025 donne un an de maintenance standard supplémentaire, jusqu'au 31 décembre 2027. La décision suivante est à préparer dès 2027.", "csm");
+        "BI 2025 donne un an de maintenance standard supplémentaire, jusqu'au 31 décembre 2027. SAP prévoit BI 2027 au premier trimestre 2027 (Wiiisdom, Dallas Marks) : rester chez SAP implique une montée de version environ tous les deux ans. La décision suivante est à préparer dès 2027.", "csm");
     }
 
     if (d.unv > 0 && d.version !== "2025") {
