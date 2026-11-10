@@ -99,13 +99,13 @@
 
     if (d.version === "4.3") {
       add("CSM-01", "critique", 25, "Maintenance spécifique client au 1er janvier 2027",
-        "En 2027, seuls les correctifs de sécurité notés CVSS 7.0 ou plus sont livrés, sans engagement de délai. Les nouveaux problèmes deviennent facturables. À partir de 2028, plus aucun correctif. Les frais de maintenance restent inchangés.", "csm");
+        "D'après les informations publiées par la communauté SAP (à confirmer auprès de SAP) : en 2027, seuls les correctifs de sécurité notés CVSS 7.0 ou plus seraient livrés, sans engagement de délai ; les nouveaux problèmes deviendraient facturables ; à partir de 2028, plus aucun correctif ; les frais de maintenance resteraient inchangés.", "csm");
     } else if (d.version === "4.2" || d.version === "4.1") {
       add("CSM-02", "critique", 35, "Version déjà sortie de la maintenance standard",
         "La version " + d.version + " n'est plus en maintenance standard. Vérifiez sa situation exacte dans la PAM SAP avant toute décision.", "pam");
     } else if (d.version === "2025") {
-      add("CSM-03", "attention", 10, "Maintenance standard de BI 2025 jusqu'au 31 décembre 2027",
-        "BI 2025 donne un an de maintenance standard supplémentaire. La décision suivante est à préparer dès 2027.", "csm");
+      add("CSM-03", "attention", 10, "Maintenance standard de BI 2025 jusqu'à fin 2027 (à confirmer)",
+        "BI 2025 donnerait environ un an de maintenance standard supplémentaire, d'après les informations publiées (à confirmer auprès de SAP). La décision suivante est à préparer dès 2027.", "csm");
     }
 
     if (d.unv > 0 && d.version !== "2025") {

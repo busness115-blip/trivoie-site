@@ -17,20 +17,20 @@ dict(
 """ + tbl(1) + """<table>
 <thead><tr><th>Point</th><th>Maintenance standard (jusqu'au 31/12/2026)</th><th>Maintenance spécifique client (2027)</th></tr></thead>
 <tbody>
-<tr><td>Correctifs de sécurité</td><td>Livrés selon le cycle habituel de SAP.</td><td>Seuls les correctifs dont le score CVSS est de 7 ou plus.</td></tr>
-<tr><td>Délai de traitement</td><td>Engagements de service du contrat.</td><td>Pas d'engagement de délai.</td></tr>
-<tr><td>Nouveaux problèmes</td><td>Pris en charge par le support.</td><td>Peuvent être facturés.</td></tr>
-<tr><td>Année 2028</td><td>Sans objet.</td><td>Plus aucun correctif.</td></tr>
-<tr><td>Frais de maintenance</td><td>Selon contrat.</td><td>Inchangés.</td></tr>
+<tr><td>Correctifs de sécurité</td><td>Livrés selon le cycle habituel de SAP.</td><td>Seuls les correctifs dont le score CVSS est de 7 ou plus, d'après les informations publiées.</td></tr>
+<tr><td>Délai de traitement</td><td>Engagements de service du contrat.</td><td>Pas d'engagement de délai, d'après les informations publiées.</td></tr>
+<tr><td>Nouveaux problèmes</td><td>Pris en charge par le support.</td><td>Pourraient être facturés, d'après les informations publiées.</td></tr>
+<tr><td>Année 2028</td><td>Sans objet.</td><td>Plus aucun correctif, d'après les informations publiées.</td></tr>
+<tr><td>Frais de maintenance</td><td>Selon contrat.</td><td>Inchangés, d'après les informations publiées.</td></tr>
 </tbody></table></div>
-<p>Sources : """ + SRC_CSM + """. Les conditions exactes dépendent de votre contrat : à confirmer auprès de SAP.</p>
+<p>Sources : """ + SRC_CSM + """. Ces points proviennent de résumés publiés par la communauté SAP. Trivoie n'a pas pu les confirmer dans les notes SAP elles-mêmes : les conditions exactes dépendent de votre contrat et sont à confirmer auprès de SAP.</p>
 
 <h2>Ce que cela veut dire en pratique</h2>
 <ul>
 <li><strong>Votre plateforme continue de fonctionner.</strong> Rien ne s'arrête le 1er janvier 2027 : rapports, planifications et connexions restent actifs.</li>
-<li><strong>Les failles de gravité moyenne ou faible ne sont plus corrigées</strong> à partir de 2027, et plus aucune faille ne l'est à partir de 2028.</li>
-<li><strong>Le support change de nature.</strong> Sans délai garanti, une panne ou une régression en production peut durer plus longtemps qu'aujourd'hui.</li>
-<li><strong>Le coût ne baisse pas.</strong> Les frais restent identiques pour une couverture réduite : c'est un point à présenter à la direction financière.</li>
+<li><strong>Les failles de gravité moyenne ou faible ne seraient plus corrigées</strong> à partir de 2027, et plus aucune faille ne le serait à partir de 2028, d'après les informations publiées.</li>
+<li><strong>Le support change de nature.</strong> Sans délai garanti, une panne ou une régression en production pourrait durer plus longtemps qu'aujourd'hui.</li>
+<li><strong>Le coût ne baisserait pas.</strong> Les frais resteraient identiques pour une couverture réduite, d'après les informations publiées : c'est un point à vérifier avec SAP et à présenter à la direction financière.</li>
 </ul>
 
 <h2>Pour qui c'est un choix raisonnable</h2>
@@ -40,12 +40,12 @@ dict(
 <ol>
 <li>Rester en 4.3, monter en BI 2025 ou sortir de BusinessObjects (<a href="/bi-2025-ou-sortir-de-businessobjects/">les critères</a>).</li>
 <li>Si l'on reste : qui porte le risque, et quelles mesures compensatoires (isolement réseau, accès restreints, supervision) ?</li>
-<li>Quand sera prise la décision suivante, puisque 2028 sans correctif n'est pas tenable pour une plateforme exposée ?</li>
+<li>Quand sera prise la décision suivante, puisqu'une année 2028 sans correctif ne serait pas tenable pour une plateforme exposée ?</li>
 </ol>
 """,
  faqs=[
-  ("Qu'est-ce que la maintenance spécifique client de SAP BusinessObjects ?", "C'est le régime appliqué aux clients qui restent sur SAP BusinessObjects BI 4.3 après la fin de la maintenance standard, le 31 décembre 2026. En 2027, seuls les correctifs de sécurité graves (CVSS 7 ou plus) sont livrés, sans engagement de délai, et les nouveaux problèmes peuvent être facturés. En 2028, plus aucun correctif n'est livré."),
-  ("Les frais de maintenance baissent-ils en maintenance spécifique client ?", "D'après les informations publiées par la communauté SAP, non : les frais de maintenance restent inchangés alors que la couverture se réduit. À confirmer auprès de SAP pour votre contrat."),
+  ("Qu'est-ce que la maintenance spécifique client de SAP BusinessObjects ?", "C'est le régime appliqué aux clients qui restent sur SAP BusinessObjects BI 4.3 après la fin de la maintenance standard, le 31 décembre 2026. D'après les informations publiées par la communauté SAP (à confirmer auprès de SAP), en 2027 seuls les correctifs de sécurité graves (CVSS 7 ou plus) seraient livrés, sans engagement de délai, et les nouveaux problèmes pourraient être facturés. En 2028, plus aucun correctif ne serait livré."),
+  ("Les frais de maintenance baissent-ils en maintenance spécifique client ?", "D'après les informations publiées par la communauté SAP, non : les frais de maintenance resteraient inchangés alors que la couverture se réduirait. À confirmer auprès de SAP pour votre contrat."),
   ("La plateforme s'arrête-t-elle le 1er janvier 2027 ?", "Non. La plateforme continue de fonctionner. Ce qui change, c'est le niveau de protection et de support."),
  ],
  related=["fin-maintenance-sap-businessobjects-4-3","risque-securite-sap-businessobjects-4-3","bi-2025-ou-sortir-de-businessobjects"],
@@ -54,7 +54,7 @@ dict(
 dict(
  slug="risque-securite-sap-businessobjects-4-3",
  title="Risque de sécurité SAP BusinessObjects 4.3 : le point pour un RSSI",
- desc="Ce que la fin de maintenance de SAP BusinessObjects 4.3 change pour la sécurité : correctifs CVSS 7+ en 2027, aucun en 2028, mesures compensatoires et questions à poser.",
+ desc="Ce que la fin de maintenance de SAP BusinessObjects 4.3 pourrait changer pour la sécurité, d'après les informations publiées (à confirmer), mesures compensatoires et questions à poser.",
  h1="Risque de sécurité SAP BusinessObjects 4.3 : le point pour un RSSI",
  lead="Une plateforme décisionnelle donne souvent accès à des données sensibles : finance, ressources humaines, clients. Voici comment inscrire la fin de maintenance de SAP BusinessObjects 4.3 dans un registre des risques.",
  body="""
@@ -63,18 +63,18 @@ dict(
 <thead><tr><th>Période</th><th>Failles corrigées</th><th>Failles qui restent ouvertes</th></tr></thead>
 <tbody>
 <tr><td>Jusqu'au 31/12/2026</td><td>Cycle de correctifs standard.</td><td>Selon le cycle de SAP.</td></tr>
-<tr><td>2027</td><td>Gravité élevée ou critique (score CVSS de 7 ou plus).</td><td>Gravité moyenne et faible.</td></tr>
-<tr><td>2028</td><td>Aucune.</td><td>Toutes les nouvelles failles.</td></tr>
+<tr><td>2027</td><td>Gravité élevée ou critique (score CVSS de 7 ou plus), selon les informations publiées.</td><td>Gravité moyenne et faible.</td></tr>
+<tr><td>2028</td><td>Aucune, selon les informations publiées.</td><td>Toutes les nouvelles failles.</td></tr>
 </tbody></table></div>
-<p>Source : """ + SRC_CSM + """. À confirmer auprès de SAP.</p>
+<p>Source : """ + SRC_CSM + """. Résumé communautaire des notes SAP, non confirmé dans les notes elles-mêmes : à confirmer auprès de SAP.</p>
 <p>Le score CVSS (Common Vulnerability Scoring System) note la gravité d'une faille de 0 à 10. Un score de 7 à 8,9 est qualifié d'élevé, de 9 à 10 de critique.</p>
 
 <h2>Comment l'écrire dans un registre des risques</h2>
 <ul>
 <li><strong>Actif concerné :</strong> la plateforme SAP BusinessObjects 4.3 et les données qu'elle expose.</li>
-<li><strong>Événement :</strong> exploitation d'une faille non corrigée (moyenne ou faible en 2027, toute faille en 2028).</li>
+<li><strong>Événement :</strong> exploitation d'une faille non corrigée (moyenne ou faible en 2027, toute faille en 2028, si les informations publiées se confirment).</li>
 <li><strong>Facteurs aggravants :</strong> plateforme accessible depuis internet ou par de nombreux comptes, données sensibles, comptes inactifs jamais supprimés.</li>
-<li><strong>Échéance de décision :</strong> avant le 31 décembre 2026 pour choisir la voie, avant fin 2027 au plus tard pour ne pas entrer en 2028 sans correctif.</li>
+<li><strong>Échéance de décision :</strong> avant le 31 décembre 2026 pour choisir la voie, avant fin 2027 au plus tard pour ne pas entrer en 2028 sans correctif, si les informations publiées se confirment.</li>
 </ul>
 
 <h2>Mesures compensatoires à examiner</h2>
@@ -91,8 +91,8 @@ dict(
 <p>Nombre de comptes (dont actifs sur 12 mois), nombre de documents et d'univers, contenus obsolètes, connexions à des sources sensibles. Les <a href="/compter-documents-sap-businessobjects-query-builder/">requêtes Query Builder</a> les donnent en lecture seule, et le <a href="/#scan">scan gratuit</a> les transforme en niveau de risque.</p>
 """,
  faqs=[
-  ("Quel score CVSS est encore corrigé en 2027 ?", "D'après les notes SAP résumées par la communauté, seuls les correctifs de sécurité dont le score CVSS est de 7 ou plus sont livrés en 2027. À confirmer auprès de SAP."),
-  ("Que se passe-t-il pour la sécurité en 2028 ?", "Plus aucun correctif n'est livré pour SAP BusinessObjects BI 4.3 en 2028. Toute nouvelle faille reste ouverte."),
+  ("Quel score CVSS est encore corrigé en 2027 ?", "D'après des résumés de notes SAP publiés par la communauté, seuls les correctifs de sécurité dont le score CVSS est de 7 ou plus seraient livrés en 2027. Trivoie n'a pas pu le confirmer dans les notes SAP : à confirmer auprès de SAP."),
+  ("Que se passe-t-il pour la sécurité en 2028 ?", "D'après les informations publiées (à confirmer auprès de SAP), plus aucun correctif ne serait livré pour SAP BusinessObjects BI 4.3 en 2028. Toute nouvelle faille resterait alors ouverte."),
   ("Les mesures compensatoires suffisent-elles ?", "Elles réduisent l'exposition à court terme mais ne remplacent pas les correctifs. Elles servent à tenir le temps d'une migration, pas à prolonger la plateforme durablement."),
  ],
  related=["maintenance-specifique-client-sap-businessobjects","fin-maintenance-sap-businessobjects-4-3","diagnostic-sortie-businessobjects"],
@@ -253,7 +253,7 @@ dict(
 <li><strong>« Quels sont les chiffres sur lesquels repose votre estimation ? »</strong> Documents, univers UNV, contenus obsolètes, comptes actifs : sans inventaire, le chiffrage est une hypothèse.</li>
 <li><strong>« Que se passe-t-il pour les univers UNV et les contenus obsolètes ? »</strong> C'est là que se cachent les dépassements (<a href="/convertir-univers-unv-en-unx/">conversion UNV en UNX</a>).</li>
 <li><strong>« Quel est le prix, fixe ou au temps passé, et que comprend-il ? »</strong> Un prix fixe sur un périmètre écrit protège des dérives.</li>
-<li><strong>« Quelle est la suite après 2027 ? »</strong> Monter en BI 2025 ne repousse l'échéance que d'un an (<a href="/bi-2025-ou-sortir-de-businessobjects/">critères de choix</a>).</li>
+<li><strong>« Quelle est la suite après 2027 ? »</strong> Monter en BI 2025 ne repousserait l'échéance que d'environ un an, d'après les informations publiées (<a href="/bi-2025-ou-sortir-de-businessobjects/">critères de choix</a>).</li>
 </ol>
 <h2>Ce qu'AM DATA répond à ces questions</h2>
 <p>Trivoie est un service d'AM DATA, indépendant : AM DATA n'est revendeur ni de SAP ni de Microsoft. Le <a href="/diagnostic-sortie-businessobjects/">Diagnostic Sortie BO</a> est à prix fixe (2 900 à 7 900 € HT selon la taille de la plateforme) et chiffre les trois voies, dont celle où l'on ne migre pas.</p>
@@ -307,9 +307,9 @@ dict(
 <dl class="gloss">
 <dt>SAP BusinessObjects BI (SAP BO, BO)</dt><dd>Plateforme décisionnelle de SAP qui regroupe la création, la planification et la diffusion de rapports et de tableaux de bord.</dd>
 <dt>BI 4.3</dt><dd>Version de la plateforme dont la maintenance standard s'arrête le 31 décembre 2026.</dd>
-<dt>BI 2025</dt><dd>Version suivante, dont la maintenance standard va jusqu'à fin 2027 d'après les informations publiées.</dd>
+<dt>BI 2025</dt><dd>Version suivante, dont la maintenance standard irait jusqu'à fin 2027 d'après les informations publiées (à confirmer auprès de SAP).</dd>
 <dt>Maintenance standard</dt><dd>Régime normal de support et de correctifs prévu par le contrat de maintenance de l'éditeur.</dd>
-<dt>Maintenance spécifique client</dt><dd>Régime appliqué après la fin de la maintenance standard : correctifs de sécurité graves seulement en 2027, aucun en 2028, sans engagement de délai (<a href="/maintenance-specifique-client-sap-businessobjects/">détail</a>).</dd>
+<dt>Maintenance spécifique client</dt><dd>Régime appliqué après la fin de la maintenance standard : d'après les informations publiées, correctifs de sécurité graves seulement en 2027, aucun en 2028, sans engagement de délai (à confirmer auprès de SAP ; <a href="/maintenance-specifique-client-sap-businessobjects/">détail</a>).</dd>
 <dt>CVSS</dt><dd>Common Vulnerability Scoring System : note de 0 à 10 qui mesure la gravité d'une faille de sécurité. À partir de 7, la faille est qualifiée d'élevée.</dd>
 <dt>CMS</dt><dd>Central Management Server : le serveur qui gère le référentiel de la plateforme (documents, utilisateurs, droits, planifications).</dd>
 <dt>CMC</dt><dd>Central Management Console : l'interface d'administration de la plateforme, utilisée notamment pour les comptes, les droits et l'audit.</dd>
