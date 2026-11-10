@@ -460,15 +460,15 @@ lay();window.addEventListener('resize',lay);if(!reduce)requestAnimationFrame(tic
               <div class="field">
                 <span id="auditLbl" class="lbl-strong">La base d'audit est-elle active ?</span>
                 <div class="radio-row" role="radiogroup" aria-labelledby="auditLbl">
-                  <label><input type="radio" name="auditActive" id="audit-oui" value="oui" checked> Oui</label>
+                  <label><input type="radio" name="auditActive" id="audit-oui" value="oui"> Oui</label>
                   <label><input type="radio" name="auditActive" id="audit-non" value="non"> Non</label>
-                  <label><input type="radio" name="auditActive" id="audit-nsp" value="non"> Je ne sais pas</label>
+                  <label><input type="radio" name="auditActive" id="audit-nsp" value="non" checked> Je ne sais pas</label>
                 </div>
                 <small>Elle enregistre qui ouvre quel document. « Je ne sais pas » est traité comme « Non ».</small>
               </div>
               <div class="field" id="pctField">
                 <label for="usedPct">Documents ouverts au moins une fois en 12 mois (%)</label>
-                <input id="usedPct" inputmode="numeric" value="45">
+                <input id="usedPct" inputmode="numeric" value="" placeholder="ex. 45">
                 <small>D'après l'audit. Plus ce pourcentage est bas, moins il y a de documents à traiter (ce qui peut faire baisser le niveau de risque). Laissez vide si vous ne l'avez pas.</small>
                 <span class="err" id="err-usedPct"></span>
               </div>
