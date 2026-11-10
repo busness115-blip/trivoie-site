@@ -6,12 +6,12 @@
 
 - [Accueil et scan gratuit](https://trivoie.fr/): calcul d'un niveau de risque dans le navigateur, sans envoi de données
 - [Index des guides](https://trivoie.fr/guides/): liste de tous les guides
-- [Fin de maintenance de SAP BusinessObjects 4.3 : ce qui change le 31 décembre 2026](https://trivoie.fr/fin-maintenance-sap-businessobjects-4-3/): À partir du 1er janvier 2027, SAP BusinessObjects 4.3 n'est plus maintenu comme aujourd'hui. Dates, conséquences, options et premières décisions à prendre.
+- [Fin de maintenance de SAP BusinessObjects 4.3 : ce qui change le 31 décembre 2026](https://trivoie.fr/fin-maintenance-sap-businessobjects-4-3/): La maintenance standard de SAP BusinessObjects 4.3 s'arrête le 31 décembre 2026. Dates, conséquences probables, options et premières décisions à prendre.
 - [BI 2025 ou sortir de BusinessObjects : comment choisir](https://trivoie.fr/bi-2025-ou-sortir-de-businessobjects/): Rester en 4.3, monter en SAP BusinessObjects BI 2025 ou migrer vers une autre solution : les critères pour décider, sans parti pris d'éditeur.
 - [Diagnostic Sortie BO : une décision chiffrée en 10 jours ouvrés](https://trivoie.fr/diagnostic-sortie-businessobjects/): Diagnostic indépendant de votre plateforme SAP BusinessObjects 4.3, à prix fixe (2 900 à 7 900 € HT), livré en 10 jours ouvrés : inventaire, usage, trois options chiffrées.
 - [Compter ses documents, univers et utilisateurs SAP BusinessObjects avec Query Builder](https://trivoie.fr/compter-documents-sap-businessobjects-query-builder/): Les requêtes Query Builder pour compter documents, univers UNV et UNX, utilisateurs actifs d'une plateforme SAP BusinessObjects 4.3, sans la limite de 1 000 lignes.
 - [Maintenance spécifique client SAP BusinessObjects : ce que ça couvre vraiment](https://trivoie.fr/maintenance-specifique-client-sap-businessobjects/): Ce que couvre (et ne couvre pas) la maintenance spécifique client de SAP BusinessObjects BI 4.3 après le 31 décembre 2026 : correctifs, délais, facturation, frais.
-- [Risque de sécurité SAP BusinessObjects 4.3 : le point pour un RSSI](https://trivoie.fr/risque-securite-sap-businessobjects-4-3/): Ce que la fin de maintenance de SAP BusinessObjects 4.3 change pour la sécurité : correctifs CVSS 7+ en 2027, aucun en 2028, mesures compensatoires et questions à poser.
+- [Risque de sécurité SAP BusinessObjects 4.3 : le point pour un RSSI](https://trivoie.fr/risque-securite-sap-businessobjects-4-3/): Ce que la fin de maintenance de SAP BusinessObjects 4.3 pourrait changer pour la sécurité, d'après les informations publiées (à confirmer), mesures compensatoires et questions à poser.
 - [Convertir ses univers UNV en UNX : méthode et points de vigilance](https://trivoie.fr/convertir-univers-unv-en-unx/): Les univers UNV ne sont plus pris en charge après SAP BusinessObjects 4.3. Comment compter, convertir en UNX et retester les documents Web Intelligence.
 - [Xcelsius, Desktop Intelligence, Explorer : que faire de ces contenus obsolètes](https://trivoie.fr/contenus-obsoletes-xcelsius-desktop-intelligence-explorer/): Xcelsius, Dashboards, Desktop Intelligence, Explorer et contenus Flash : comment les repérer sur une plateforme SAP BusinessObjects 4.3 et décider de leur sort.
 - [Nettoyer son parc BusinessObjects avant de migrer : repérer l'inutilisé](https://trivoie.fr/nettoyer-parc-businessobjects-documents-inutilises/): Avant de migrer SAP BusinessObjects, repérez les documents jamais ouverts, les comptes inactifs et les planifications mortes : méthode, audit et décisions.
@@ -23,8 +23,8 @@
 ## Faits clés
 
 - La maintenance standard de SAP BusinessObjects BI 4.3 s'arrête le 31 décembre 2026.
-- En 2027, maintenance spécifique client : correctifs de sécurité de score CVSS 7 ou plus seulement. En 2028, plus aucun correctif. Frais inchangés. À confirmer auprès de SAP.
-- La maintenance standard de SAP BusinessObjects BI 2025 va jusqu'à fin 2027.
+- D'après les informations publiées par la communauté SAP (non confirmées dans les notes SAP, à vérifier auprès de SAP) : en 2027, maintenance spécifique client avec correctifs de sécurité de score CVSS 7 ou plus seulement ; en 2028, plus aucun correctif ; frais inchangés.
+- D'après les informations publiées, la maintenance standard de SAP BusinessObjects BI 2025 irait jusqu'à fin 2027 (à confirmer auprès de SAP).
 - Les univers UNV ne sont plus pris en charge après la 4.3 et doivent être convertis en UNX pour monter en BI 2025.
 
 ## Contact
