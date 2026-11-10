@@ -1066,9 +1066,8 @@ finally {
     unv: "Univers UNV", unx: "Univers UNX", users: "Comptes utilisateurs", activeUsers: "dont connectés en 12 mois" };
   var SIZE_DEF = { S: "jusqu'à 200 comptes et 2 000 documents", M: "jusqu'à 1 000 comptes et 10 000 documents", L: "plus de 1 000 comptes ou 10 000 documents" };
   var DATE_FMT = new Intl.DateTimeFormat("fr-FR", { weekday: "long", day: "numeric", month: "long" });
-  /* Lien de réservation Calendly : à renseigner une fois le compte créé (ex. https://calendly.com/trivoie/20min).
-     Vide : le bouton « Échange gratuit » ouvre le formulaire d'email. */
-  var CALENDLY_URL = "";
+  /* Lien de réservation Calendly (événement de 20 minutes). Si vide : le bouton « Échange gratuit » ouvre le formulaire d'email. */
+  var CALENDLY_URL = "https://calendly.com/trivoie-contact/30min";
   var ctaMode = "diag", lastSummary = "", lastSize = "M", lastRisk = null;
   function today() { var n = new Date(); return new Date(n.getFullYear(), n.getMonth(), n.getDate()); }
   function daysUntil(d) { return Math.round((Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) - Date.UTC(today().getFullYear(), today().getMonth(), today().getDate())) / 86400000); }
