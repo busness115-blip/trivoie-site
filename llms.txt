@@ -19,12 +19,18 @@
 - [Migration BusinessObjects : les questions à poser à votre prestataire](https://trivoie.fr/questions-a-poser-prestataire-migration-businessobjects/): Avant de signer une migration ou une montée de version SAP BusinessObjects, les questions qui révèlent l'indépendance, le périmètre et le vrai coût de la proposition.
 - [Secteur public : engager un diagnostic BusinessObjects sans attendre une consultation](https://trivoie.fr/diagnostic-businessobjects-secteur-public-marche-60000-euros/): Depuis le 1er avril 2026, un achat public sous 60 000 € HT peut se faire sans publicité ni mise en concurrence préalables : ce que cela permet pour un diagnostic BusinessObjects.
 - [Glossaire SAP BusinessObjects : les termes de la fin de maintenance](https://trivoie.fr/glossaire-sap-businessobjects/): Les termes à connaître pour comprendre la fin de maintenance de SAP BusinessObjects 4.3 : CMS, CMC, UNV, UNX, Web Intelligence, Query Builder, CVSS, maintenance spécifique client.
+- [Migrer SAP BusinessObjects vers Power BI : méthode, correspondances et pièges](https://trivoie.fr/migration-businessobjects-power-bi/): Migrer SAP BusinessObjects (Webi, Crystal, univers) vers Power BI : correspondances, étapes, pièges, et pourquoi trier le parc avant de convertir quoi que ce soit.
+- [SAP BusinessObjects BI 2027 : ce que l'on sait de la prochaine version](https://trivoie.fr/sap-businessobjects-bi-2027/): SAP BusinessObjects BI 2027 est attendu au premier trimestre 2027 : dates connues, maintenance, rythme des versions, impact pour la 4.3 et BI 2025.
+- [Consultant SAP BusinessObjects indépendant](https://trivoie.fr/consultant-sap-businessobjects/): Consultant SAP BusinessObjects freelance, plus de 10 ans d'expérience : administration BI 4.2 et 4.3, Web Intelligence, TMA, audit et sortie de la 4.3.
+- [Audit SAP BusinessObjects : ce qu'il doit contenir](https://trivoie.fr/audit-sap-businessobjects/): Que contient un audit de plateforme SAP BusinessObjects : inventaire, usage réel, univers UNV, contenus obsolètes, sécurité, planifications. Méthode et livrables.
+- [Alternatives à SAP BusinessObjects : les options et les critères pour choisir](https://trivoie.fr/alternatives-sap-businessobjects/): Remplacer SAP BusinessObjects : BI 2025 et BI 2027, SAP Analytics Cloud, Power BI, Tableau, Qlik. Les critères qui départagent avant de décider.
 
 ## Faits clés
 
 - La maintenance standard de SAP BusinessObjects BI 4.3 s'arrête le 31 décembre 2026.
 - À partir du 1er janvier 2027, maintenance spécifique client : correctifs de sécurité de score CVSS 7 ou plus seulement pendant 12 mois (notes SAP 3486924 et 3763590) ; à partir de 2028, plus aucun correctif.
 - La maintenance standard de SAP BusinessObjects BI 2025 va jusqu'au 31 décembre 2027.
+- SAP BusinessObjects BI 2027 est attendu au premier trimestre 2027 (Wiiisdom, Dallas Marks) ; sa maintenance standard irait jusqu'au quatrième trimestre 2029 selon Wiiisdom.
 - Les univers UNV ne sont plus pris en charge après la 4.3 et doivent être convertis en UNX pour monter en BI 2025.
 
 ## Contact
