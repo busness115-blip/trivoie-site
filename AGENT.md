@@ -10,7 +10,8 @@ Site : https://trivoie.fr (GitHub Pages, branche `main` = site publié, branche 
 4. Offre et prix : uniquement ceux déjà sur le site (Diagnostic Sortie BO, S 2 900, M 4 900, L 7 900 € HT, 10 jours ouvrés).
 5. Faits déjà établis (ne pas les contredire) : fin de maintenance standard BI 4.3 le 31/12/2026 ; 2027 maintenance spécifique client, correctifs CVSS 7 ou plus seulement ; 2028 plus aucun correctif ; frais inchangés ; BI 2025 maintenue jusqu'à fin 2027 ; UNV non pris en charge après 4.3. Si une recherche montre un changement, corriger les pages concernées et le signaler.
 6. Maximum 2 nouvelles pages par exécution. Qualité avant quantité. Chaque page : 600 à 1 000 mots, un h1 unique avec la requête cible, 3 questions fréquentes ou plus, sources liées, 2 à 3 liens internes dans `related`, titre de 60 caractères maximum, description de 155 caractères maximum.
-7. Pas de doublon : vérifier slug et sujet contre les pages existantes (pages.py, pages2.py, content/).
+7. Rythme : cette tâche tourne trois fois par semaine jusqu'au 31 décembre 2026, puis sera ralentie. Si aucun sujet utile et vérifiable ne reste, n'ajoute rien plutôt que de publier une page faible ou redondante (Google sanctionne les pages produites en masse sans valeur propre). Chaque page doit répondre à une question que se pose réellement un prospect.
+8. Pas de doublon : vérifier slug et sujet contre les pages existantes (pages.py, pages2.py, content/).
 
 ## Procédure
 1. Lire `BACKLOG.md`, prendre le premier sujet non fait (ou en proposer un meilleur après recherche de ce que cherchent les prospects).
