@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://trivoie.fr/</loc><lastmod>2026-11-10</lastmod></url>
+  <url><loc>https://trivoie.fr/guides/</loc><lastmod>2026-11-10</lastmod></url>
   <url><loc>https://trivoie.fr/fin-maintenance-sap-businessobjects-4-3/</loc><lastmod>2026-11-10</lastmod></url>
   <url><loc>https://trivoie.fr/bi-2025-ou-sortir-de-businessobjects/</loc><lastmod>2026-11-10</lastmod></url>
   <url><loc>https://trivoie.fr/diagnostic-sortie-businessobjects/</loc><lastmod>2026-11-10</lastmod></url>
   <url><loc>https://trivoie.fr/compter-documents-sap-businessobjects-query-builder/</loc><lastmod>2026-11-10</lastmod></url>
+  <url><loc>https://trivoie.fr/maintenance-specifique-client-sap-businessobjects/</loc><lastmod>2026-11-10</lastmod></url>
+  <url><loc>https://trivoie.fr/risque-securite-sap-businessobjects-4-3/</loc><lastmod>2026-11-10</lastmod></url>
+  <url><loc>https://trivoie.fr/convertir-univers-unv-en-unx/</loc><lastmod>2026-11-10</lastmod></url>
+  <url><loc>https://trivoie.fr/contenus-obsoletes-xcelsius-desktop-intelligence-explorer/</loc><lastmod>2026-11-10</lastmod></url>
+  <url><loc>https://trivoie.fr/nettoyer-parc-businessobjects-documents-inutilises/</loc><lastmod>2026-11-10</lastmod></url>
+  <url><loc>https://trivoie.fr/checklist-migration-sap-businessobjects/</loc><lastmod>2026-11-10</lastmod></url>
+  <url><loc>https://trivoie.fr/questions-a-poser-prestataire-migration-businessobjects/</loc><lastmod>2026-11-10</lastmod></url>
+  <url><loc>https://trivoie.fr/diagnostic-businessobjects-secteur-public-marche-60000-euros/</loc><lastmod>2026-11-10</lastmod></url>
+  <url><loc>https://trivoie.fr/glossaire-sap-businessobjects/</loc><lastmod>2026-11-10</lastmod></url>
   <url><loc>https://trivoie.fr/mentions-legales/</loc><lastmod>2026-11-10</lastmod></url>
   <url><loc>https://trivoie.fr/confidentialite/</loc><lastmod>2026-11-10</lastmod></url>
 </urlset>

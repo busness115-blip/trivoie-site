@@ -63,6 +63,14 @@
 
 
 
+.gloss dt { font-weight: 600; margin-top: 16px; }
+.gloss dd { margin: 4px 0 0; color: var(--muted); }
+.steps li { margin: 10px 0; }
+.hub-list { list-style: none; padding: 0; display: grid; gap: 12px; }
+.hub-list li { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; }
+.hub-list a { font-weight: 600; }
+.hub-list p { margin: 6px 0 0; color: var(--muted); }
+
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
 body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 17px; line-height: 1.65; }
@@ -117,7 +125,7 @@ footer.site p { margin: 6px 0; max-width: none; }
 <body>
 <header class="top"><div class="wrap"><a class="brand" href="/">Tri<span>voie</span></a>
 <nav aria-label="Navigation"><a href="/#scan">Scan gratuit</a><a href="/fin-maintenance-sap-businessobjects-4-3/">Fin de maintenance</a><a href="/diagnostic-sortie-businessobjects/">Diagnostic</a></nav></div></header>
-<main><div class="wrap"><p class="crumbs"><a href="/">Trivoie</a> &rsaquo; Compter ses documents BusinessObjects avec Query Builder</p><h1>Compter ses documents, univers et utilisateurs SAP BusinessObjects avec Query Builder</h1><p class="lead">Avant de décider quoi faire de la plateforme, il faut des chiffres fiables. Query Builder, l&#x27;outil d&#x27;administration de SAP BusinessObjects, permet de les obtenir en quelques requêtes en lecture seule.</p><p class="meta">Par AM DATA, expert SAP BusinessObjects. Mis à jour le 9 novembre 2026.</p>
+<main><div class="wrap"><p class="crumbs"><a href="/">Trivoie</a> &rsaquo; Compter ses documents BusinessObjects avec Query Builder</p><h1>Compter ses documents, univers et utilisateurs SAP BusinessObjects avec Query Builder</h1><p class="lead">Avant de décider quoi faire de la plateforme, il faut des chiffres fiables. Query Builder, l&#x27;outil d&#x27;administration de SAP BusinessObjects, permet de les obtenir en quelques requêtes en lecture seule.</p><p class="meta">Par AM DATA, expert SAP BusinessObjects. Mis à jour le 10 novembre 2026.</p>
 <h2>Ouvrir Query Builder</h2>
 <p>Query Builder se trouve en général à l'adresse <code>http://votre-serveur:8080/AdminTools</code>. Connectez-vous avec un compte qui voit tout le référentiel, en pratique un administrateur. Avec un compte limité, les chiffres sont plus bas que la réalité.</p>
 
@@ -149,6 +157,7 @@ footer.site p { margin: 6px 0; max-width: none; }
 <p>Source : les limites de Query Builder sont documentées par la communauté SAP (note SAP KBA 1693396).</p>
 <section class="faq"><h2>Questions fréquentes</h2><details><summary>Pourquoi Query Builder ne renvoie-t-il que 1 000 lignes ?</summary><p>Sans clause TOP, une requête est limitée à 1 000 lignes par défaut. Pour obtenir un total exact, utilisez COUNT(SI_ID), qui renvoie le nombre dans l&#x27;attribut SI_AGGREGATE_COUNT.</p></details><details><summary>Ces requêtes modifient-elles la plateforme ?</summary><p>Non. Ce sont des requêtes SELECT en lecture seule sur le référentiel du CMS.</p></details><details><summary>Quels droits faut-il pour lancer ces requêtes ?</summary><p>Un compte qui voit tout le référentiel, en pratique un administrateur. Avec un compte limité, les chiffres sont plus bas que la réalité.</p></details></section><aside class="cta"><h2>Mesurez votre risque en 5 minutes</h2><p>Le scan est gratuit, sans inscription. Il calcule dans votre navigateur un niveau de risque et la taille de votre plateforme.</p><a class="btn" href="/#scan">Mesurer mon risque</a></aside><section class="related"><h2>À lire aussi</h2><ul><li><a href="/fin-maintenance-sap-businessobjects-4-3/">Fin de maintenance de SAP BusinessObjects 4.3 : ce qui change le 31 décembre 2026</a></li><li><a href="/bi-2025-ou-sortir-de-businessobjects/">BI 2025 ou sortir de BusinessObjects : comment choisir</a></li></ul></section></div></main>
 <footer class="site"><div class="wrap"><nav aria-label="Guides et informations">
+<a href="/guides/">Tous les guides</a>
 <a href="/fin-maintenance-sap-businessobjects-4-3/">Fin de maintenance 4.3</a>
 <a href="/bi-2025-ou-sortir-de-businessobjects/">BI 2025 ou sortie</a>
 <a href="/diagnostic-sortie-businessobjects/">Diagnostic Sortie BO</a>
