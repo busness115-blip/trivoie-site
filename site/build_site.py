@@ -331,8 +331,8 @@ Sitemap: %s/sitemap.xml
         lines.append("- [%s](%s/%s/): %s" % (p["h1"], DOMAIN, p["slug"], p["desc"]))
     lines += ["", "## Faits clés", "",
               "- La maintenance standard de SAP BusinessObjects BI 4.3 s'arrête le 31 décembre 2026.",
-              "- D'après les informations publiées par la communauté SAP (non confirmées dans les notes SAP, à vérifier auprès de SAP) : en 2027, maintenance spécifique client avec correctifs de sécurité de score CVSS 7 ou plus seulement ; en 2028, plus aucun correctif ; frais inchangés.",
-              "- D'après les informations publiées, la maintenance standard de SAP BusinessObjects BI 2025 irait jusqu'à fin 2027 (à confirmer auprès de SAP).",
+              "- À partir du 1er janvier 2027, maintenance spécifique client : correctifs de sécurité de score CVSS 7 ou plus seulement pendant 12 mois (notes SAP 3486924 et 3763590) ; à partir de 2028, plus aucun correctif.",
+              "- La maintenance standard de SAP BusinessObjects BI 2025 va jusqu'au 31 décembre 2027.",
               "- Les univers UNV ne sont plus pris en charge après la 4.3 et doivent être convertis en UNX pour monter en BI 2025.",
               "", "## Contact", "", "- %s" % EMAIL, "- AM DATA, 32 rue Boyer, 75020 Paris, SIREN 939 133 781", ""]
     write("/llms.txt", "\n".join(lines))
