@@ -267,9 +267,16 @@ def build_index():
     # nombre de jours statique à jour pour les robots
     days = (datetime.date(2026, 12, 31) - datetime.date.fromisoformat(TODAY)).days
     s = re.sub(r'(id="heroDays">)\d+(<)', r"\g<1>%d\2" % days, s)
+    # section visible "Guides" avant le pied de page (mobile et ordinateur)
+    cards = "".join('<li><a href="/%s/"><strong>%s</strong><span>%s</span></a></li>' % (q["slug"], html.escape(q["title"]), html.escape(q["desc"])) for q in PAGES)
+    gsec = ('<section class="guides-home" aria-labelledby="guidesH"><div class="wrap"><p class="eyebrow">Guides</p>'
+            '<h2 id="guidesH">Comprendre la fin de maintenance de SAP BusinessObjects 4.3</h2>'
+            '<ul class="gh-grid">%s</ul><p><a href="/guides/">Voir tous les guides</a></p></div></section>\n' % cards)
+    assert s.count("<footer>") == 1
+    s = s.replace("<footer>", gsec + "<footer>", 1)
     # maillage interne dans le pied de page
     s = s.replace("<footer>\n  <div class=\"wrap\">", "<footer>\n  <div class=\"wrap\">\n    " + NAV_FOOT.replace("\n", "") , 1)
-    s = s.replace("</style>", "footer nav { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 10px; }\nfooter nav a { color: var(--muted); }\n</style>", 1)
+    s = s.replace("</style>", "footer nav { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 10px; }\nfooter nav a { color: var(--muted); }\n.guides-home { border-top: 1px solid var(--line); padding-block: 40px; }\n.guides-home .wrap { display: grid; gap: 16px; }\n.gh-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap: 12px; }\n.gh-grid a { display: grid; gap: 6px; align-content: start; height: 100%; padding: 14px 16px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); text-decoration: none; color: var(--ink); }\n.gh-grid a:hover { border-color: var(--accent); }\n.gh-grid strong { font-family: var(--f-display); font-stretch: 95%; font-size: 1.02rem; line-height: 1.25; }\n.gh-grid span { color: var(--muted); font-size: 0.9rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }\n</style>", 1)
     assert "fonts.googleapis" not in s and "fonts.gstatic" not in s
     k = s.index("</style>") + len("</style>")
     s = '<!doctype html>\n<html lang="fr">\n<head>\n' + s[:k].strip() + '\n</head>\n<body>\n' + s[k:].strip() + '\n</body>\n</html>\n'
