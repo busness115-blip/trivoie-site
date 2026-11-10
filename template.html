@@ -1,0 +1,824 @@
+<title>Trivoie</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Scan gratuit de préparation à la fin de maintenance de SAP BusinessObjects 4.3. Analyse dans votre navigateur, sans accès à vos serveurs.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout : poste d'aiguillage. Bandeau compte à rebours, trois voies qui divergent, puis le pupitre (saisie à gauche, signaux à droite). */
+:root {
+  --bg: #eef2f1; --surface: #ffffff; --ink: #15212a; --muted: #56636c; --line: #d3dbda;
+  --accent: #0c5a6b; --accent-ink: #ffffff; --accent-soft: #dcebee;
+  --ok: #226a3f; --warn: #875608; --crit: #b0372b; --info: #375aa6;
+  --ok-soft: #e1f0e6; --warn-soft: #f6ead6; --crit-soft: #f6e0dd; --info-soft: #e2e8f5;
+  --board: #15212a; --board-ink: #f2c94c;
+  --f-display: "Archivo", "Arial Narrow", Arial, sans-serif;
+  --f-body: "IBM Plex Sans", "Segoe UI", Roboto, Arial, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --radius: 6px;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0e1418; --surface: #162027; --ink: #e5ecee; --muted: #9aa8af; --line: #2a3742;
+  --accent: #56b6c8; --accent-ink: #0b1418; --accent-soft: #173640;
+  --ok: #5fbf84; --warn: #e3ab4e; --crit: #e57a68; --info: #8aa6e6;
+  --ok-soft: #173326; --warn-soft: #3a2c13; --crit-soft: #3d1d19; --info-soft: #1c2742;
+  --board: #070b0e; --board-ink: #f2c94c; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0e1418; --surface: #162027; --ink: #e5ecee; --muted: #9aa8af; --line: #2a3742;
+  --accent: #56b6c8; --accent-ink: #0b1418; --accent-soft: #173640;
+  --ok: #5fbf84; --warn: #e3ab4e; --crit: #e57a68; --info: #8aa6e6;
+  --ok-soft: #173326; --warn-soft: #3a2c13; --crit-soft: #3d1d19; --info-soft: #1c2742;
+  --board: #070b0e; --board-ink: #f2c94c; color-scheme: dark }
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 16px; line-height: 1.55; }
+a { color: var(--accent); }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { font-family: var(--f-display); font-stretch: 85%; line-height: 1.1; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(2.1rem, 5vw, 3.6rem); font-weight: 800; letter-spacing: -0.01em; }
+h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 750; }
+h3 { font-size: 1.15rem; font-weight: 700; font-stretch: 95%; }
+p { margin: 0; max-width: 65ch; }
+.eyebrow { font-family: var(--f-mono); font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+
+/* Bandeau */
+.board { background: var(--board); color: #e8eef0; }
+.board .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding-block: 10px; }
+.brand { display: flex; align-items: center; gap: 10px; font-family: var(--f-display); font-weight: 800; font-size: 1.25rem; letter-spacing: 0.01em; color: #e8eef0; text-decoration: none; }
+.brand svg { width: 28px; height: 28px; }
+.countdown { display: flex; align-items: center; gap: 10px; font-family: var(--f-mono); font-size: 0.85rem; }
+.flaps { display: flex; gap: 3px; }
+.flap { background: #24323c; color: var(--board-ink); font-weight: 500; font-size: 1.05rem; padding: 2px 7px; border-radius: 3px; min-width: 1.6em; text-align: center; font-variant-numeric: tabular-nums; }
+
+/* Accueil */
+.hero { padding-block: 48px 32px; }
+.hero .wrap { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 40px; align-items: center; }
+.hero .lead { display: grid; gap: 18px; }
+.hero p.sub { font-size: 1.12rem; color: var(--muted); }
+.promises { display: flex; flex-wrap: wrap; gap: 8px 18px; list-style: none; padding: 0; margin: 0; font-size: 0.95rem; }
+.promises li { display: flex; gap: 8px; align-items: baseline; }
+.promises li::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--ok); flex: none; transform: translateY(-1px); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font: 600 1rem var(--f-body); padding: 12px 20px; border-radius: var(--radius); border: 1px solid transparent; cursor: pointer; text-decoration: none; }
+.btn-primary { background: var(--accent); color: var(--accent-ink); }
+.btn-primary:hover { filter: brightness(1.08); }
+.btn-ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+.btn-ghost:hover { border-color: var(--accent); }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.tracks { width: 100%; max-width: 100%; height: auto; display: block; }
+.tracks text { font-family: var(--f-mono); fill: var(--ink); }
+.tracks .lbl { font-family: var(--f-display); font-weight: 700; font-size: 17px; font-stretch: 90%; }
+.tracks .sub { font-size: 12px; fill: var(--muted); }
+
+/* Pupitre */
+section.band { padding-block: 40px; border-top: 1px solid var(--line); }
+.section-head { display: grid; gap: 8px; margin-bottom: 24px; }
+.console { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; align-items: start; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; display: grid; gap: 18px; min-width: 0; }
+.tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--line); }
+.tab { font: 600 0.95rem var(--f-body); background: none; border: none; border-bottom: 3px solid transparent; padding: 8px 12px; color: var(--muted); cursor: pointer; }
+.tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+.mode-hint { font-size: 0.95rem; color: var(--muted); }
+.pane { display: grid; gap: 14px; }
+.pane[hidden] { display: none; }
+.fine { font-size: 0.88rem; color: var(--muted); }
+.btn-sm { padding: 6px 12px; font-size: 0.9rem; }
+.form-title { margin-top: 4px; }
+.recap { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 0; }
+.recap div { background: var(--bg); border-radius: var(--radius); padding: 8px 10px; min-width: 0; }
+.recap dt { font-size: 0.78rem; color: var(--muted); }
+.recap dd { margin: 0; font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+.empty { color: var(--muted); font-size: 0.95rem; }
+.qb { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.qb li { display: grid; gap: 6px; border: 1px solid var(--line); border-radius: var(--radius); padding: 10px 12px; background: var(--bg); min-width: 0; }
+.qb .qb-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
+.qb code { font: 0.78rem/1.45 var(--f-mono); word-break: break-word; color: var(--ink); }
+.example-note { font-size: 0.88rem; background: var(--info-soft); color: var(--ink); padding: 8px 12px; border-radius: var(--radius); }
+#form { display: grid; gap: 22px; }
+fieldset { border: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+legend { font-family: var(--f-mono); font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.field { display: grid; gap: 4px; min-width: 0; }
+.field label { font-size: 0.9rem; font-weight: 500; }
+.field input:not([type="radio"]), .field select { font: 1rem var(--f-mono); color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius); padding: 8px 10px; width: 100%; font-variant-numeric: tabular-nums; }
+.field input:not([type="radio"])[aria-invalid="true"] { border-color: var(--crit); }
+.err { color: var(--crit); font-size: 0.82rem; min-height: 0; }
+.radio-row { display: flex; gap: 16px; flex-wrap: wrap; }
+.radio-row input { margin: 0; width: 18px; height: 18px; flex: none; accent-color: var(--accent); }
+.radio-row label { white-space: nowrap; display: flex; gap: 6px; align-items: center; font-size: 0.95rem; }
+
+.drop { border: 2px dashed var(--line); border-radius: var(--radius); padding: 20px; text-align: center; display: grid; gap: 8px; justify-items: center; }
+.drop.over { border-color: var(--accent); background: var(--accent-soft); }
+.drop input[type="file"] { max-width: 100%; }
+.status { font-size: 0.9rem; }
+.status.ok { color: var(--ok); }
+.status.bad { color: var(--crit); }
+
+/* Résultat */
+.result { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 16px); }
+.gauge-row { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+.gauge { width: 132px; height: 132px; flex: none; }
+.gauge text { font-family: var(--f-display); fill: var(--ink); }
+.level { font-family: var(--f-display); font-weight: 750; font-size: 1.5rem; font-stretch: 90%; }
+.meta { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.meta div { background: var(--bg); border-radius: var(--radius); padding: 8px 10px; min-width: 0; }
+.meta dt { font-size: 0.75rem; color: var(--muted); font-family: var(--f-mono); text-transform: uppercase; letter-spacing: 0.06em; }
+.meta dd { margin: 0; font-family: var(--f-mono); font-size: 1.05rem; font-variant-numeric: tabular-nums; }
+.findings { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.finding { display: grid; grid-template-columns: 6px minmax(0, 1fr); gap: 12px; }
+.finding .stripe { border-radius: 3px; background: var(--muted); }
+.finding[data-sev="critique"] .stripe { background: var(--crit); }
+.finding[data-sev="élevé"] .stripe { background: var(--warn); }
+.finding[data-sev="attention"] .stripe { background: var(--info); }
+.finding[data-sev="opportunité"] .stripe { background: var(--ok); }
+.finding .body { display: grid; gap: 4px; min-width: 0; }
+.chip { display: inline-block; font-family: var(--f-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; padding: 1px 7px; border-radius: 99px; background: var(--bg); color: var(--muted); margin-right: 6px; }
+.finding[data-sev="critique"] .chip { background: var(--crit-soft); color: var(--crit); }
+.finding[data-sev="élevé"] .chip { background: var(--warn-soft); color: var(--warn); }
+.finding[data-sev="attention"] .chip { background: var(--info-soft); color: var(--info); }
+.finding[data-sev="opportunité"] .chip { background: var(--ok-soft); color: var(--ok); }
+.finding strong { font-weight: 600; }
+.finding p { font-size: 0.92rem; color: var(--muted); }
+.finding .src { font-size: 0.8rem; }
+.offer { border-top: 1px solid var(--line); padding-top: 16px; display: grid; gap: 12px; }
+.price { font-family: var(--f-display); font-weight: 800; font-size: 1.6rem; font-stretch: 90%; }
+
+/* Contact */
+.contact { display: grid; gap: 12px; background: var(--accent-soft); border-radius: var(--radius); padding: 16px; }
+.copy-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.mail { font-family: var(--f-mono); font-size: 1rem; user-select: all; background: var(--surface); padding: 6px 10px; border-radius: var(--radius); border: 1px solid var(--line); }
+textarea.summary { width: 100%; min-height: 150px; font: 0.85rem/1.5 var(--f-mono); color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 10px; resize: vertical; }
+
+/* Méthode et script */
+.cols3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.voie { border-top: 4px solid var(--muted); background: var(--surface); padding: 16px; border-radius: 0 0 var(--radius) var(--radius); display: grid; gap: 8px; align-content: start; }
+.voie.v1 { border-top-color: var(--crit); }
+.voie.v2 { border-top-color: var(--warn); }
+.voie.v3 { border-top-color: var(--ok); }
+.voie .when { font-family: var(--f-mono); font-size: 0.85rem; color: var(--muted); }
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 0.92rem; }
+th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-family: var(--f-mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 500; }
+td.num { font-family: var(--f-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+tr:last-child td { border-bottom: none; }
+pre.code { margin: 0; overflow: auto; max-height: 360px; background: var(--board); color: #dfe7ea; font: 0.8rem/1.5 var(--f-mono); padding: 14px; border-radius: var(--radius); }
+.steps { margin: 0; padding-left: 1.3em; display: grid; gap: 6px; }
+
+footer { border-top: 1px solid var(--line); padding-block: 28px 40px; font-size: 0.85rem; color: var(--muted); }
+footer .wrap { display: grid; gap: 8px; }
+
+@media (max-width: 860px) {
+  .hero .wrap, .console, .cols3 { grid-template-columns: minmax(0, 1fr); }
+  .result { position: static; }
+  .hero { padding-block: 28px 20px; }
+}
+@media (max-width: 460px) {
+  .grid2 { grid-template-columns: minmax(0, 1fr); }
+  .meta { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .tracks .run { stroke-dasharray: 6 10; animation: run 1.6s linear infinite; }
+  @keyframes run { to { stroke-dashoffset: -32; } }
+}
+
+.proof { background: var(--surface); border-block: 1px solid var(--line); }
+.proof-in { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 32px; align-items: center; padding-block: 28px; }
+.proof-stat { display: flex; align-items: center; gap: 14px; padding-right: 32px; border-right: 1px solid var(--line); }
+.proof-num { font-family: var(--f-display); font-weight: 800; font-size: 3.6rem; line-height: 1; color: var(--accent); }
+.proof-num span { font-size: 2.4rem; }
+.proof-lbl { font-weight: 600; line-height: 1.3; }
+.proof-refs { display: grid; gap: 10px; min-width: 0; }
+.arc { position: relative; height: 150px; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
+.arc-item { position: absolute; left: 0; top: 0; width: 150px; height: 92px; display: flex; align-items: center; justify-content: center; text-align: center; padding: 6px 4px; border: 0; background: none; box-shadow: none; font-family: var(--f-display); font-weight: 750; font-stretch: 90%; font-size: 1.25rem; line-height: 1.15; color: var(--ink); will-change: transform; }
+.arc-item img { max-width: 100%; max-height: 100%; object-fit: contain; mix-blend-mode: multiply; }
+:root[data-theme="dark"] .arc-item img { mix-blend-mode: normal; background: #fff; border-radius: 6px; padding: 6px 10px; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .arc-item img { mix-blend-mode: normal; background: #fff; border-radius: 6px; padding: 6px 10px; } }
+.proof-sub { font-size: 0.9rem; color: var(--muted); }
+.who { font-size: 0.95rem; border-left: 3px solid var(--accent); padding-left: 10px; }
+@media (max-width: 700px) {
+  .proof-in { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+  .proof-stat { border-right: none; padding-right: 0; border-bottom: 1px solid var(--line); padding-bottom: 16px; }
+  .arc { height: 130px; }
+  .arc-item { width: 112px; height: 70px; font-size: 1rem; padding: 6px 4px; }
+}
+.days { color: var(--crit); font-variant-numeric: tabular-nums; }
+.btn-lg { padding: 14px 26px; font-size: 1.05rem; }
+.verdict { border-radius: var(--radius); padding: 16px; display: grid; gap: 10px; background: var(--crit-soft); border-left: 6px solid var(--crit); }
+.verdict[data-level="modéré"], .verdict[data-level="faible"] { background: var(--ok-soft); border-left-color: var(--ok); }
+.verdict-top { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.verdict .level { font-size: 2rem; text-transform: uppercase; letter-spacing: 0.02em; }
+.verdict-txt { font-size: 1rem; font-weight: 500; }
+.deadline { border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 14px; font-size: 0.95rem; background: var(--bg); }
+.deadline strong { color: var(--crit); }
+.cta-top .btn { flex: 1 1 auto; }
+.stickybar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; display: flex; align-items: center; justify-content: space-between; gap: 10px; background: var(--board); color: #e8eef0; padding: 10px max(16px, env(safe-area-inset-right, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); font-size: 0.92rem; }
+.stickybar b { color: var(--board-ink); text-transform: uppercase; }
+@media (min-width: 861px) { .stickybar { display: none !important; } }
+.fig { margin: 0; display: grid; gap: 10px; min-width: 0; }
+.fig figcaption { font-size: 0.88rem; color: var(--muted); max-width: 60ch; }
+.field small, .legend-hint { font-size: 0.8rem; color: var(--muted); }
+.legend-hint { display: block; margin-top: -4px; }
+.lbl-strong { font-size: 0.9rem; font-weight: 500; }
+.res-body { display: grid; gap: 16px; }
+.level-box { display: grid; gap: 4px; min-width: 0; }
+.level-txt { font-size: 0.9rem; }
+.small-link { font-size: 0.85rem; }
+.size-txt { font-size: 0.85rem; color: var(--muted); margin-top: -8px; }
+.f-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; }
+.pts { font-family: var(--f-mono); font-size: 0.78rem; color: var(--muted); margin-left: auto; }
+.finding .src { font-size: 0.8rem; }
+.offer-list { margin: 0; padding-left: 1.2em; display: grid; gap: 4px; font-size: 0.95rem; }
+.price-txt { color: var(--muted); font-size: 0.9rem; }
+.defs { display: grid; gap: 10px; margin: 16px 0 0; }
+.defs div { display: grid; grid-template-columns: 7rem minmax(0, 1fr); gap: 12px; font-size: 0.92rem; }
+.defs dt { font-weight: 600; }
+.defs dd { margin: 0; color: var(--muted); }
+.faq { display: grid; gap: 8px; max-width: 820px; }
+.faq details, .script-box { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 16px; }
+.faq summary, .script-box summary { cursor: pointer; font-weight: 600; }
+.faq p { margin-top: 8px; color: var(--muted); }
+.script-box { margin-top: 24px; max-width: 100%; min-width: 0; }
+.script-head { justify-content: space-between; margin: 12px 0; }
+@media (max-width: 460px) { .defs div { grid-template-columns: minmax(0, 1fr); gap: 2px; } }
+</style>
+
+<header class="board">
+  <div class="wrap">
+    <a class="brand" href="#haut" aria-label="Trivoie, accueil">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M3 16h9" stroke="#e8eef0" stroke-width="3" stroke-linecap="round" fill="none"/><path d="M12 16 C18 16 20 6 29 6" stroke="#e57a68" stroke-width="3" stroke-linecap="round" fill="none"/><path d="M12 16H29" stroke="#f2c94c" stroke-width="3" stroke-linecap="round" fill="none"/><path d="M12 16 C18 16 20 26 29 26" stroke="#5fbf84" stroke-width="3" stroke-linecap="round" fill="none"/></svg>
+      Trivoie
+    </a>
+    <div class="countdown">
+      <span>Fin de maintenance standard BI 4.3</span>
+      <span class="flaps" id="flaps"></span>
+    </div>
+  </div>
+</header>
+
+<main id="haut">
+  <section class="hero">
+    <div class="wrap">
+      <div class="lead">
+        <span class="eyebrow">SAP BusinessObjects BI 4.3 · 31 décembre 2026</span>
+        <h1>Dans <span class="days" id="heroDays">57</span> jours, votre BusinessObjects 4.3 ne sera plus maintenu comme aujourd'hui.</h1>
+        <p class="sub">Mesurez en 5 minutes votre niveau de risque et ce qu'il faut traiter avant d'en sortir. L'analyse se fait dans votre navigateur : aucune donnée n'est envoyée.</p>
+        <ul class="promises">
+          <li>Gratuit, sans inscription</li>
+          <li>Règles de calcul publiées</li>
+          <li>Indépendant de SAP et de Microsoft</li>
+          <li>Plus de 10 ans d'expertise SAP BusinessObjects</li>
+        </ul>
+        <div class="actions"><a class="btn btn-primary btn-lg" href="#scan">Mesurer mon risque</a></div>
+      </div>
+      <figure class="fig">
+        <svg class="tracks" viewBox="0 0 520 300" role="img" aria-labelledby="tracksTitle">
+          <title id="tracksTitle">Les trois voies : rester en 4.3 jusqu'à l'arrêt des correctifs en 2028, monter en BI 2025 jusqu'à fin 2027, ou migrer vers une autre solution.</title>
+          <path d="M10 150H120" stroke="var(--ink)" stroke-width="6" stroke-linecap="round" fill="none"/>
+          <path d="M120 150 C200 150 210 52 300 52H400" stroke="var(--crit)" stroke-width="6" stroke-linecap="round" fill="none"/>
+          <path d="M120 150H390" stroke="var(--warn)" stroke-width="6" stroke-linecap="round" fill="none"/>
+          <path d="M120 150 C200 150 210 248 300 248H500" stroke="var(--ok)" stroke-width="6" stroke-linecap="round" fill="none"/>
+          <path class="run" d="M300 248H500" stroke="var(--surface)" stroke-width="2" fill="none"/>
+          <rect x="400" y="38" width="8" height="28" rx="2" fill="var(--crit)"/>
+          <rect x="390" y="136" width="8" height="28" rx="2" fill="var(--warn)"/>
+          <path d="M500 238 L516 248 L500 258Z" fill="var(--ok)"/>
+          <circle cx="120" cy="150" r="9" fill="var(--surface)" stroke="var(--ink)" stroke-width="4"/>
+          <text x="10" y="132" class="sub">BI 4.3 aujourd'hui</text>
+          <text x="300" y="30" class="lbl">Rester en 4.3</text>
+          <text x="300" y="86" class="sub">plus aucun correctif en 2028</text>
+          <text x="262" y="132" class="lbl">Monter en BI 2025</text>
+          <text x="262" y="174" class="sub">maintenance standard</text>
+          <text x="262" y="190" class="sub">jusqu'à fin 2027</text>
+          <text x="300" y="226" class="lbl">Migrer</text>
+          <text x="300" y="282" class="sub">vers une autre solution BI</text>
+        </svg>
+        <figcaption>À partir du 1er janvier 2027, SAP ne livre plus pour BI 4.3 que les correctifs de sécurité graves (score CVSS de 7 ou plus), et plus aucun à partir de 2028, pour un coût de maintenance inchangé. <a href="https://clintvosloo.com/sap-customer-specific-maintenance-bi-43-ds-43-what-it-means" target="_blank" rel="noopener">Source : notes SAP 3486924 et 3763590</a></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="proof" aria-labelledby="proofTitle">
+    <div class="wrap proof-in">
+      <div class="proof-stat">
+        <span class="proof-num">10<span>+</span></span>
+        <span class="proof-lbl">ans de missions<br>SAP BusinessObjects</span>
+      </div>
+      <div class="proof-refs">
+        <span class="eyebrow" id="proofTitle">Missions réalisées chez</span>
+        {{REFS}}
+        <span class="proof-sub">Énergie, sécurité, secteur public, services : des plateformes critiques, en production.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="scan">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Le scan</span>
+        <h2>Mesurez votre plateforme</h2>
+        <p>Choisissez comment renseigner vos chiffres. Le résultat se met à jour à chaque modification.</p>
+      </div>
+      <div class="console">
+        <div class="panel">
+          <div class="tabs" role="tablist" aria-label="Mode de saisie">
+            <button class="tab" role="tab" id="tab-manual" aria-selected="true">Saisie rapide</button>
+            <button class="tab" role="tab" id="tab-file" aria-selected="false">Collecte automatique</button>
+            <button class="tab" role="tab" id="tab-qb" aria-selected="false">Query Builder</button>
+          </div>
+
+          <p class="mode-hint" id="hint-manual">Saisissez vos volumes, même approximatifs. Pour des chiffres exacts, utilisez la collecte automatique.</p>
+
+          <div id="pane-file" class="pane" hidden>
+            <p class="mode-hint">Chiffres exacts en 5 minutes, sans rien installer. À faire par un administrateur BusinessObjects.</p>
+            <ol class="steps">
+              <li>Sur un poste Windows qui accède au serveur BusinessObjects, ou sur le serveur lui-même, ouvrez <strong>PowerShell</strong> : touche Windows, tapez « PowerShell », puis Entrée.</li>
+              <li><button class="btn btn-primary btn-sm" type="button" id="copyScript2">Copier le script</button> puis collez-le dans PowerShell (clic droit ou Ctrl+V) et appuyez sur Entrée.</li>
+              <li>Répondez aux trois questions : nom du serveur, compte, mot de passe.</li>
+              <li>Le fichier <code>trivoie-scan.json</code> apparaît sur votre Bureau. Déposez-le ci-dessous.</li>
+            </ol>
+            <span class="status" id="scriptStatus2" role="status"></span>
+            <div class="drop" id="drop">
+              <strong>Déposez ici le fichier trivoie-scan.json</strong>
+              <input type="file" id="file" accept=".json,application/json">
+              <span class="status" id="fileStatus" role="status"></span>
+            </div>
+          </div>
+
+          <div id="pane-qb" class="pane" hidden>
+            <p class="mode-hint">Sans script. Ouvrez Query Builder (en général <code>http://votre-serveur:8080/AdminTools</code>), lancez chaque requête et reportez le nombre affiché sous SI_AGGREGATE_COUNT dans le champ du même nom, plus bas.</p>
+            <ol class="qb" id="qbList"></ol>
+            <span class="status" id="qbStatus" role="status"></span>
+          </div>
+
+          <form id="form" novalidate>
+            <p class="example-note" id="exampleNote">Les valeurs affichées sont un exemple. Remplacez-les par les vôtres.</p>
+            <h3 class="form-title" id="formTitle">Vos chiffres</h3>
+            <div id="recapWrap" hidden>
+              <p class="mode-hint">Chiffres lus dans le fichier :</p>
+              <dl class="recap" id="recap"></dl>
+            </div>
+            <fieldset id="fs-version">
+              <div class="field">
+                <label for="version">Version de la plateforme</label>
+                <select id="version" name="version">
+                  <option value="4.3" selected>BI 4.3</option>
+                  <option value="4.2">BI 4.2</option>
+                  <option value="4.1">BI 4.1</option>
+                  <option value="2025">BI 2025</option>
+                </select>
+                <small>Indiquée dans la CMC, rubrique Paramètres.</small>
+              </div>
+            </fieldset>
+            <fieldset id="fs-docs">
+              <legend>Documents</legend>
+              <small class="legend-hint">Documents publiés dans le référentiel, sans les instances planifiées, les dossiers ni les raccourcis.</small>
+              <div class="grid2">
+                <div class="field"><label for="webi">Web Intelligence</label><input id="webi" inputmode="numeric" value="5800"><span class="err" id="err-webi"></span></div>
+                <div class="field"><label for="crystal">Crystal Reports</label><input id="crystal" inputmode="numeric" value="300"><span class="err" id="err-crystal"></span></div>
+                <div class="field"><label for="analysis">Analysis for OLAP</label><input id="analysis" inputmode="numeric" value="40"><span class="err" id="err-analysis"></span></div>
+                <div class="field"><label for="lumira">Lumira</label><input id="lumira" inputmode="numeric" value="0"><span class="err" id="err-lumira"></span></div>
+                <div class="field"><label for="dashboards">Dashboards (Xcelsius)</label><input id="dashboards" inputmode="numeric" value="12"><span class="err" id="err-dashboards"></span></div>
+                <div class="field"><label for="legacy">Desktop Intelligence, Explorer, Flash</label><input id="legacy" inputmode="numeric" value="0"><span class="err" id="err-legacy"></span></div>
+                <div class="field"><label for="otherDocs">Autres fichiers (PDF, Excel, Word...)</label><input id="otherDocs" inputmode="numeric" value="150"><span class="err" id="err-otherDocs"></span></div>
+              </div>
+            </fieldset>
+            <fieldset id="fs-univ">
+              <legend>Univers et utilisateurs</legend>
+              <small class="legend-hint">UNV : univers créés avec Universe Design Tool. UNX : avec Information Design Tool.</small>
+              <div class="grid2">
+                <div class="field"><label for="unv">Univers UNV</label><input id="unv" inputmode="numeric" value="23"><span class="err" id="err-unv"></span></div>
+                <div class="field"><label for="unx">Univers UNX</label><input id="unx" inputmode="numeric" value="40"><span class="err" id="err-unx"></span></div>
+                <div class="field"><label for="users">Comptes utilisateurs</label><input id="users" inputmode="numeric" value="740"><span class="err" id="err-users"></span></div>
+                <div class="field"><label for="activeUsers">dont connectés en 12 mois (facultatif)</label><input id="activeUsers" inputmode="numeric" value=""><span class="err" id="err-activeUsers"></span></div>
+              </div>
+            </fieldset>
+            <fieldset id="fs-usage">
+              <legend>Usage</legend>
+              <div class="field">
+                <span id="auditLbl" class="lbl-strong">La base d'audit est-elle active ?</span>
+                <div class="radio-row" role="radiogroup" aria-labelledby="auditLbl">
+                  <label><input type="radio" name="auditActive" id="audit-oui" value="oui" checked> Oui</label>
+                  <label><input type="radio" name="auditActive" id="audit-non" value="non"> Non</label>
+                  <label><input type="radio" name="auditActive" id="audit-nsp" value="non"> Je ne sais pas</label>
+                </div>
+                <small>Elle enregistre qui ouvre quel document. « Je ne sais pas » est traité comme « Non ».</small>
+              </div>
+              <div class="field" id="pctField">
+                <label for="usedPct">Documents ouverts au moins une fois en 12 mois (%)</label>
+                <input id="usedPct" inputmode="numeric" value="45">
+                <small>D'après l'audit. Laissez vide si vous ne l'avez pas.</small>
+                <span class="err" id="err-usedPct"></span>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+        <aside class="panel result" aria-labelledby="resTitle">
+          <span class="eyebrow" id="resTitle">Résultat</span>
+          <p class="empty" id="resEmpty" hidden>Le résultat s'affichera ici dès que vous aurez déposé le fichier trivoie-scan.json.</p>
+          <div id="resBody" class="res-body">
+            <div class="verdict" id="verdict">
+              <div class="verdict-top">
+                <svg class="gauge" viewBox="0 0 120 120" role="img" aria-labelledby="gaugeLbl">
+                  <title id="gaugeLbl">Niveau de risque</title>
+                  <circle cx="60" cy="60" r="50" fill="none" stroke="var(--line)" stroke-width="12"/>
+                  <circle id="gaugeArc" cx="60" cy="60" r="50" fill="none" stroke="var(--crit)" stroke-width="12" stroke-linecap="round" transform="rotate(-90 60 60)" stroke-dasharray="314.16" stroke-dashoffset="314.16"/>
+                  <text id="gaugeNum" x="60" y="66" text-anchor="middle" font-size="32" font-weight="800">0</text>
+                  <text x="60" y="86" text-anchor="middle" font-size="11" style="fill:var(--muted);font-family:var(--f-mono)">sur 100</text>
+                </svg>
+                <div class="level-box">
+                  <span class="eyebrow">Niveau de risque</span>
+                  <span class="level" id="level"></span>
+                  <a href="#methode" class="small-link">Comment il est calculé</a>
+                </div>
+              </div>
+              <p class="verdict-txt" id="verdictTxt"></p>
+            </div>
+            <div class="deadline" id="deadline"></div>
+            <div class="actions cta-top">
+              <button class="btn btn-primary" type="button" data-cta="diag">Demander le diagnostic</button>
+              <a class="btn btn-ghost" href="#contact" data-cta="call">Échange gratuit de 20 minutes</a>
+            </div>
+            <dl class="meta">
+              <div><dt>Documents</dt><dd id="mDocs">0</dd></div>
+              <div><dt>Comptes</dt><dd id="mUsers">0</dd></div>
+              <div><dt>Taille</dt><dd id="mSize">M</dd></div>
+            </dl>
+            <h3>Ce qu'il faut traiter</h3>
+            <ul class="findings" id="findings"></ul>
+            <div class="offer">
+              <span class="eyebrow">Étape suivante : le diagnostic Trivoie</span>
+              <p class="who">Réalisé par un expert SAP BusinessObjects de plus de 10 ans d'expérience, passé par Enedis, TotalEnergies, Securitas Direct, la Région Île-de-France et La Poste, avec sa méthode d'audit BI Pulse.</p>
+              <ul class="offer-list">
+                <li>Inventaire complet de la plateforme et mesure de l'usage réel</li>
+                <li>Chiffrage des trois voies : coût, délai, risques</li>
+                <li>Recommandation argumentée et plan d'action, présentés à votre équipe</li>
+              </ul>
+              <div><span class="price" id="price"></span> <span class="price-txt">prix fixe, taille <span id="sizeInline"></span> (<span id="sizeDef"></span>), livré en 10 jours ouvrés</span></div>
+              <p class="fine">Garanties : 20 % remboursés si le délai n'est pas tenu. Aucune commission d'éditeur, donc aucun intérêt à recommander une voie plutôt qu'une autre.</p>
+              <div class="actions">
+                <button class="btn btn-primary" type="button" data-cta="diag">Demander le diagnostic</button>
+                <a class="btn btn-ghost" href="#contact" data-cta="call">Échange gratuit de 20 minutes</a>
+                <button class="btn btn-ghost" type="button" id="printBtn" hidden>Imprimer ou enregistrer en PDF</button>
+              </div>
+              <div class="contact" id="contact" hidden>
+                <p id="contactTxt">Envoyez ce résumé à l'adresse ci-dessous. Il ne contient que les chiffres affichés ici.</p>
+                <textarea class="summary" id="summary" readonly aria-label="Résumé du scan"></textarea>
+                <div class="copy-row">
+                  <button class="btn btn-ghost" type="button" id="copySummary">Copier le résumé</button>
+                  <span class="mail" id="mail">contact@trivoie.fr</span>
+                  <button class="btn btn-ghost" type="button" id="copyMail">Copier l'adresse</button>
+                  <a class="btn btn-ghost" id="mailLink" href="mailto:contact@trivoie.fr">Ouvrir ma messagerie</a>
+                </div>
+                <span class="status" id="copyStatus" role="status"></span>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="methode">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Méthode</span>
+        <h2>Comment le niveau de risque est calculé</h2>
+        <p>Chaque point de vigilance détecté ajoute un nombre de points fixe, jusqu'à 100. Les faits viennent de SAP et sont sourcés. Les poids sont une règle Trivoie, publiée ici : ils reflètent le risque et la charge de travail que chaque point ajoute à une sortie de BI 4.3. Ils servent à classer les priorités, pas à chiffrer un projet.</p>
+      </div>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Tableau des sources (défilement horizontal)">
+        <table>
+          <thead><tr><th>Point de vigilance</th><th>Points de risque</th><th>Pourquoi ce poids</th><th>Source du fait</th></tr></thead>
+          <tbody>
+            <tr><td>Version 4.1 ou 4.2, déjà sortie de la maintenance standard</td><td class="num">35</td><td>Le risque existe déjà aujourd'hui.</td><td>Product Availability Matrix SAP</td></tr>
+            <tr><td>BI 4.3 : maintenance spécifique client au 1er janvier 2027</td><td class="num">25</td><td>Sécurité et support, à date fixe, pour toute la plateforme.</td><td>Notes SAP 3486924 et 3763590</td></tr>
+            <tr><td>Univers UNV à convertir : 1 à 10 / 11 à 50 / plus de 50</td><td class="num">8 / 14 / 20</td><td>Chaque univers se convertit puis se reteste avec ses documents.</td><td>Feuille de route BI 2025</td></tr>
+            <tr><td>Base d'audit inactive</td><td class="num">10</td><td>Sans mesure d'usage, on migre aussi ce que personne ne lit.</td><td>Vos réponses</td></tr>
+            <tr><td>BI 2025 : maintenance standard jusqu'à fin 2027</td><td class="num">10</td><td>Nouvelle échéance un an plus tard, à anticiper.</td><td>Calendrier SAP (à confirmer)</td></tr>
+            <tr><td>Plus de 10 000 / plus de 2 000 documents</td><td class="num">10 / 5</td><td>Plus de contenu, plus de tri et de tests.</td><td>Vos chiffres</td></tr>
+            <tr><td>Contenus obsolètes : Dashboards (Xcelsius), Desktop Intelligence, Explorer, Flash</td><td class="num">5</td><td>Ils ne fonctionnent plus : à reconstruire ou à retirer.</td><td>Notes SAP 2801797 et 2914654</td></tr>
+            <tr><td>Contenus Lumira</td><td class="num">5</td><td>Plus de nouvelle fonctionnalité : à requalifier.</td><td>Feuille de route BI 2025</td></tr>
+            <tr><td>Documents non ouverts en 12 mois, comptes sans connexion (20 % ou plus)</td><td class="num">0</td><td>Ce sont des économies possibles, pas des risques.</td><td>Vos chiffres</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <dl class="defs">
+        <div><dt>Niveaux</dt><dd>70 et plus : critique. 45 à 69 : élevé. 25 à 44 : modéré. Moins de 25 : faible. Une version 4.1, 4.2 ou 4.3 est toujours au moins « élevé », car son échéance est fixe.</dd></div>
+        <div><dt>Taille</dt><dd>S : jusqu'à 200 comptes et 2 000 documents. M : jusqu'à 1 000 comptes et 10 000 documents. L : au-delà. Elle fixe le prix du diagnostic : 2 900, 4 900 ou 7 900 € HT.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="band" id="questions">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Questions fréquentes</span>
+        <h2>Avant de lancer le scan</h2>
+      </div>
+      <div class="faq">
+        <details><summary>Mes données sont-elles envoyées quelque part ?</summary><p>Non. Le calcul se fait dans votre navigateur et rien n'est transmis. Vous ne nous envoyez le résumé que si vous le décidez, et il ne contient que des nombres.</p></details>
+        <details><summary>Le script modifie-t-il ma plateforme ?</summary><p>Non. Il ne fait que des lectures : il se connecte, compte les objets par type, se déconnecte. Il n'exporte aucun nom de document, d'utilisateur ou de serveur, et le mot de passe n'est jamais enregistré.</p></details>
+        <details><summary>Quels droits faut-il ?</summary><p>Un compte qui voit tout le référentiel, en pratique un administrateur, et l'application « RESTful Web Services » autorisée pour ce compte dans la CMC. Avec un compte limité, les chiffres sont plus bas que la réalité.</p></details>
+        <details><summary>Le script n'arrive pas à se connecter</summary><p>Il affiche la cause probable. Le plus souvent, l'API REST n'écoute pas sur le port 6405 : l'adresse exacte figure dans la CMC, rubrique Applications, RESTful Web Service, Propriétés. Vous pouvez aussi lancer le script depuis le serveur BusinessObjects lui-même. Si votre poste bloque le collage, enregistrez le script dans un fichier <code>trivoie.ps1</code> et lancez <code>powershell -ExecutionPolicy Bypass -File .\trivoie.ps1</code>.</p></details>
+        <details><summary>Les chiffres sont-ils fiables ?</summary><p>Le script compte chaque type avec deux méthodes, <code>COUNT(SI_ID)</code> et une liste <code>TOP N</code> qui lève la limite de 1 000 lignes appliquée par défaut, et vérifie qu'elles concordent. Si ce n'est pas le cas, la page vous le signale.</p></details>
+        <details><summary>Pourquoi agir avant le 31 décembre ?</summary><p>Le diagnostic prend 10 jours ouvrés. Lancé à temps, il vous donne un plan chiffré avant l'échéance, pour décider en connaissance de cause plutôt que subir la maintenance spécifique client. Après, il sert à limiter la durée d'exposition en 2027.</p></details>
+        <details><summary>Quelle voie est la bonne pour moi ?</summary><p>Le scan mesure votre exposition et les chantiers à traiter. Le choix de la voie dépend aussi de vos usages, de vos contrats et de votre budget : c'est l'objet du diagnostic, qui chiffre les trois voies pour votre plateforme.</p></details>
+        <details><summary>Trivoie est-il lié à SAP ou à un éditeur ?</summary><p>Non. Trivoie n'est affilié à aucun éditeur et ne perçoit aucune commission, ce qui garantit une recommandation neutre.</p></details>
+      </div>
+      <details class="script-box" id="script">
+        <summary>Lire le script de collecte en entier</summary>
+        <div class="copy-row script-head">
+          <span class="fine">Interroge le référentiel en lecture seule par l'API REST officielle (BI 4.2 SP03 et versions ultérieures). Commenté ligne à ligne.</span>
+          <button class="btn btn-ghost btn-sm" type="button" id="copyScript">Copier le script</button>
+        </div>
+        <pre class="code" id="scriptCode" tabindex="0">{{SCRIPT}}</pre>
+        <span class="status" id="scriptStatus" role="status"></span>
+      </details>
+    </div>
+  </section>
+</main>
+<div class="stickybar" id="stickybar" hidden>
+  <span id="stickyTxt"></span>
+  <a class="btn btn-primary btn-sm" href="#resTitle">Voir mon résultat</a>
+</div>
+
+<footer>
+  <div class="wrap">
+    <p><strong>Trivoie</strong> est un service d'AM DATA, entreprise individuelle, SIREN 939 133 781, 32 rue Boyer, 75020 Paris. Contact : contact@trivoie.fr</p>
+    <p>SAP, BusinessObjects, Crystal Reports, Lumira et Power BI sont des marques de leurs propriétaires respectifs. Trivoie n'est affilié ni à SAP, ni à Microsoft.</p>
+  </div>
+</footer>
+
+<script>
+{{ENGINE}}
+</script>
+<script>
+(function () {
+  "use strict";
+  var E = window.TrivoieEngine;
+  var $ = function (id) { return document.getElementById(id); };
+  var COUNT_FIELDS = ["webi", "crystal", "analysis", "lumira", "dashboards", "legacy", "otherDocs", "unv", "unx", "users", "activeUsers"];
+  var FIELDS = COUNT_FIELDS.concat(["usedPct"]);
+  var LABELS = { webi: "Web Intelligence", crystal: "Crystal Reports", analysis: "Analysis for OLAP", lumira: "Lumira",
+    dashboards: "Dashboards (Xcelsius)", legacy: "Desktop Intelligence, Explorer, Flash", otherDocs: "Autres fichiers",
+    unv: "Univers UNV", unx: "Univers UNX", users: "Comptes utilisateurs", activeUsers: "dont connectés en 12 mois" };
+  var SIZE_DEF = { S: "jusqu'à 200 comptes et 2 000 documents", M: "jusqu'à 1 000 comptes et 10 000 documents", L: "plus de 1 000 comptes ou 10 000 documents" };
+  var DATE_FMT = new Intl.DateTimeFormat("fr-FR", { weekday: "long", day: "numeric", month: "long" });
+  /* Lien de réservation Calendly : à renseigner une fois le compte créé (ex. https://calendly.com/trivoie/20min).
+     Vide : le bouton « Échange gratuit » ouvre le formulaire d'email. */
+  var CALENDLY_URL = "";
+  var ctaMode = "diag", lastSummary = "", lastSize = "M", lastRisk = null;
+  function today() { var n = new Date(); return new Date(n.getFullYear(), n.getMonth(), n.getDate()); }
+  function daysUntil(d) { return Math.round((Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) - Date.UTC(today().getFullYear(), today().getMonth(), today().getDate())) / 86400000); }
+  var nf = new Intl.NumberFormat("fr-FR");
+  var touched = false, mode = "manual", imported = null;
+
+  function renderCountdown() {
+    var days = daysUntil(new Date(2027, 0, 1));
+    if (days > 0) $("heroDays").textContent = String(days);
+    else $("heroDays").parentNode.textContent = "Depuis le 1er janvier 2027, BusinessObjects 4.3 n'est plus maintenu comme avant.";
+    var box = $("flaps"); box.textContent = "";
+    (days > 0 ? "J-" + days : "CSM").split("").forEach(function (c) {
+      var s = document.createElement("span"); s.className = "flap"; s.textContent = c; box.appendChild(s);
+    });
+    box.setAttribute("aria-label", days > 0 ? days + " jours restants" : "Maintenance spécifique client en cours");
+  }
+
+  function readForm() {
+    var raw = {};
+    FIELDS.forEach(function (f) { raw[f] = $(f).value; });
+    if (mode === "file" && imported) COUNT_FIELDS.forEach(function (f) { raw[f] = imported[f] === null ? "" : imported[f]; });
+    raw.version = $("version").value;
+    raw.auditActive = $("audit-oui").checked ? "oui" : "non";
+    return raw;
+  }
+
+  function applyMode() {
+    var fileMode = mode === "file", waiting = fileMode && !imported;
+    $("hint-manual").hidden = mode !== "manual";
+    $("pane-file").hidden = !fileMode;
+    $("pane-qb").hidden = mode !== "qb";
+    $("form").hidden = waiting;
+    $("resBody").hidden = waiting;
+    $("resEmpty").hidden = !waiting;
+    $("fs-docs").hidden = fileMode;
+    $("fs-univ").hidden = fileMode;
+    $("recapWrap").hidden = !fileMode;
+    $("exampleNote").hidden = fileMode || touched;
+    $("formTitle").textContent = fileMode ? "Complétez ces deux informations" : "Vos chiffres";
+  }
+
+  function render() {
+    applyMode();
+    var raw = readForm();
+    $("pctField").hidden = raw.auditActive !== "oui";
+    var v = E.validate(raw);
+    FIELDS.forEach(function (f) {
+      var msg = (mode === "file" && COUNT_FIELDS.indexOf(f) !== -1) ? "" : (v.errors[f] || "");
+      $("err-" + f).textContent = msg;
+      $(f).setAttribute("aria-invalid", msg ? "true" : "false");
+    });
+    var r = E.analyse(v.data);
+    var hot = r.riskLevel === "critique" || r.riskLevel === "élevé";
+    var color = hot ? "var(--crit)" : r.riskLevel === "modéré" ? "var(--warn)" : "var(--ok)";
+    $("gaugeArc").setAttribute("stroke-dashoffset", String(314.16 * (1 - r.risk / 100)));
+    $("gaugeArc").setAttribute("stroke", color);
+    $("gaugeNum").textContent = String(r.risk);
+    $("level").textContent = r.riskLevel; $("level").style.color = color;
+    $("verdict").setAttribute("data-level", r.riskLevel);
+    var todo = r.findings.filter(function (f) { return f.penalty > 0; }).length;
+    var dCsm = daysUntil(new Date(2027, 0, 1));
+    var head;
+    if (v.data.version === "4.3") head = dCsm > 0
+      ? "Dans " + dCsm + " jours, votre plateforme passe en maintenance spécifique client : correctifs de sécurité graves seulement en 2027, plus aucun en 2028."
+      : "Votre plateforme est en maintenance spécifique client : correctifs de sécurité graves seulement en 2027, plus aucun en 2028.";
+    else if (v.data.version === "2025") head = "Votre version reste en maintenance standard jusqu'à fin 2027. Le prochain choix se prépare dès maintenant.";
+    else head = "Votre version n'est déjà plus en maintenance standard : le risque existe aujourd'hui.";
+    $("verdictTxt").textContent = head + (todo ? " " + todo + (todo > 1 ? " chantiers" : " chantier") + " à traiter avant de choisir une voie." : "");
+    var deadline = v.data.version === "2025" ? new Date(2027, 11, 31) : new Date(2026, 11, 31);
+    var order = E.lastOrderDate(deadline), dOrder = daysUntil(order), dl = $("deadline");
+    dl.textContent = "";
+    var already = v.data.version === "4.1" || v.data.version === "4.2";
+    if (dOrder >= 0 && !already) {
+      dl.appendChild(document.createTextNode("Pour recevoir votre plan chiffré avant le 31 décembre " + deadline.getFullYear() + ", lancez le diagnostic au plus tard le "));
+      var st = document.createElement("strong"); st.textContent = DATE_FMT.format(order) + (dOrder === 0 ? " (aujourd'hui)" : " (dans " + dOrder + (dOrder > 1 ? " jours)" : " jour)"));
+      dl.appendChild(st); dl.appendChild(document.createTextNode("."));
+    } else {
+      var st2 = document.createElement("strong"); st2.textContent = "Chaque semaine d'attente prolonge l'exposition.";
+      dl.appendChild(st2); dl.appendChild(document.createTextNode(" Le diagnostic vous donne un plan chiffré en 10 jours ouvrés pour la réduire au plus vite."));
+    }
+    $("mDocs").textContent = nf.format(r.docs);
+    $("mUsers").textContent = nf.format(v.data.users);
+    $("mSize").textContent = r.size; $("sizeInline").textContent = r.size; $("sizeDef").textContent = SIZE_DEF[r.size];
+    $("price").textContent = nf.format(r.price) + " € HT";
+    lastSize = r.size; lastRisk = r;
+    $("stickyTxt").innerHTML = "";
+    $("stickyTxt").appendChild(document.createTextNode("Risque "));
+    var b = document.createElement("b"); b.textContent = r.riskLevel; $("stickyTxt").appendChild(b);
+    $("stickyTxt").appendChild(document.createTextNode(" · " + r.risk + "/100"));
+    var ul = $("findings"); ul.textContent = "";
+    if (!r.findings.length) {
+      var li0 = document.createElement("li"); li0.textContent = "Aucun point de vigilance détecté avec ces chiffres."; ul.appendChild(li0);
+    }
+    r.findings.forEach(function (f) {
+      var li = document.createElement("li"); li.className = "finding"; li.setAttribute("data-sev", f.severity);
+      var stripe = document.createElement("span"); stripe.className = "stripe"; stripe.setAttribute("aria-hidden", "true");
+      var body = document.createElement("div"); body.className = "body";
+      var head = document.createElement("div"); head.className = "f-head";
+      var chip = document.createElement("span"); chip.className = "chip"; chip.textContent = f.severity;
+      var title = document.createElement("strong"); title.textContent = f.title;
+      head.appendChild(chip); head.appendChild(title);
+      if (f.penalty > 0) { var pts = document.createElement("span"); pts.className = "pts"; pts.textContent = "−" + f.penalty + " points"; head.appendChild(pts); }
+      var p = document.createElement("p"); p.textContent = f.detail;
+      body.appendChild(head); body.appendChild(p);
+      if (f.source.url.charAt(0) !== "#") {
+        var a = document.createElement("a"); a.className = "src"; a.href = f.source.url; a.target = "_blank"; a.rel = "noopener";
+        a.textContent = "Source : " + f.source.label; body.appendChild(a);
+      }
+      li.appendChild(stripe); li.appendChild(body); ul.appendChild(li);
+    });
+    lastSummary = E.summaryText(v.data, r);
+    updateContact();
+    updateSticky();
+  }
+
+  function updateContact() {
+    var call = ctaMode === "call";
+    $("contactTxt").textContent = call
+      ? "Envoyez ce résumé avec deux ou trois créneaux qui vous conviennent. Nous confirmons l'échange de 20 minutes sous 24 heures ouvrées."
+      : "Envoyez ce résumé à l'adresse ci-dessous. Nous revenons vers vous sous 24 heures ouvrées avec la proposition.";
+    var subject = call ? "Échange de 20 minutes : plateforme BusinessObjects taille " + lastSize : "Diagnostic Trivoie : plateforme taille " + lastSize;
+    var body = (call ? "Bonjour,\n\nJe souhaite un échange de 20 minutes. Mes disponibilités : \n\n" : "Bonjour,\n\nJe souhaite recevoir la proposition de diagnostic.\n\n") + lastSummary;
+    $("summary").value = body;
+    $("mailLink").href = "mailto:contact@trivoie.fr?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+  }
+
+  var scanSeen = false, resSeen = false;
+  function updateSticky() {
+    var waiting = mode === "file" && !imported;
+    $("stickybar").hidden = !scanSeen || resSeen || waiting;
+  }
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(function (es) { es.forEach(function (e) { scanSeen = e.isIntersecting; }); updateSticky(); }).observe($("scan"));
+    new IntersectionObserver(function (es) { es.forEach(function (e) { resSeen = e.isIntersecting; }); updateSticky(); }).observe($("resTitle").parentNode);
+  }
+
+  function markTouched() { touched = true; }
+  FIELDS.concat(["version"]).forEach(function (f) { $(f).addEventListener("input", function () { markTouched(); render(); }); });
+  ["audit-oui", "audit-non", "audit-nsp"].forEach(function (id) { $(id).addEventListener("change", function () { markTouched(); render(); }); });
+  $("form").addEventListener("submit", function (e) { e.preventDefault(); });
+
+  ["manual", "file", "qb"].forEach(function (t) {
+    $("tab-" + t).addEventListener("click", function () {
+      ["manual", "file", "qb"].forEach(function (u) { $("tab-" + u).setAttribute("aria-selected", String(u === t)); });
+      mode = t; render();
+    });
+  });
+
+  /* Requêtes Query Builder : COUNT(SI_ID) n'est pas limité à 1 000 lignes. */
+  function sinceDate() {
+    var d = new Date(); d.setDate(d.getDate() - 365);
+    var p2 = function (n) { return (n < 10 ? "0" : "") + n; };
+    return d.getFullYear() + "." + p2(d.getMonth() + 1) + "." + p2(d.getDate()) + ".00.00.00";
+  }
+  var DOCS = "SELECT COUNT(SI_ID) FROM CI_INFOOBJECTS WHERE SI_INSTANCE = 0 AND SI_KIND";
+  [
+    ["webi", DOCS + " = 'Webi'"],
+    ["crystal", DOCS + " = 'CrystalReport'"],
+    ["analysis", DOCS + " IN ('MDAnalysis', 'Analysis', 'AAD.AnalysisWorkspace')"],
+    ["lumira", DOCS + " IN ('AAD.AnalysisApplication', 'VISILums')"],
+    ["dashboards", DOCS + " IN ('XL.XcelsiusEnterprise', 'Xcelsius', 'XL.XcelsiusApplication')"],
+    ["legacy", DOCS + " IN ('FullClient', 'DataDiscovery', 'DataDiscoveryAlbum', 'Flash')"],
+    ["otherDocs", DOCS + " IN ('Pdf', 'Excel', 'Word', 'Powerpoint', 'Txt', 'Rtf', 'Agnostic', 'AO.Workbook', 'AO.Presentation')"],
+    ["unv", "SELECT COUNT(SI_ID) FROM CI_APPOBJECTS WHERE SI_KIND = 'Universe'"],
+    ["unx", "SELECT COUNT(SI_ID) FROM CI_APPOBJECTS WHERE SI_KIND = 'DSL.MetaDataFile'"],
+    ["users", "SELECT COUNT(SI_ID) FROM CI_SYSTEMOBJECTS WHERE SI_KIND = 'User'"],
+    ["activeUsers", "SELECT COUNT(SI_ID) FROM CI_SYSTEMOBJECTS WHERE SI_KIND = 'User' AND SI_LASTLOGONTIME >= '" + sinceDate() + "'"]
+  ].forEach(function (q) {
+    var li = document.createElement("li");
+    var head = document.createElement("div"); head.className = "qb-head";
+    var lab = document.createElement("strong"); lab.textContent = LABELS[q[0]];
+    var btn = document.createElement("button"); btn.type = "button"; btn.className = "btn btn-ghost btn-sm"; btn.textContent = "Copier";
+    var code = document.createElement("code"); code.textContent = q[1];
+    btn.addEventListener("click", function () { copy(q[1], $("qbStatus"), "Requête « " + LABELS[q[0]] + " » copiée.", code); });
+    head.appendChild(lab); head.appendChild(btn); li.appendChild(head); li.appendChild(code); $("qbList").appendChild(li);
+  });
+
+  function loadText(text) {
+    try {
+      var o = E.fromScriptFile(text);
+      imported = o;
+      var dl = $("recap"); dl.textContent = "";
+      COUNT_FIELDS.forEach(function (k) {
+        var div = document.createElement("div");
+        var dt = document.createElement("dt"); dt.textContent = LABELS[k];
+        var dd = document.createElement("dd"); dd.textContent = o[k] === null ? "non mesuré" : nf.format(o[k]);
+        div.appendChild(dt); div.appendChild(dd); dl.appendChild(div);
+      });
+      $("fileStatus").className = o.coherent ? "status ok" : "status bad";
+      $("fileStatus").textContent = o.coherent ? "Fichier lu. Complétez la version et l'usage juste en dessous."
+        : "Fichier lu, mais les deux méthodes de comptage du script ne donnent pas le même total : les chiffres sont peut-être incomplets. Écrivez-nous pour vérifier.";
+      render();
+    } catch (err) {
+      $("fileStatus").className = "status bad";
+      $("fileStatus").textContent = "Ce fichier n'a pas été produit par le script Trivoie. Déposez le fichier trivoie-scan.json créé sur votre Bureau.";
+    }
+  }
+  function readFile(file) {
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function () { loadText(String(reader.result)); };
+    reader.onerror = function () { $("fileStatus").className = "status bad"; $("fileStatus").textContent = "Lecture du fichier impossible. Réessayez."; };
+    reader.readAsText(file);
+  }
+  $("file").addEventListener("change", function (e) { readFile(e.target.files[0]); });
+  var drop = $("drop");
+  ["dragenter", "dragover"].forEach(function (t) { drop.addEventListener(t, function (e) { e.preventDefault(); drop.classList.add("over"); }); });
+  ["dragleave", "drop"].forEach(function (t) { drop.addEventListener(t, function (e) { e.preventDefault(); drop.classList.remove("over"); }); });
+  drop.addEventListener("drop", function (e) { readFile(e.dataTransfer && e.dataTransfer.files[0]); });
+
+  function copy(text, statusEl, okMsg, selectEl) {
+    function fallback() {
+      if (selectEl) {
+        if (selectEl.select) { selectEl.focus(); selectEl.select(); }
+        else { var range = document.createRange(); range.selectNodeContents(selectEl); var s = window.getSelection(); s.removeAllRanges(); s.addRange(range); }
+      }
+      statusEl.className = "status"; statusEl.textContent = "Le texte est sélectionné : copiez-le avec Ctrl+C (ou Cmd+C).";
+    }
+    try {
+      navigator.clipboard.writeText(text).then(function () { statusEl.className = "status ok"; statusEl.textContent = okMsg; }, fallback);
+    } catch (e) { fallback(); }
+  }
+  if (CALENDLY_URL) {
+    Array.prototype.forEach.call(document.querySelectorAll('[data-cta="call"]'), function (a) {
+      a.href = CALENDLY_URL; a.target = "_blank"; a.rel = "noopener"; a.textContent = "Réserver un échange gratuit de 20 minutes";
+    });
+  }
+  Array.prototype.forEach.call(document.querySelectorAll("[data-cta]"), function (btn) {
+    btn.addEventListener("click", function (e) {
+      if (CALENDLY_URL && btn.getAttribute("data-cta") === "call") return;
+      e.preventDefault();
+      ctaMode = btn.getAttribute("data-cta");
+      updateContact();
+      $("contact").hidden = false;
+      $("contact").scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+  });
+  $("copySummary").addEventListener("click", function () { copy($("summary").value, $("copyStatus"), "Résumé copié.", $("summary")); });
+  $("copyMail").addEventListener("click", function () { copy("contact@trivoie.fr", $("copyStatus"), "Adresse copiée.", $("mail")); });
+  $("copyScript").addEventListener("click", function () { copy($("scriptCode").textContent, $("scriptStatus"), "Script copié.", $("scriptCode")); });
+  $("copyScript2").addEventListener("click", function () {
+    $("script").open = true;
+    copy($("scriptCode").textContent, $("scriptStatus2"), "Script copié. Collez-le dans PowerShell puis appuyez sur Entrée.", $("scriptCode"));
+  });
+
+  var embedded = false;
+  try { embedded = window.self !== window.top; } catch (e) { embedded = true; }
+  if (!embedded) { $("printBtn").hidden = false; $("printBtn").addEventListener("click", function () { window.print(); }); }
+
+  renderCountdown();
+  render();
+})();
+</script>
