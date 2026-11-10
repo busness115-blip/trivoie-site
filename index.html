@@ -43,6 +43,7 @@
   --accent: #0c5a6b; --accent-ink: #ffffff; --accent-soft: #dcebee;
   --ok: #226a3f; --warn: #875608; --crit: #b0372b; --info: #375aa6;
   --ok-soft: #e1f0e6; --warn-soft: #f6ead6; --crit-soft: #f6e0dd; --info-soft: #e2e8f5;
+  --call-ink: #ffffff; --call-ring: rgba(34, 106, 63, 0.42);
   --board: #15212a; --board-ink: #f2c94c;
   --f-display: "Archivo", "Arial Narrow", Arial, sans-serif;
   --f-body: "IBM Plex Sans", "Segoe UI", Roboto, Arial, sans-serif;
@@ -54,12 +55,14 @@
   --accent: #56b6c8; --accent-ink: #0b1418; --accent-soft: #173640;
   --ok: #5fbf84; --warn: #e3ab4e; --crit: #e57a68; --info: #8aa6e6;
   --ok-soft: #173326; --warn-soft: #3a2c13; --crit-soft: #3d1d19; --info-soft: #1c2742;
+  --call-ink: #0b1418; --call-ring: rgba(95, 191, 132, 0.40);
   --board: #070b0e; --board-ink: #f2c94c; color-scheme: dark } }
 :root[data-theme="dark"] {
   --bg: #0e1418; --surface: #162027; --ink: #e5ecee; --muted: #9aa8af; --line: #2a3742;
   --accent: #56b6c8; --accent-ink: #0b1418; --accent-soft: #173640;
   --ok: #5fbf84; --warn: #e3ab4e; --crit: #e57a68; --info: #8aa6e6;
   --ok-soft: #173326; --warn-soft: #3a2c13; --crit-soft: #3d1d19; --info-soft: #1c2742;
+  --call-ink: #0b1418; --call-ring: rgba(95, 191, 132, 0.40);
   --board: #070b0e; --board-ink: #f2c94c; color-scheme: dark }
 
 * { box-sizing: border-box; }
@@ -97,6 +100,13 @@ p { margin: 0; max-width: 65ch; }
 .btn-primary:hover { filter: brightness(1.08); }
 .btn-ghost { background: transparent; color: var(--ink); border-color: var(--line); }
 .btn-ghost:hover { border-color: var(--accent); }
+.btn-call { background: var(--ok); color: var(--call-ink); border-color: transparent; transition: transform 0.15s ease, filter 0.15s ease; animation: callpulse 3.2s ease-out 2.5s 5; }
+.btn-call svg { width: 18px; height: 18px; flex: none; }
+.btn-call:hover { filter: brightness(1.1); transform: translateY(-1px); animation: none; }
+.btn-call:active { transform: translateY(0); }
+.btn-call:focus-visible { animation: none; }
+@keyframes callpulse { 0% { box-shadow: 0 0 0 0 var(--call-ring); } 65% { box-shadow: 0 0 0 10px rgba(0, 0, 0, 0); } 100% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); } }
+@media (prefers-reduced-motion: reduce) { .btn-call { animation: none; transition: none; } .btn-call:hover { transform: none; } }
 .actions { display: flex; flex-wrap: wrap; gap: 10px; }
 .tracks { width: 100%; max-width: 100%; height: auto; display: block; }
 .tracks text { font-family: var(--f-mono); fill: var(--ink); }
@@ -482,7 +492,7 @@ lay();window.addEventListener('resize',lay);if(!reduce)requestAnimationFrame(tic
             <div class="deadline" id="deadline"></div>
             <div class="actions cta-top">
               <button class="btn btn-primary" type="button" data-cta="diag">Demander le diagnostic</button>
-              <a class="btn btn-ghost" href="#contact" data-cta="call">Échange gratuit de 20 minutes</a>
+              <a class="btn btn-call" href="#contact" data-cta="call"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg><span class="call-txt">Échange gratuit de 20 minutes</span></a>
             </div>
             <dl class="meta">
               <div><dt>Documents</dt><dd id="mDocs">0</dd></div>
@@ -503,7 +513,7 @@ lay();window.addEventListener('resize',lay);if(!reduce)requestAnimationFrame(tic
               <p class="fine">Garanties : 20 % remboursés si le délai n'est pas tenu. Aucune commission d'éditeur, donc aucun intérêt à recommander une voie plutôt qu'une autre.</p>
               <div class="actions">
                 <button class="btn btn-primary" type="button" data-cta="diag">Demander le diagnostic</button>
-                <a class="btn btn-ghost" href="#contact" data-cta="call">Échange gratuit de 20 minutes</a>
+                <a class="btn btn-call" href="#contact" data-cta="call"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg><span class="call-txt">Échange gratuit de 20 minutes</span></a>
                 <button class="btn btn-ghost" type="button" id="printBtn" hidden>Imprimer ou enregistrer en PDF</button>
               </div>
               <div class="contact" id="contact" hidden>
@@ -1292,7 +1302,7 @@ finally {
   }
   if (CALENDLY_URL) {
     Array.prototype.forEach.call(document.querySelectorAll('[data-cta="call"]'), function (a) {
-      a.href = CALENDLY_URL; a.target = "_blank"; a.rel = "noopener"; a.textContent = "Réserver un échange gratuit de 20 minutes";
+      a.href = CALENDLY_URL; a.target = "_blank"; a.rel = "noopener"; var t = a.querySelector(".call-txt"); if (t) t.textContent = "Réserver un échange gratuit de 20 minutes";
     });
   }
   Array.prototype.forEach.call(document.querySelectorAll("[data-cta]"), function (btn) {
