@@ -117,15 +117,32 @@ footer.site p { margin: 6px 0; max-width: none; }
 @media (max-width: 600px) { body { font-size: 16px; } main { padding-block: 28px 40px; } }
 """
 
-NAV_FOOT = """<nav aria-label="Guides et informations">
-<a href="/guides/">Tous les guides</a>
-<a href="/fin-maintenance-sap-businessobjects-4-3/">Fin de maintenance 4.3</a>
-<a href="/bi-2025-ou-sortir-de-businessobjects/">BI 2025 ou sortie</a>
-<a href="/diagnostic-sortie-businessobjects/">Diagnostic Sortie BO</a>
-<a href="/compter-documents-sap-businessobjects-query-builder/">Query Builder</a>
-<a href="/mentions-legales/">Mentions légales</a>
-<a href="/confidentialite/">Confidentialité</a>
-</nav>"""
+# Pied de page généré depuis PAGES : chaque nouvelle page y apparaît automatiquement.
+FOOT_LABELS = {
+    "fin-maintenance-sap-businessobjects-4-3": "Fin de maintenance 4.3",
+    "bi-2025-ou-sortir-de-businessobjects": "BI 2025 ou sortie",
+    "diagnostic-sortie-businessobjects": "Diagnostic Sortie BO",
+    "compter-documents-sap-businessobjects-query-builder": "Query Builder",
+    "maintenance-specifique-client-sap-businessobjects": "Maintenance spécifique client",
+    "risque-securite-sap-businessobjects-4-3": "Risque de sécurité 4.3",
+    "convertir-univers-unv-en-unx": "Convertir UNV en UNX",
+    "contenus-obsoletes-xcelsius-desktop-intelligence-explorer": "Contenus obsolètes",
+    "nettoyer-parc-businessobjects-documents-inutilises": "Nettoyer son parc",
+    "checklist-migration-sap-businessobjects": "Checklist de migration",
+    "questions-a-poser-prestataire-migration-businessobjects": "Choisir son prestataire",
+    "diagnostic-businessobjects-secteur-public-marche-60000-euros": "Secteur public",
+    "glossaire-sap-businessobjects": "Glossaire",
+    "migration-businessobjects-power-bi": "Migrer vers Power BI",
+    "sap-businessobjects-bi-2027": "BI 2027",
+    "consultant-sap-businessobjects": "Consultant SAP BusinessObjects",
+    "audit-sap-businessobjects": "Audit SAP BusinessObjects",
+    "alternatives-sap-businessobjects": "Alternatives à BusinessObjects",
+}
+def foot_label(p):
+    return p.get("nav") or FOOT_LABELS.get(p["slug"]) or p["h1"].split(" : ")[0]
+NAV_FOOT = ('<nav aria-label="Guides"><a href="/guides/">Tous les guides</a>'
+            + "".join('<a href="/%s/">%s</a>' % (p["slug"], html.escape(foot_label(p))) for p in PAGES)
+            + '</nav><nav aria-label="Informations"><a href="/mentions-legales/">Mentions légales</a><a href="/confidentialite/">Confidentialité</a></nav>')
 
 FOOT_TXT = ('<p><strong>Trivoie</strong> est un service d\'AM DATA, entreprise individuelle, SIREN 939 133 781, 32 rue Boyer, 75020 Paris. Contact : %s</p>'
             '<p>SAP, BusinessObjects, Crystal Reports, Lumira et Power BI sont des marques de leurs propriétaires respectifs. Trivoie n\'est affilié ni à SAP, ni à Microsoft.</p>') % EMAIL

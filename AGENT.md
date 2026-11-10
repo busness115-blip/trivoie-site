@@ -29,3 +29,7 @@ Ne pas modifier mentions légales, confidentialité, prix, logos, ni la page d'a
 
 ## Règle ajoutée le 10/11/2026 : formulation des faits non vérifiés
 Faits recoupés le 10/11/2026 par au moins deux analyses indépendantes (Wiiisdom, C. Vosloo, InfoSol, NTT DATA) et écrits à l'indicatif : fin de maintenance standard de BI 4.3 le 31/12/2026 ; maintenance spécifique client dès le 01/01/2027 ; en 2027 seuls les correctifs de sécurité CVSS 7+ (12 premiers mois) ; plus aucun livrable à partir de 2028 ; BI 2025 en maintenance standard jusqu'au 31/12/2027. Faits à source unique (délai de résolution, nouveaux problèmes facturables, frais du contrat inchangés) : attribués par leur nom à C. Vosloo. Les notes SAP elles-mêmes n'ont pas pu être lues (accès bloqué) : ne jamais écrire « selon SAP » pour un point non recoupé, et ne jamais écrire « à confirmer » (cela nuit à la crédibilité) : soit le fait est recoupé et affirmé avec sa source, soit il est retiré ou attribué nommément.
+
+## Pages et pied de page (10/11/2026)
+- Toute nouvelle page se crée dans site/content/NN_nom.py (dict PAGE). Elle apparaît automatiquement dans le pied de page de toutes les pages, l'index des guides, la section guides de l'accueil, le sitemap et llms.txt. Libellé court du pied de page : clé "nav" du dict, sinon FOOT_LABELS dans build_site.py.
+- Après chaque modification : python3 build.py, python3 site/build_site.py, python3 make_artifact.py, puis déployer le site ET republier l'artefact (artifact-home.html).
