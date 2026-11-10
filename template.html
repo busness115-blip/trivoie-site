@@ -274,7 +274,7 @@ footer .wrap { display: grid; gap: 8px; }
     <div class="wrap">
       <div class="lead">
         <span class="eyebrow">SAP BusinessObjects BI 4.3 · 31 décembre 2026</span>
-        <h1>Dans <span class="days" id="heroDays">57</span> jours, votre BusinessObjects 4.3 ne sera plus maintenu comme aujourd'hui.</h1>
+        <h1>Dans <span class="days" id="heroDays">57</span> <span id="heroUnit">jours</span>, votre BusinessObjects 4.3 ne sera plus maintenu comme aujourd'hui.</h1>
         <p class="sub">Mesurez en 5 minutes votre niveau de risque et ce qu'il faut traiter avant d'en sortir. L'analyse se fait dans votre navigateur : aucune donnée n'est envoyée.</p>
         <ul class="promises">
           <li>Gratuit, sans inscription</li>
@@ -590,7 +590,7 @@ footer .wrap { display: grid; gap: 8px; }
 
   function renderCountdown() {
     var days = daysUntil(new Date(2027, 0, 1));
-    if (days > 0) $("heroDays").textContent = String(days);
+    if (days > 0) { $("heroDays").textContent = String(days); $("heroUnit").textContent = days === 1 ? "jour" : "jours"; }
     else $("heroDays").parentNode.textContent = "Depuis le 1er janvier 2027, BusinessObjects 4.3 n'est plus maintenu comme avant.";
     var box = $("flaps"); box.textContent = "";
     (days > 0 ? "J-" + days : "CSM").split("").forEach(function (c) {

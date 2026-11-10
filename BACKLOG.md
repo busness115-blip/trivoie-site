@@ -2,7 +2,8 @@
 
 ## Pages du site
 - [ ] Calendrier de fin de maintenance de toutes les versions SAP BusinessObjects (4.1, 4.2, 4.3, BI 2025), dates sourcées
-- [ ] Migrer de SAP BusinessObjects vers Power BI : ce qu'il faut inventorier avant de comparer (neutre, sans parti pris)
+- [x] Migrer de SAP BusinessObjects vers Power BI (fait le 10/11/2026 : migration-businessobjects-power-bi)
+- [x] BI 2027, audit, consultant, alternatives (faits le 10/11/2026)
 - [ ] Crystal Reports après la fin de maintenance de la 4.3 : options
 - [ ] Web Intelligence : comment trier les rapports à migrer, à refaire, à supprimer
 - [ ] Combien de temps prend une migration BusinessObjects : facteurs qui font varier la durée (sans chiffres inventés)

@@ -1,0 +1,37 @@
+{
+  "format": "trivoie-scan/2",
+  "script": "2",
+  "genere": "2026-11-05T19:51:10",
+  "documents": {
+    "parType": {
+      "AAD.AnalysisApplication": 6,
+      "AO.Workbook": 14,
+      "CrystalReport": 61,
+      "DataDiscovery": 2,
+      "Excel": 30,
+      "FavoritesFolder": 812,
+      "Flash": 3,
+      "Folder": 410,
+      "FullClient": 5,
+      "Inbox": 812,
+      "MDAnalysis": 9,
+      "Pdf": 12,
+      "Shortcut": 7,
+      "Webi": 2345,
+      "XL.XcelsiusEnterprise": 4
+    },
+    "totalListe": 4532,
+    "totalCompte": 4532,
+    "coherent": true
+  },
+  "universUnv": 27,
+  "universUnx": 33,
+  "utilisateurs": 812,
+  "utilisateursActifs12Mois": 500,
+  "planificationsRecurrentes": 1503,
+  "methodes": {
+    "univers": "count",
+    "utilisateurs": "count",
+    "planifications": "count"
+  }
+}
