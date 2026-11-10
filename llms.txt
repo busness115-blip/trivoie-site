@@ -1,0 +1,23 @@
+# Trivoie
+
+> Trivoie est un service d'AM DATA : un scan gratuit pour mesurer son risque après la fin de maintenance de SAP BusinessObjects 4.3 (31 décembre 2026), puis un diagnostic indépendant à prix fixe (2 900 à 7 900 € HT) livré en 10 jours ouvrés. AM DATA n'est revendeur ni de SAP ni de Microsoft.
+
+## Pages
+
+- [Accueil et scan gratuit](https://trivoie.fr/): calcul d'un niveau de risque dans le navigateur, sans envoi de données
+- [Fin de maintenance de SAP BusinessObjects 4.3 : ce qui change le 31 décembre 2026](https://trivoie.fr/fin-maintenance-sap-businessobjects-4-3/): À partir du 1er janvier 2027, SAP BusinessObjects 4.3 n'est plus maintenu comme aujourd'hui. Dates, conséquences, options et premières décisions à prendre.
+- [BI 2025 ou sortir de BusinessObjects : comment choisir](https://trivoie.fr/bi-2025-ou-sortir-de-businessobjects/): Rester en 4.3, monter en SAP BusinessObjects BI 2025 ou migrer vers une autre solution : les critères pour décider, sans parti pris d'éditeur.
+- [Diagnostic Sortie BO : une décision chiffrée en 10 jours ouvrés](https://trivoie.fr/diagnostic-sortie-businessobjects/): Diagnostic indépendant de votre plateforme SAP BusinessObjects 4.3, à prix fixe (2 900 à 7 900 € HT), livré en 10 jours ouvrés : inventaire, usage, trois options chiffrées.
+- [Compter ses documents, univers et utilisateurs SAP BusinessObjects avec Query Builder](https://trivoie.fr/compter-documents-sap-businessobjects-query-builder/): Les requêtes Query Builder pour compter documents, univers UNV et UNX, utilisateurs actifs d'une plateforme SAP BusinessObjects 4.3, sans la limite de 1 000 lignes.
+
+## Faits clés
+
+- La maintenance standard de SAP BusinessObjects BI 4.3 s'arrête le 31 décembre 2026.
+- En 2027, maintenance spécifique client : correctifs de sécurité de score CVSS 7 ou plus seulement. En 2028, plus aucun correctif. Frais inchangés. À confirmer auprès de SAP.
+- La maintenance standard de SAP BusinessObjects BI 2025 va jusqu'à fin 2027.
+- Les univers UNV ne sont plus pris en charge après la 4.3 et doivent être convertis en UNX pour monter en BI 2025.
+
+## Contact
+
+- contact@trivoie.fr
+- AM DATA, 32 rue Boyer, 75020 Paris, SIREN 939 133 781
