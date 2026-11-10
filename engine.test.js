@@ -35,9 +35,9 @@ t("plateforme 4.3 typique", () => {
   const d = E.validate({ version: "4.3", webi: 5800, crystal: 300, unv: 23, unx: 40, users: 740,
     auditActive: "oui", usedPct: 45, lumira: 0, dashboards: 12 }).data;
   const r = E.analyse(d);
-  // 100 - 25 (CSM) - 11 (UNV 11-50 : 14, moins 3 car UNX 40 >= UNV 23) - 5 (obsolètes : 12 Dashboards)
-  // - 5 (volume moyen : 2 750 documents ouverts à traiter sur 6 112) = 54
-  assert.equal(r.score, 54);
+  // 100 - 25 (CSM) - 7,6 (UNV 23 : 4 + 0,3 x 22 = 10,6, moins 3 car UNX 40 >= UNV 23)
+  // - 2,7 (obsolètes : 12 Dashboards, 2 + 0,06 x 11) - 2,8 (volume : 2 750 documents ouverts à traiter) = 61,9 soit 62
+  assert.equal(r.score, 62);
   assert.equal(r.toProcess, 6112 - Math.round(6112 * 0.55));
   assert.equal(r.level, "À organiser");
   assert.equal(r.size, "M");
@@ -45,7 +45,7 @@ t("plateforme 4.3 typique", () => {
   assert.equal(r.docs, 6112);
   assert.equal(r.unused, Math.round(6112 * 0.55));
   assert.equal(r.findings[0].id, "CSM-01");
-  assert.ok(r.findings.some(f => f.id === "CMP-02" && f.penalty === 5));
+  assert.ok(r.findings.some(f => f.id === "CMP-02" && f.penalty === 2.7));
   assert.equal(r.top.length, 3);
 });
 
@@ -143,17 +143,36 @@ console.log(n + " tests réussis");
 const base = { version: "4.3", webi: 5800, crystal: 300, analysis: 40, lumira: 0, dashboards: 12, legacy: 0, otherDocs: 150,
   unv: 23, unx: 10, users: 740, activeUsers: 740, auditActive: "oui", usedPct: 100 };
 const run = (o) => E.analyse(E.validate(Object.assign({}, base, o)).data);
+const pen = (r, id) => { const f = r.findings.find(x => x.id === id); return f ? f.penalty : 0; };
 
-t("champ « documents ouverts (%) » : réduit le volume à traiter et donc le risque", () => {
+t("champ « documents ouverts (%) » : le volume à traiter et le risque suivent le pourcentage", () => {
   const hi = run({ usedPct: 100 }), lo = run({ usedPct: 20 });
-  assert.equal(hi.toProcess, hi.docs);
-  assert.ok(lo.toProcess < hi.toProcess);
-  assert.ok(hi.findings.some(f => f.id === "VOL-02"));
-  assert.ok(!lo.findings.some(f => f.id === "VOL-02"));
-  assert.equal(lo.risk, hi.risk - 5);
+  assert.equal(hi.docs, 6302);
+  assert.equal(hi.toProcess, 6302);
+  assert.equal(pen(hi, "VOL-01"), 6.3);
+  assert.equal(lo.toProcess, 6302 - Math.round(6302 * 0.8));
+  assert.equal(pen(lo, "VOL-01"), 1.3);
+  assert.equal(lo.risk, 38);
+  assert.equal(hi.risk, 43);
   assert.equal(lo.size, hi.size);
   assert.equal(lo.price, hi.price);
   assert.ok(run({ usedPct: 20 }).unused > run({ usedPct: 80 }).unused);
+});
+
+t("champ « documents ouverts (%) » : chaque dizaine déplace le volume et le risque ne baisse jamais quand l'usage monte", () => {
+  let prev = -1, prevTp = -1; const seen = new Set();
+  for (let p = 0; p <= 100; p += 10) {
+    const r = run({ usedPct: p });
+    assert.equal(r.toProcess, 6302 - Math.round(6302 * (100 - p) / 100));
+    assert.ok(r.toProcess > prevTp);
+    assert.ok(r.risk >= prev);
+    prev = r.risk; prevTp = r.toProcess; seen.add(r.risk);
+  }
+  assert.ok(seen.size >= 6, "au moins 6 niveaux de risque différents entre 0 et 100 %");
+  assert.ok(run({ usedPct: 10 }).risk < run({ usedPct: 90 }).risk);
+  assert.equal(run({ usedPct: 0 }).toProcess, 0);
+  assert.equal(pen(run({ usedPct: 0 }), "VOL-01"), 0);
+  assert.notEqual(pen(run({ usedPct: 41 }), "VOL-01"), pen(run({ usedPct: 45 }), "VOL-01"));
 });
 
 t("champ « documents ouverts (%) » : ignoré si l'audit n'est pas actif", () => {
@@ -163,38 +182,75 @@ t("champ « documents ouverts (%) » : ignoré si l'audit n'est pas actif", () =
   assert.equal(a.unused, null);
 });
 
-t("univers UNX : au moins autant que d'UNV réduit la pénalité de 3 points", () => {
-  const few = run({ unx: 5 }), many = run({ unx: 23 });
-  const pen = (r) => r.findings.find(f => f.id === "UNV-01").penalty;
-  assert.equal(pen(few), 14);
-  assert.equal(pen(many), 11);
-  assert.equal(many.risk, few.risk - 3);
-  assert.equal(pen(run({ unx: 0, unv: 5 })), 8);
-  assert.equal(pen(run({ unx: 5, unv: 5 })), 5);
+t("volume : 0,1 point par 100 documents à traiter, plafonné à 10", () => {
+  const v = (n) => pen(run({ webi: n, crystal: 0, analysis: 0, otherDocs: 0, dashboards: 0, usedPct: 100 }), "VOL-01");
+  assert.equal(v(40), 0);
+  assert.equal(v(500), 0.5);
+  assert.equal(v(1499), 1.5);
+  assert.equal(v(4000), 4);
+  assert.equal(v(9400), 9.4);
+  assert.equal(v(10000), 10);
+  assert.equal(v(50000), 10);
 });
 
-t("comptes actifs : 20 % d'inactifs ou plus pénalise une 4.x, simple économie en BI 2025", () => {
-  const ok = run({ activeUsers: 740 }), inact = run({ activeUsers: 300 });
+t("univers UNV : pénalité proportionnelle au nombre, plafonnée à 20", () => {
+  const p = (n) => pen(run({ unv: n, unx: 0 }), "UNV-01");
+  assert.equal(p(0), 0);
+  assert.equal(p(1), 4);
+  assert.equal(p(10), 6.7);
+  assert.equal(p(23), 10.6);
+  assert.equal(p(50), 18.7);
+  assert.equal(p(55), 20);
+  assert.equal(p(500), 20);
+  for (let n = 1; n < 55; n++) assert.ok(p(n + 1) > p(n), "UNV " + n);
+});
+
+t("univers UNX : le rapport UNX / UNV réduit la pénalité de 3 points au plus", () => {
+  const p = (o) => pen(run(o), "UNV-01");
+  assert.equal(p({ unv: 23, unx: 0 }), 10.6);
+  assert.equal(p({ unv: 23, unx: 5 }), 9.9);
+  assert.equal(p({ unv: 23, unx: 12 }), 9);
+  assert.equal(p({ unv: 23, unx: 23 }), 7.6);
+  assert.equal(p({ unv: 23, unx: 400 }), 7.6);
+  assert.equal(p({ unv: 5, unx: 0 }), 5.2);
+  assert.equal(p({ unv: 5, unx: 5 }), 2.2);
+  assert.ok(run({ unx: 23 }).risk < run({ unx: 0 }).risk);
+});
+
+t("comptes actifs : de 2 à 5 points selon la part d'inactifs, dès 20 %, simple économie en BI 2025", () => {
+  const ok = run({ activeUsers: 740 });
   assert.ok(!ok.findings.some(f => f.id === "USG-03"));
-  assert.equal(inact.findings.find(f => f.id === "USG-03").penalty, 5);
-  assert.equal(inact.risk, ok.risk + 5);
-  assert.equal(run({ activeUsers: 590 }).findings.find(f => f.id === "USG-03").penalty, 5);
+  assert.equal(pen(run({ activeUsers: 590 }), "USG-03"), 2);
+  assert.equal(pen(run({ activeUsers: 520 }), "USG-03"), 3);
+  assert.equal(pen(run({ activeUsers: 450 }), "USG-03"), 3.9);
+  assert.equal(pen(run({ activeUsers: 370 }), "USG-03"), 5);
+  assert.equal(pen(run({ activeUsers: 100 }), "USG-03"), 5);
   assert.ok(!run({ activeUsers: 600 }).findings.some(f => f.id === "USG-03"));
+  assert.equal(run({ activeUsers: 300 }).risk, ok.risk + 5);
   const y = run({ version: "2025", activeUsers: 300 });
   assert.equal(y.findings.find(f => f.id === "USG-03").penalty, 0);
   assert.equal(y.findings.find(f => f.id === "USG-03").severity, "opportunité");
   assert.equal(run({ activeUsers: "" }).findings.some(f => f.id === "USG-03"), false);
 });
 
-t("contenus obsolètes : pénalité par palier 3 / 5 / 8", () => {
-  const pen = (o) => run(o).findings.find(f => f.id === "CMP-02").penalty;
-  assert.equal(pen({ dashboards: 1 }), 3);
-  assert.equal(pen({ dashboards: 10 }), 3);
-  assert.equal(pen({ dashboards: 11 }), 5);
-  assert.equal(pen({ dashboards: 100 }), 5);
-  assert.equal(pen({ dashboards: 101 }), 8);
-  assert.equal(pen({ dashboards: 5, legacy: 6 }), 5);
+t("contenus obsolètes : pénalité proportionnelle, de 2 à 8", () => {
+  const p = (o) => pen(run(o), "CMP-02");
+  assert.equal(p({ dashboards: 1 }), 2);
+  assert.equal(p({ dashboards: 10 }), 2.5);
+  assert.equal(p({ dashboards: 50 }), 4.9);
+  assert.equal(p({ dashboards: 100 }), 7.9);
+  assert.equal(p({ dashboards: 5, legacy: 6 }), 2.6);
+  assert.equal(p({ dashboards: 500 }), 8);
   assert.ok(!run({ dashboards: 0, legacy: 0 }).findings.some(f => f.id === "CMP-02"));
+});
+
+t("Lumira : de 2 à 5 points selon le nombre de contenus", () => {
+  const p = (n) => pen(run({ lumira: n }), "CMP-01");
+  assert.equal(p(0), 0);
+  assert.equal(p(1), 2);
+  assert.equal(p(3), 2.6);
+  assert.equal(p(11), 5);
+  assert.equal(p(300), 5);
 });
 
 t("taille et prix : comptes et documents (tous types) fixent S, M ou L", () => {
@@ -206,10 +262,21 @@ t("taille et prix : comptes et documents (tous types) fixent S, M ou L", () => {
   assert.equal(run({ legacy: 12000 }).size, "L");
 });
 
-t("version, Lumira, base d'audit : effets de base", () => {
-  assert.ok(run({ lumira: 3 }).risk === run({ lumira: 0 }).risk + 5);
-  assert.equal(run({ auditActive: "non" }).risk, run({ auditActive: "oui" }).risk + 10);
+t("version et base d'audit : effets de base", () => {
+  assert.equal(pen(run({ auditActive: "non" }), "USG-01"), 10);
+  assert.equal(pen(run({ auditActive: "oui" }), "USG-01"), 0);
   assert.ok(run({ version: "4.2" }).risk > run({ version: "4.3" }).risk);
   assert.ok(run({ version: "2025" }).risk < run({ version: "4.3" }).risk);
+});
+
+t("chaque champ numérique modifie le résultat (aucun champ inerte)", () => {
+  const fields = { webi: [100, 8000], crystal: [0, 3000], analysis: [0, 2000], otherDocs: [0, 3000], dashboards: [0, 60], legacy: [0, 60],
+    lumira: [0, 6], unv: [0, 30], users: [100, 1500], activeUsers: [100, 700] };
+  Object.keys(fields).forEach((f) => {
+    const a = run(Object.assign({ unx: 0 }, { [f]: fields[f][0] })), b = run(Object.assign({ unx: 0 }, { [f]: fields[f][1] }));
+    const same = a.risk === b.risk && a.docs === b.docs && a.size === b.size && JSON.stringify(a.findings.map(x => x.title)) === JSON.stringify(b.findings.map(x => x.title));
+    assert.ok(!same, "champ inerte : " + f);
+  });
+  assert.notEqual(run({ unx: 0 }).risk, run({ unx: 23 }).risk);
 });
 console.log(n + " tests réussis");

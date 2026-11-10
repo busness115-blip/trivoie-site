@@ -87,6 +87,9 @@
 
   var PRICES = { S: 2900, M: 4900, L: 7900 };
 
+  /* Pénalités à une décimale : chaque chiffre saisi déplace le résultat. */
+  function r1(x) { return Math.round(x * 10) / 10; }
+
   function analyse(d) {
     var findings = [];
     var score = 100;
@@ -109,22 +112,22 @@
     }
 
     if (d.unv > 0 && d.version !== "2025") {
-      var p = d.unv <= 10 ? 8 : d.unv <= 50 ? 14 : 20;
-      var half = d.unx >= d.unv;
-      if (half) p -= 3;
+      var credit = r1(3 * Math.min(d.unx / d.unv, 1));
+      var p = r1(Math.min(20, r1(4 + 0.3 * (d.unv - 1))) - credit);
+      var half = credit > 0;
       add("UNV-01", "élevé", p, d.unv + " univers UNV à convertir",
         "Les univers UNV ne sont plus pris en charge après BI 4.3. Ils doivent être convertis en UNX avant une montée en BI 2025, et les documents qui les utilisent doivent être retestés." +
-        (half ? " Vous avez déjà " + d.unx.toLocaleString("fr-FR") + " univers UNX, au moins autant que d'univers UNV : une partie du chantier est faite, la pénalité est réduite de 3 points." : ""), "bi2025");
+        (half ? " Vous avez déjà " + d.unx.toLocaleString("fr-FR") + " univers UNX pour " + d.unv.toLocaleString("fr-FR") + " UNV : une partie du chantier semble engagée, la pénalité est réduite de " + String(credit).replace(".", ",") + " points." : ""), "bi2025");
     }
 
     if (d.lumira > 0) {
-      add("CMP-01", "attention", 5, d.lumira + " applications ou documents Lumira",
+      add("CMP-01", "attention", r1(Math.min(5, 2 + 0.3 * (d.lumira - 1))), d.lumira + " applications ou documents Lumira",
         "Lumira Designer reste maintenu en BI 2025, mais sans nouvelle fonctionnalité. La situation de Lumira Discovery est à vérifier dans la PAM SAP. Ces contenus sont à requalifier dans le plan de sortie.", "bi2025");
     }
 
     var obsolete = d.dashboards + (d.legacy || 0);
     if (obsolete > 0) {
-      var po = obsolete <= 10 ? 3 : obsolete <= 100 ? 5 : 8;
+      var po = r1(Math.min(8, 2 + 0.06 * (obsolete - 1)));
       add("CMP-02", "élevé", po, obsolete + " contenus obsolètes (Dashboards, Desktop Intelligence, Explorer, Flash)",
         "Ces technologies ne sont plus prises en charge depuis BI 4.2 SP09 et BI 4.3. SAP fournit un script qui les supprime du référentiel. Elles sont à reconstruire ou à retirer avant toute montée de version.", "deprecated");
     }
@@ -155,7 +158,7 @@
         var share = Math.round(100 * inactive / d.users);
         var legacyV = d.version === "4.3" || d.version === "4.2" || d.version === "4.1";
         if (legacyV) {
-          add("USG-03", "attention", 5, inactive.toLocaleString("fr-FR") + " comptes sans connexion depuis 12 mois",
+          add("USG-03", "attention", r1(Math.min(5, Math.max(2, 10 * inactive / d.users))), inactive.toLocaleString("fr-FR") + " comptes sans connexion depuis 12 mois",
             "Soit " + share + " % des comptes. Avec une couverture de sécurité réduite, chaque compte inutile est une surface d'exposition de plus : les désactiver allège aussi la migration et peut réduire les licences.", "method");
         } else {
           findings.push({ id: "USG-03", severity: "opportunité", penalty: 0,
@@ -167,15 +170,13 @@
     }
 
     var volNote = toProcess < docs ? " (sur " + docs.toLocaleString("fr-FR") + " au total, hors documents non ouverts en 12 mois)" : "";
-    if (toProcess > 10000) {
-      add("VOL-01", "élevé", 10, "Volume important : " + toProcess.toLocaleString("fr-FR") + " documents à traiter" + volNote,
+    var volPts = r1(Math.min(10, toProcess / 1000));
+    if (volPts > 0) {
+      add("VOL-01", volPts >= 7.5 ? "élevé" : "attention", volPts, (volPts >= 7.5 ? "Volume important : " : "Volume à traiter : ") + toProcess.toLocaleString("fr-FR") + " documents" + volNote,
         "Un tri préalable du contenu est indispensable pour maîtriser le coût d'une montée de version ou d'une migration.", "method");
-    } else if (toProcess > 2000) {
-      add("VOL-02", "attention", 5, "Volume moyen : " + toProcess.toLocaleString("fr-FR") + " documents à traiter" + volNote,
-        "Un tri préalable du contenu réduira la durée du projet.", "method");
     }
 
-    score = Math.max(0, Math.min(100, score));
+    score = Math.round(Math.max(0, Math.min(100, score)));
     var level = score >= 70 ? "Préparée" : score >= 40 ? "À organiser" : "Urgent";
     /* Niveau de risque affiché : 100 moins l'indice. Une version 4.x a une échéance fixe :
        son risque n'est jamais présenté en dessous de « élevé ». */
