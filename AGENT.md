@@ -4,7 +4,7 @@ Site : https://trivoie.fr (GitHub Pages, branche `main` = site publié, branche 
 Éditeur : AM DATA (Abderrahim Mouloud). Cible : directions, DSI, RSSI, achats et équipes BI sous SAP BusinessObjects 4.3.
 
 ## Règles non négociables
-1. Zéro erreur factuelle. Chaque fait (date, règle, chiffre, texte réglementaire) doit venir d'une source retrouvée par recherche web pendant ce run, citée dans la page avec un lien. Un fait non confirmé est soit retiré, soit écrit « à confirmer auprès de SAP ». Ne jamais inventer de prix, statistique, client, témoignage ou cas.
+1. Zéro erreur factuelle. Chaque fait (date, règle, chiffre, texte réglementaire) doit venir d'une source retrouvée par recherche web pendant ce run, citée dans la page avec un lien. Un fait non recoupé est soit retiré, soit attribué nommément à son auteur. Ne jamais inventer de prix, statistique, client, témoignage ou cas.
 2. Pas de tiret cadratin ni demi-cadratin. Français soigné, ton factuel, sans superlatifs.
 3. Indépendance : AM DATA n'est revendeur ni de SAP ni de Microsoft. Ne pas dénigrer d'éditeur. Ne citer aucun nom de client.
 4. Offre et prix : uniquement ceux déjà sur le site (Diagnostic Sortie BO, S 2 900, M 4 900, L 7 900 € HT, 10 jours ouvrés).
@@ -28,4 +28,4 @@ Ne pas modifier mentions légales, confidentialité, prix, logos, ni la page d'a
 
 
 ## Règle ajoutée le 10/11/2026 : formulation des faits non vérifiés
-Tout fait que tu n'as pas pu vérifier dans une source primaire (notes SAP, documents officiels) s'écrit au conditionnel ou avec « d'après les informations publiées », et porte la mention « à confirmer auprès de SAP ». Ne jamais attribuer une affirmation à une source que tu n'as pas lue (ex. notes SAP 3486924 et 3763590 : seul un résumé communautaire a été lu). Faits établis : fin de maintenance standard de BI 4.3 le 31/12/2026. Faits à confirmer : CVSS 7+ en 2027, aucun correctif en 2028, frais inchangés, nouveaux problèmes facturables, BI 2025 maintenue jusqu'à fin 2027.
+Faits recoupés le 10/11/2026 par au moins deux analyses indépendantes (Wiiisdom, C. Vosloo, InfoSol, NTT DATA) et écrits à l'indicatif : fin de maintenance standard de BI 4.3 le 31/12/2026 ; maintenance spécifique client dès le 01/01/2027 ; en 2027 seuls les correctifs de sécurité CVSS 7+ (12 premiers mois) ; plus aucun livrable à partir de 2028 ; BI 2025 en maintenance standard jusqu'au 31/12/2027. Faits à source unique (délai de résolution, nouveaux problèmes facturables, frais du contrat inchangés) : attribués par leur nom à C. Vosloo. Les notes SAP elles-mêmes n'ont pas pu être lues (accès bloqué) : ne jamais écrire « selon SAP » pour un point non recoupé, et ne jamais écrire « à confirmer » (cela nuit à la crédibilité) : soit le fait est recoupé et affirmé avec sa source, soit il est retiré ou attribué nommément.

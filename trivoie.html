@@ -12,6 +12,7 @@
   --accent: #0c5a6b; --accent-ink: #ffffff; --accent-soft: #dcebee;
   --ok: #226a3f; --warn: #875608; --crit: #b0372b; --info: #375aa6;
   --ok-soft: #e1f0e6; --warn-soft: #f6ead6; --crit-soft: #f6e0dd; --info-soft: #e2e8f5;
+  --call-ink: #ffffff; --call-ring: rgba(34, 106, 63, 0.42);
   --board: #15212a; --board-ink: #f2c94c;
   --f-display: "Archivo", "Arial Narrow", Arial, sans-serif;
   --f-body: "IBM Plex Sans", "Segoe UI", Roboto, Arial, sans-serif;
@@ -23,12 +24,14 @@
   --accent: #56b6c8; --accent-ink: #0b1418; --accent-soft: #173640;
   --ok: #5fbf84; --warn: #e3ab4e; --crit: #e57a68; --info: #8aa6e6;
   --ok-soft: #173326; --warn-soft: #3a2c13; --crit-soft: #3d1d19; --info-soft: #1c2742;
+  --call-ink: #0b1418; --call-ring: rgba(95, 191, 132, 0.40);
   --board: #070b0e; --board-ink: #f2c94c; color-scheme: dark } }
 :root[data-theme="dark"] {
   --bg: #0e1418; --surface: #162027; --ink: #e5ecee; --muted: #9aa8af; --line: #2a3742;
   --accent: #56b6c8; --accent-ink: #0b1418; --accent-soft: #173640;
   --ok: #5fbf84; --warn: #e3ab4e; --crit: #e57a68; --info: #8aa6e6;
   --ok-soft: #173326; --warn-soft: #3a2c13; --crit-soft: #3d1d19; --info-soft: #1c2742;
+  --call-ink: #0b1418; --call-ring: rgba(95, 191, 132, 0.40);
   --board: #070b0e; --board-ink: #f2c94c; color-scheme: dark }
 
 * { box-sizing: border-box; }
@@ -66,6 +69,14 @@ p { margin: 0; max-width: 65ch; }
 .btn-primary:hover { filter: brightness(1.08); }
 .btn-ghost { background: transparent; color: var(--ink); border-color: var(--line); }
 .btn-ghost:hover { border-color: var(--accent); }
+.btn-call { background: var(--ok); color: var(--call-ink); border-color: transparent; transition: transform 0.15s ease, filter 0.15s ease; animation: callpulse 3.2s ease-out 2.5s 5; }
+.btn-call { text-align: center; }
+.btn-call svg { width: 18px; height: 18px; flex: none; }
+.btn-call:hover { filter: brightness(1.1); transform: translateY(-1px); animation: none; }
+.btn-call:active { transform: translateY(0); }
+.btn-call:focus-visible { animation: none; }
+@keyframes callpulse { 0% { box-shadow: 0 0 0 0 var(--call-ring); } 65% { box-shadow: 0 0 0 10px rgba(0, 0, 0, 0); } 100% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); } }
+@media (prefers-reduced-motion: reduce) { .btn-call { animation: none; transition: none; } .btn-call:hover { transform: none; } }
 .actions { display: flex; flex-wrap: wrap; gap: 10px; }
 .tracks { width: 100%; max-width: 100%; height: auto; display: block; }
 .tracks text { font-family: var(--f-mono); fill: var(--ink); }
@@ -275,7 +286,7 @@ footer .wrap { display: grid; gap: 8px; }
       </div>
       <figure class="fig">
         <svg class="tracks" viewBox="0 0 520 300" role="img" aria-labelledby="tracksTitle">
-          <title id="tracksTitle">Les trois voies : rester en 4.3 jusqu'à l'arrêt des correctifs en 2028, monter en BI 2025 jusqu'à fin 2027, ou migrer vers une autre solution.</title>
+          <title id="tracksTitle">Les trois voies : rester en 4.3 (plus aucun correctif en 2028), monter en BI 2025 (maintenance standard jusqu'à fin 2027), ou migrer vers une autre solution.</title>
           <path d="M10 150H120" stroke="var(--ink)" stroke-width="6" stroke-linecap="round" fill="none"/>
           <path d="M120 150 C200 150 210 52 300 52H400" stroke="var(--crit)" stroke-width="6" stroke-linecap="round" fill="none"/>
           <path d="M120 150H390" stroke="var(--warn)" stroke-width="6" stroke-linecap="round" fill="none"/>
@@ -287,14 +298,15 @@ footer .wrap { display: grid; gap: 8px; }
           <circle cx="120" cy="150" r="9" fill="var(--surface)" stroke="var(--ink)" stroke-width="4"/>
           <text x="10" y="132" class="sub">BI 4.3 aujourd'hui</text>
           <text x="300" y="30" class="lbl">Rester en 4.3</text>
-          <text x="300" y="86" class="sub">plus aucun correctif en 2028</text>
+          <text x="300" y="86" class="sub">plus aucun correctif</text>
+          <text x="300" y="102" class="sub">à partir de 2028</text>
           <text x="262" y="132" class="lbl">Monter en BI 2025</text>
           <text x="262" y="174" class="sub">maintenance standard</text>
           <text x="262" y="190" class="sub">jusqu'à fin 2027</text>
           <text x="300" y="226" class="lbl">Migrer</text>
           <text x="300" y="282" class="sub">vers une autre solution BI</text>
         </svg>
-        <figcaption>À partir du 1er janvier 2027, SAP ne livre plus pour BI 4.3 que les correctifs de sécurité graves (score CVSS de 7 ou plus), et plus aucun à partir de 2028, pour un coût de maintenance inchangé. <a href="https://clintvosloo.com/sap-customer-specific-maintenance-bi-43-ds-43-what-it-means" target="_blank" rel="noopener">Source : notes SAP 3486924 et 3763590</a></figcaption>
+        <figcaption>À partir du 1er janvier 2027, SAP ne livre pour BI 4.3 que les correctifs de sécurité graves (score CVSS de 7 ou plus) pendant les 12 premiers mois, puis plus aucun livrable à partir de 2028. Sources : notes SAP 3486924 et 3763590, analysées par <a href="https://clintvosloo.com/sap-customer-specific-maintenance-bi-43-ds-43-what-it-means" target="_blank" rel="noopener">C. Vosloo</a>, <a href="https://www.infosol.com/sap-security-patch-day-october-2026/" target="_blank" rel="noopener">InfoSol</a> et <a href="https://nttdata-solutions.com/uk/blog/preparing-for-the-end-of-life-of-sap-businessobjects-4-3-what-should-your-business-do/" target="_blank" rel="noopener">NTT DATA</a>.</figcaption>
       </figure>
     </div>
   </section>
@@ -394,12 +406,12 @@ lay();window.addEventListener('resize',lay);if(!reduce)requestAnimationFrame(tic
             </fieldset>
             <fieldset id="fs-univ">
               <legend>Univers et utilisateurs</legend>
-              <small class="legend-hint">UNV : univers créés avec Universe Design Tool. UNX : avec Information Design Tool.</small>
+              <small class="legend-hint">UNV : univers créés avec Universe Design Tool, ils sont à convertir. UNX : avec Information Design Tool, au moins autant que d'UNV réduit un peu le risque.</small>
               <div class="grid2">
                 <div class="field"><label for="unv">Univers UNV</label><input id="unv" inputmode="numeric" value="23"><span class="err" id="err-unv"></span></div>
                 <div class="field"><label for="unx">Univers UNX</label><input id="unx" inputmode="numeric" value="40"><span class="err" id="err-unx"></span></div>
                 <div class="field"><label for="users">Comptes utilisateurs</label><input id="users" inputmode="numeric" value="740"><span class="err" id="err-users"></span></div>
-                <div class="field"><label for="activeUsers">dont connectés en 12 mois (facultatif)</label><input id="activeUsers" inputmode="numeric" value=""><span class="err" id="err-activeUsers"></span></div>
+                <div class="field"><label for="activeUsers">dont connectés en 12 mois (facultatif, 20 % d'inactifs ou plus ajoute un point de vigilance en 4.x)</label><input id="activeUsers" inputmode="numeric" value=""><span class="err" id="err-activeUsers"></span></div>
               </div>
             </fieldset>
             <fieldset id="fs-usage">
@@ -416,7 +428,7 @@ lay();window.addEventListener('resize',lay);if(!reduce)requestAnimationFrame(tic
               <div class="field" id="pctField">
                 <label for="usedPct">Documents ouverts au moins une fois en 12 mois (%)</label>
                 <input id="usedPct" inputmode="numeric" value="45">
-                <small>D'après l'audit. Laissez vide si vous ne l'avez pas.</small>
+                <small>D'après l'audit. Plus ce pourcentage est bas, moins il y a de documents à traiter (ce qui peut faire baisser le niveau de risque). Laissez vide si vous ne l'avez pas.</small>
                 <span class="err" id="err-usedPct"></span>
               </div>
             </fieldset>
@@ -447,7 +459,7 @@ lay();window.addEventListener('resize',lay);if(!reduce)requestAnimationFrame(tic
             <div class="deadline" id="deadline"></div>
             <div class="actions cta-top">
               <button class="btn btn-primary" type="button" data-cta="diag">Demander le diagnostic</button>
-              <a class="btn btn-ghost" href="#contact" data-cta="call">Échange gratuit de 20 minutes</a>
+              <a class="btn btn-call" href="#contact" data-cta="call"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg><span class="call-txt">Échange gratuit de 20 minutes</span></a>
             </div>
             <dl class="meta">
               <div><dt>Documents</dt><dd id="mDocs">0</dd></div>
@@ -468,7 +480,7 @@ lay();window.addEventListener('resize',lay);if(!reduce)requestAnimationFrame(tic
               <p class="fine">Garanties : 20 % remboursés si le délai n'est pas tenu. Aucune commission d'éditeur, donc aucun intérêt à recommander une voie plutôt qu'une autre.</p>
               <div class="actions">
                 <button class="btn btn-primary" type="button" data-cta="diag">Demander le diagnostic</button>
-                <a class="btn btn-ghost" href="#contact" data-cta="call">Échange gratuit de 20 minutes</a>
+                <a class="btn btn-call" href="#contact" data-cta="call"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg><span class="call-txt">Échange gratuit de 20 minutes</span></a>
                 <button class="btn btn-ghost" type="button" id="printBtn" hidden>Imprimer ou enregistrer en PDF</button>
               </div>
               <div class="contact" id="contact" hidden>
@@ -501,14 +513,15 @@ lay();window.addEventListener('resize',lay);if(!reduce)requestAnimationFrame(tic
           <thead><tr><th>Point de vigilance</th><th>Points de risque</th><th>Pourquoi ce poids</th><th>Source du fait</th></tr></thead>
           <tbody>
             <tr><td>Version 4.1 ou 4.2, déjà sortie de la maintenance standard</td><td class="num">35</td><td>Le risque existe déjà aujourd'hui.</td><td>Product Availability Matrix SAP</td></tr>
-            <tr><td>BI 4.3 : maintenance spécifique client au 1er janvier 2027</td><td class="num">25</td><td>Sécurité et support, à date fixe, pour toute la plateforme.</td><td>Notes SAP 3486924 et 3763590</td></tr>
-            <tr><td>Univers UNV à convertir : 1 à 10 / 11 à 50 / plus de 50</td><td class="num">8 / 14 / 20</td><td>Chaque univers se convertit puis se reteste avec ses documents.</td><td>Feuille de route BI 2025</td></tr>
+            <tr><td>BI 4.3 : maintenance spécifique client à partir du 1er janvier 2027</td><td class="num">25</td><td>Sécurité et support, à date fixe, pour toute la plateforme.</td><td>Notes SAP 3486924 et 3763590, résumées par C. Vosloo et InfoSol</td></tr>
+            <tr><td>Univers UNV à convertir : 1 à 10 / 11 à 50 / plus de 50. Moins 3 points si vous avez déjà au moins autant d'univers UNX que d'UNV</td><td class="num">8 / 14 / 20</td><td>Chaque univers se convertit puis se reteste avec ses documents. Des UNX déjà créés montrent qu'une partie du chantier est faite.</td><td>Feuille de route BI 2025</td></tr>
             <tr><td>Base d'audit inactive</td><td class="num">10</td><td>Sans mesure d'usage, on migre aussi ce que personne ne lit.</td><td>Vos réponses</td></tr>
-            <tr><td>BI 2025 : maintenance standard jusqu'à fin 2027</td><td class="num">10</td><td>Nouvelle échéance un an plus tard, à anticiper.</td><td>Calendrier SAP (à confirmer)</td></tr>
-            <tr><td>Plus de 10 000 / plus de 2 000 documents</td><td class="num">10 / 5</td><td>Plus de contenu, plus de tri et de tests.</td><td>Vos chiffres</td></tr>
-            <tr><td>Contenus obsolètes : Dashboards (Xcelsius), Desktop Intelligence, Explorer, Flash</td><td class="num">5</td><td>Ils ne fonctionnent plus : à reconstruire ou à retirer.</td><td>Notes SAP 2801797 et 2914654</td></tr>
+            <tr><td>BI 2025 : maintenance standard jusqu'au 31 décembre 2027</td><td class="num">10</td><td>Nouvelle échéance environ un an plus tard, à anticiper.</td><td>Calendrier SAP BI (Wiiisdom, C. Vosloo)</td></tr>
+            <tr><td>Plus de 10 000 / plus de 2 000 documents à traiter (hors documents non ouverts en 12 mois si l'audit est actif)</td><td class="num">10 / 5</td><td>Plus de contenu, plus de tri et de tests. Le pourcentage d'usage retire ce qui n'est plus ouvert.</td><td>Vos chiffres</td></tr>
+            <tr><td>Contenus obsolètes : Dashboards (Xcelsius), Desktop Intelligence, Explorer, Flash. 1 à 10 / 11 à 100 / plus de 100</td><td class="num">3 / 5 / 8</td><td>Ils ne fonctionnent plus : à reconstruire ou à retirer.</td><td>Notes SAP 2801797 et 2914654</td></tr>
             <tr><td>Contenus Lumira</td><td class="num">5</td><td>Plus de nouvelle fonctionnalité : à requalifier.</td><td>Feuille de route BI 2025</td></tr>
-            <tr><td>Documents non ouverts en 12 mois, comptes sans connexion (20 % ou plus)</td><td class="num">0</td><td>Ce sont des économies possibles, pas des risques.</td><td>Vos chiffres</td></tr>
+            <tr><td>Comptes sans connexion en 12 mois (20 % ou plus), BI 4.1 à 4.3</td><td class="num">5</td><td>Licences et comptes à nettoyer avant la migration, sinon on migre des accès inutiles.</td><td>Vos chiffres</td></tr>
+            <tr><td>Documents non ouverts en 12 mois, ou comptes sans connexion en BI 2025</td><td class="num">0</td><td>Ce sont des économies possibles, pas des risques.</td><td>Vos chiffres</td></tr>
           </tbody>
         </table>
       </div>
@@ -871,19 +884,22 @@ finally {
 
     if (d.version === "4.3") {
       add("CSM-01", "critique", 25, "Maintenance spécifique client au 1er janvier 2027",
-        "En 2027, seuls les correctifs de sécurité notés CVSS 7.0 ou plus sont livrés, sans engagement de délai. Les nouveaux problèmes deviennent facturables. À partir de 2028, plus aucun correctif. Les frais de maintenance restent inchangés.", "csm");
+        "Pendant les 12 premiers mois (2027), SAP ne livre que les correctifs de sécurité notés CVSS 7.0 ou plus. À partir de 2028, plus aucun correctif, patch ni support package n'est livré. Selon l'analyse de C. Vosloo, les nouveaux problèmes non documentés deviennent aussi facturables et SAP ne s'engage plus sur un délai de résolution.", "csm");
     } else if (d.version === "4.2" || d.version === "4.1") {
       add("CSM-02", "critique", 35, "Version déjà sortie de la maintenance standard",
         "La version " + d.version + " n'est plus en maintenance standard. Vérifiez sa situation exacte dans la PAM SAP avant toute décision.", "pam");
     } else if (d.version === "2025") {
       add("CSM-03", "attention", 10, "Maintenance standard de BI 2025 jusqu'au 31 décembre 2027",
-        "BI 2025 donne un an de maintenance standard supplémentaire. La décision suivante est à préparer dès 2027.", "csm");
+        "BI 2025 donne un an de maintenance standard supplémentaire, jusqu'au 31 décembre 2027. La décision suivante est à préparer dès 2027.", "csm");
     }
 
     if (d.unv > 0 && d.version !== "2025") {
       var p = d.unv <= 10 ? 8 : d.unv <= 50 ? 14 : 20;
+      var half = d.unx >= d.unv;
+      if (half) p -= 3;
       add("UNV-01", "élevé", p, d.unv + " univers UNV à convertir",
-        "Les univers UNV ne sont plus pris en charge après BI 4.3. Ils doivent être convertis en UNX avant une montée en BI 2025, et les documents qui les utilisent doivent être retestés.", "bi2025");
+        "Les univers UNV ne sont plus pris en charge après BI 4.3. Ils doivent être convertis en UNX avant une montée en BI 2025, et les documents qui les utilisent doivent être retestés." +
+        (half ? " Vous avez déjà " + d.unx.toLocaleString("fr-FR") + " univers UNX, au moins autant que d'univers UNV : une partie du chantier est faite, la pénalité est réduite de 3 points." : ""), "bi2025");
     }
 
     if (d.lumira > 0) {
@@ -893,7 +909,8 @@ finally {
 
     var obsolete = d.dashboards + (d.legacy || 0);
     if (obsolete > 0) {
-      add("CMP-02", "élevé", 5, obsolete + " contenus obsolètes (Dashboards, Desktop Intelligence, Explorer, Flash)",
+      var po = obsolete <= 10 ? 3 : obsolete <= 100 ? 5 : 8;
+      add("CMP-02", "élevé", po, obsolete + " contenus obsolètes (Dashboards, Desktop Intelligence, Explorer, Flash)",
         "Ces technologies ne sont plus prises en charge depuis BI 4.2 SP09 et BI 4.3. SAP fournit un script qui les supprime du référentiel. Elles sont à reconstruire ou à retirer avant toute montée de version.", "deprecated");
     }
 
@@ -903,8 +920,12 @@ finally {
     }
 
     var unused = null;
+    /* Documents à traiter : si l'audit est actif et que le pourcentage d'usage est connu,
+       seuls les documents réellement ouverts comptent pour le volume (les autres sont à décommissionner). */
+    var toProcess = docs;
     if (d.auditActive && d.usedPct !== null && docs > 0) {
       unused = Math.round(docs * (100 - d.usedPct) / 100);
+      toProcess = docs - unused;
       if (d.usedPct < 100) {
         findings.push({ id: "USG-02", severity: "opportunité", penalty: 0,
           title: "Environ " + unused.toLocaleString("fr-FR") + " documents non ouverts depuis 12 mois",
@@ -916,18 +937,26 @@ finally {
     if (d.activeUsers !== null && d.activeUsers !== undefined && d.users > 0) {
       var inactive = d.users - d.activeUsers;
       if (inactive > 0 && inactive / d.users >= 0.2) {
-        findings.push({ id: "USG-03", severity: "opportunité", penalty: 0,
-          title: inactive.toLocaleString("fr-FR") + " comptes sans connexion depuis 12 mois",
-          detail: "Soit " + Math.round(100 * inactive / d.users) + " % des comptes. Les désactiver allège la migration et peut réduire les licences.",
-          source: SOURCES.method });
+        var share = Math.round(100 * inactive / d.users);
+        var legacyV = d.version === "4.3" || d.version === "4.2" || d.version === "4.1";
+        if (legacyV) {
+          add("USG-03", "attention", 5, inactive.toLocaleString("fr-FR") + " comptes sans connexion depuis 12 mois",
+            "Soit " + share + " % des comptes. Avec une couverture de sécurité réduite, chaque compte inutile est une surface d'exposition de plus : les désactiver allège aussi la migration et peut réduire les licences.", "method");
+        } else {
+          findings.push({ id: "USG-03", severity: "opportunité", penalty: 0,
+            title: inactive.toLocaleString("fr-FR") + " comptes sans connexion depuis 12 mois",
+            detail: "Soit " + share + " % des comptes. Les désactiver allège la migration et peut réduire les licences.",
+            source: SOURCES.method });
+        }
       }
     }
 
-    if (docs > 10000) {
-      add("VOL-01", "élevé", 10, "Volume important : " + docs.toLocaleString("fr-FR") + " documents",
+    var volNote = toProcess < docs ? " (sur " + docs.toLocaleString("fr-FR") + " au total, hors documents non ouverts en 12 mois)" : "";
+    if (toProcess > 10000) {
+      add("VOL-01", "élevé", 10, "Volume important : " + toProcess.toLocaleString("fr-FR") + " documents à traiter" + volNote,
         "Un tri préalable du contenu est indispensable pour maîtriser le coût d'une montée de version ou d'une migration.", "method");
-    } else if (docs > 2000) {
-      add("VOL-02", "attention", 5, "Volume moyen : " + docs.toLocaleString("fr-FR") + " documents",
+    } else if (toProcess > 2000) {
+      add("VOL-02", "attention", 5, "Volume moyen : " + toProcess.toLocaleString("fr-FR") + " documents à traiter" + volNote,
         "Un tri préalable du contenu réduira la durée du projet.", "method");
     }
 
@@ -944,7 +973,7 @@ finally {
     var size = sizeOf(d.users, docs);
 
     return {
-      score: score, level: level, risk: risk, riskLevel: riskLevel, docs: docs, size: size, price: PRICES[size],
+      score: score, level: level, risk: risk, riskLevel: riskLevel, docs: docs, toProcess: toProcess, size: size, price: PRICES[size],
       unused: unused, findings: findings,
       top: findings.filter(function (f) { return f.penalty > 0; }).slice(0, 3)
     };
@@ -1030,9 +1059,8 @@ finally {
     unv: "Univers UNV", unx: "Univers UNX", users: "Comptes utilisateurs", activeUsers: "dont connectés en 12 mois" };
   var SIZE_DEF = { S: "jusqu'à 200 comptes et 2 000 documents", M: "jusqu'à 1 000 comptes et 10 000 documents", L: "plus de 1 000 comptes ou 10 000 documents" };
   var DATE_FMT = new Intl.DateTimeFormat("fr-FR", { weekday: "long", day: "numeric", month: "long" });
-  /* Lien de réservation Calendly : à renseigner une fois le compte créé (ex. https://calendly.com/trivoie/20min).
-     Vide : le bouton « Échange gratuit » ouvre le formulaire d'email. */
-  var CALENDLY_URL = "";
+  /* Lien de réservation Calendly (événement de 20 minutes). Si vide : le bouton « Échange gratuit » ouvre le formulaire d'email. */
+  var CALENDLY_URL = "https://calendly.com/trivoie-contact/30min";
   var ctaMode = "diag", lastSummary = "", lastSize = "M", lastRisk = null;
   function today() { var n = new Date(); return new Date(n.getFullYear(), n.getMonth(), n.getDate()); }
   function daysUntil(d) { return Math.round((Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) - Date.UTC(today().getFullYear(), today().getMonth(), today().getDate())) / 86400000); }
@@ -1096,9 +1124,9 @@ finally {
     var dCsm = daysUntil(new Date(2027, 0, 1));
     var head;
     if (v.data.version === "4.3") head = dCsm > 0
-      ? "Dans " + dCsm + " jours, votre plateforme passe en maintenance spécifique client : correctifs de sécurité graves seulement en 2027, plus aucun en 2028."
-      : "Votre plateforme est en maintenance spécifique client : correctifs de sécurité graves seulement en 2027, plus aucun en 2028.";
-    else if (v.data.version === "2025") head = "Votre version reste en maintenance standard jusqu'à fin 2027. Le prochain choix se prépare dès maintenant.";
+      ? "Dans " + dCsm + " jours, votre plateforme passe en maintenance spécifique client (correctifs de sécurité graves seulement en 2027, plus aucun en 2028)."
+      : "Votre plateforme est en maintenance spécifique client (correctifs de sécurité graves seulement en 2027, plus aucun en 2028).";
+    else if (v.data.version === "2025") head = "Votre version reste en maintenance standard jusqu'au 31 décembre 2027. Le prochain choix se prépare dès maintenant.";
     else head = "Votre version n'est déjà plus en maintenance standard : le risque existe aujourd'hui.";
     $("verdictTxt").textContent = head + (todo ? " " + todo + (todo > 1 ? " chantiers" : " chantier") + " à traiter avant de choisir une voie." : "");
     var deadline = v.data.version === "2025" ? new Date(2027, 11, 31) : new Date(2026, 11, 31);
@@ -1257,7 +1285,7 @@ finally {
   }
   if (CALENDLY_URL) {
     Array.prototype.forEach.call(document.querySelectorAll('[data-cta="call"]'), function (a) {
-      a.href = CALENDLY_URL; a.target = "_blank"; a.rel = "noopener"; a.textContent = "Réserver un échange gratuit de 20 minutes";
+      a.href = CALENDLY_URL; a.target = "_blank"; a.rel = "noopener"; var t = a.querySelector(".call-txt"); if (t) t.textContent = "Réserver un échange gratuit de 20 minutes";
     });
   }
   Array.prototype.forEach.call(document.querySelectorAll("[data-cta]"), function (btn) {

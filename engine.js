@@ -99,19 +99,22 @@
 
     if (d.version === "4.3") {
       add("CSM-01", "critique", 25, "Maintenance spécifique client au 1er janvier 2027",
-        "D'après les informations publiées par la communauté SAP (à confirmer auprès de SAP) : en 2027, seuls les correctifs de sécurité notés CVSS 7.0 ou plus seraient livrés, sans engagement de délai ; les nouveaux problèmes deviendraient facturables ; à partir de 2028, plus aucun correctif ; les frais de maintenance resteraient inchangés.", "csm");
+        "Pendant les 12 premiers mois (2027), SAP ne livre que les correctifs de sécurité notés CVSS 7.0 ou plus. À partir de 2028, plus aucun correctif, patch ni support package n'est livré. Selon l'analyse de C. Vosloo, les nouveaux problèmes non documentés deviennent aussi facturables et SAP ne s'engage plus sur un délai de résolution.", "csm");
     } else if (d.version === "4.2" || d.version === "4.1") {
       add("CSM-02", "critique", 35, "Version déjà sortie de la maintenance standard",
         "La version " + d.version + " n'est plus en maintenance standard. Vérifiez sa situation exacte dans la PAM SAP avant toute décision.", "pam");
     } else if (d.version === "2025") {
-      add("CSM-03", "attention", 10, "Maintenance standard de BI 2025 jusqu'à fin 2027 (à confirmer)",
-        "BI 2025 donnerait environ un an de maintenance standard supplémentaire, d'après les informations publiées (à confirmer auprès de SAP). La décision suivante est à préparer dès 2027.", "csm");
+      add("CSM-03", "attention", 10, "Maintenance standard de BI 2025 jusqu'au 31 décembre 2027",
+        "BI 2025 donne un an de maintenance standard supplémentaire, jusqu'au 31 décembre 2027. La décision suivante est à préparer dès 2027.", "csm");
     }
 
     if (d.unv > 0 && d.version !== "2025") {
       var p = d.unv <= 10 ? 8 : d.unv <= 50 ? 14 : 20;
+      var half = d.unx >= d.unv;
+      if (half) p -= 3;
       add("UNV-01", "élevé", p, d.unv + " univers UNV à convertir",
-        "Les univers UNV ne sont plus pris en charge après BI 4.3. Ils doivent être convertis en UNX avant une montée en BI 2025, et les documents qui les utilisent doivent être retestés.", "bi2025");
+        "Les univers UNV ne sont plus pris en charge après BI 4.3. Ils doivent être convertis en UNX avant une montée en BI 2025, et les documents qui les utilisent doivent être retestés." +
+        (half ? " Vous avez déjà " + d.unx.toLocaleString("fr-FR") + " univers UNX, au moins autant que d'univers UNV : une partie du chantier est faite, la pénalité est réduite de 3 points." : ""), "bi2025");
     }
 
     if (d.lumira > 0) {
@@ -121,7 +124,8 @@
 
     var obsolete = d.dashboards + (d.legacy || 0);
     if (obsolete > 0) {
-      add("CMP-02", "élevé", 5, obsolete + " contenus obsolètes (Dashboards, Desktop Intelligence, Explorer, Flash)",
+      var po = obsolete <= 10 ? 3 : obsolete <= 100 ? 5 : 8;
+      add("CMP-02", "élevé", po, obsolete + " contenus obsolètes (Dashboards, Desktop Intelligence, Explorer, Flash)",
         "Ces technologies ne sont plus prises en charge depuis BI 4.2 SP09 et BI 4.3. SAP fournit un script qui les supprime du référentiel. Elles sont à reconstruire ou à retirer avant toute montée de version.", "deprecated");
     }
 
@@ -131,8 +135,12 @@
     }
 
     var unused = null;
+    /* Documents à traiter : si l'audit est actif et que le pourcentage d'usage est connu,
+       seuls les documents réellement ouverts comptent pour le volume (les autres sont à décommissionner). */
+    var toProcess = docs;
     if (d.auditActive && d.usedPct !== null && docs > 0) {
       unused = Math.round(docs * (100 - d.usedPct) / 100);
+      toProcess = docs - unused;
       if (d.usedPct < 100) {
         findings.push({ id: "USG-02", severity: "opportunité", penalty: 0,
           title: "Environ " + unused.toLocaleString("fr-FR") + " documents non ouverts depuis 12 mois",
@@ -144,18 +152,26 @@
     if (d.activeUsers !== null && d.activeUsers !== undefined && d.users > 0) {
       var inactive = d.users - d.activeUsers;
       if (inactive > 0 && inactive / d.users >= 0.2) {
-        findings.push({ id: "USG-03", severity: "opportunité", penalty: 0,
-          title: inactive.toLocaleString("fr-FR") + " comptes sans connexion depuis 12 mois",
-          detail: "Soit " + Math.round(100 * inactive / d.users) + " % des comptes. Les désactiver allège la migration et peut réduire les licences.",
-          source: SOURCES.method });
+        var share = Math.round(100 * inactive / d.users);
+        var legacyV = d.version === "4.3" || d.version === "4.2" || d.version === "4.1";
+        if (legacyV) {
+          add("USG-03", "attention", 5, inactive.toLocaleString("fr-FR") + " comptes sans connexion depuis 12 mois",
+            "Soit " + share + " % des comptes. Avec une couverture de sécurité réduite, chaque compte inutile est une surface d'exposition de plus : les désactiver allège aussi la migration et peut réduire les licences.", "method");
+        } else {
+          findings.push({ id: "USG-03", severity: "opportunité", penalty: 0,
+            title: inactive.toLocaleString("fr-FR") + " comptes sans connexion depuis 12 mois",
+            detail: "Soit " + share + " % des comptes. Les désactiver allège la migration et peut réduire les licences.",
+            source: SOURCES.method });
+        }
       }
     }
 
-    if (docs > 10000) {
-      add("VOL-01", "élevé", 10, "Volume important : " + docs.toLocaleString("fr-FR") + " documents",
+    var volNote = toProcess < docs ? " (sur " + docs.toLocaleString("fr-FR") + " au total, hors documents non ouverts en 12 mois)" : "";
+    if (toProcess > 10000) {
+      add("VOL-01", "élevé", 10, "Volume important : " + toProcess.toLocaleString("fr-FR") + " documents à traiter" + volNote,
         "Un tri préalable du contenu est indispensable pour maîtriser le coût d'une montée de version ou d'une migration.", "method");
-    } else if (docs > 2000) {
-      add("VOL-02", "attention", 5, "Volume moyen : " + docs.toLocaleString("fr-FR") + " documents",
+    } else if (toProcess > 2000) {
+      add("VOL-02", "attention", 5, "Volume moyen : " + toProcess.toLocaleString("fr-FR") + " documents à traiter" + volNote,
         "Un tri préalable du contenu réduira la durée du projet.", "method");
     }
 
@@ -172,7 +188,7 @@
     var size = sizeOf(d.users, docs);
 
     return {
-      score: score, level: level, risk: risk, riskLevel: riskLevel, docs: docs, size: size, price: PRICES[size],
+      score: score, level: level, risk: risk, riskLevel: riskLevel, docs: docs, toProcess: toProcess, size: size, price: PRICES[size],
       unused: unused, findings: findings,
       top: findings.filter(function (f) { return f.penalty > 0; }).slice(0, 3)
     };
