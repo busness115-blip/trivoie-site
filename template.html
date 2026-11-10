@@ -420,7 +420,7 @@ footer .wrap { display: grid; gap: 8px; }
               <div class="field" id="pctField">
                 <label for="usedPct">Documents ouverts au moins une fois en 12 mois (%)</label>
                 <input id="usedPct" inputmode="numeric" value="" placeholder="ex. 45">
-                <small>D'après l'audit. Seuls ces documents comptent pour le volume « À traiter » : plus ce pourcentage est bas, plus le volume et le risque baissent (1 point de risque par tranche de 1 000 documents à traiter). Laissez vide si vous ne l'avez pas.</small>
+                <small>D'après l'audit. Seuls ces documents comptent pour le volume « À traiter » : plus ce pourcentage est bas, plus le volume et le risque baissent (1 point de risque par tranche de 500 documents à traiter). Laissez vide si vous ne l'avez pas.</small>
                 <span class="err" id="err-usedPct"></span>
               </div>
             </fieldset>
@@ -510,7 +510,7 @@ footer .wrap { display: grid; gap: 8px; }
             <tr><td>Univers UNV à convertir : 4 points pour 1 univers, puis 0,3 point par univers supplémentaire, plafonné à 20 (atteint à 55 univers). Moins 3 points multipliés par le rapport UNX / UNV (3 points au plus)</td><td class="num">4 à 20</td><td>Chaque univers se convertit puis se reteste avec ses documents. Des UNX déjà créés montrent qu'une partie du chantier est engagée.</td><td>Feuille de route BI 2025</td></tr>
             <tr><td>Base d'audit inactive</td><td class="num">10</td><td>Sans mesure d'usage, on migre aussi ce que personne ne lit.</td><td>Vos réponses</td></tr>
             <tr><td>BI 2025 : maintenance standard jusqu'au 31 décembre 2027</td><td class="num">10</td><td>Nouvelle échéance environ un an plus tard, à anticiper.</td><td>Calendrier SAP BI (Wiiisdom, C. Vosloo)</td></tr>
-            <tr><td>Documents à traiter : 1 point par tranche de 1 000 (0,1 point par 100 documents), plafonné à 10 (hors documents non ouverts en 12 mois si l'audit est actif)</td><td class="num">0 à 10</td><td>Plus de contenu, plus de tri et de tests. Le pourcentage d'usage retire ce qui n'est plus ouvert : à 6 000 documents, 50 % d'usage fait passer de 6 à 3 points.</td><td>Vos chiffres</td></tr>
+            <tr><td>Documents à traiter : 1 point par tranche de 500 (0,2 point par 100 documents), plafonné à 20 à partir de 10 000 (hors documents non ouverts en 12 mois si l'audit est actif)</td><td class="num">0 à 20</td><td>Plus de contenu, plus de tri et de tests. Le pourcentage d'usage retire ce qui n'est plus ouvert : à 6 000 documents, 50 % d'usage fait passer de 12 à 6 points.</td><td>Vos chiffres</td></tr>
             <tr><td>Contenus obsolètes : Dashboards (Xcelsius), Desktop Intelligence, Explorer, Flash. 2 points pour 1 contenu, puis 0,06 point par contenu supplémentaire, plafonné à 8 (atteint à 101)</td><td class="num">2 à 8</td><td>Ils ne fonctionnent plus : à reconstruire ou à retirer.</td><td>Notes SAP 2801797 et 2914654</td></tr>
             <tr><td>Contenus Lumira : 2 points pour 1 contenu, puis 0,3 point par contenu supplémentaire, plafonné à 5 (atteint à 11)</td><td class="num">2 à 5</td><td>Plus de nouvelle fonctionnalité : à requalifier.</td><td>Feuille de route BI 2025</td></tr>
             <tr><td>Comptes sans connexion en 12 mois, BI 4.1 à 4.3 : à partir de 20 % des comptes, 1 point par tranche de 10 % d'inactifs (de 2 à 5 points)</td><td class="num">2 à 5</td><td>Licences et comptes à nettoyer avant la migration, sinon on migre des accès inutiles.</td><td>Vos chiffres</td></tr>
@@ -665,7 +665,7 @@ footer .wrap { display: grid; gap: 8px; }
       dl.appendChild(st2); dl.appendChild(document.createTextNode(" Le diagnostic vous donne un plan chiffré en 10 jours ouvrés pour la réduire au plus vite."));
     }
     $("mDocs").textContent = nf.format(r.docs);
-    $("mToProcess").textContent = nf.format(r.toProcess);
+    $("mToProcess").textContent = nf.format(r.toProcess) + (r.docs > 0 && r.toProcess < r.docs ? " (" + Math.round(100 * r.toProcess / r.docs) + " %)" : "");
     $("mUsers").textContent = nf.format(v.data.users);
     $("mSize").textContent = r.size; $("sizeInline").textContent = r.size; $("sizeDef").textContent = SIZE_DEF[r.size];
     $("price").textContent = nf.format(r.price) + " € HT";

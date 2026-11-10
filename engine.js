@@ -170,9 +170,9 @@
     }
 
     var volNote = toProcess < docs ? " (sur " + docs.toLocaleString("fr-FR") + " au total, hors documents non ouverts en 12 mois)" : "";
-    var volPts = r1(Math.min(10, toProcess / 1000));
+    var volPts = r1(Math.min(20, toProcess / 500));
     if (volPts > 0) {
-      add("VOL-01", volPts >= 7.5 ? "élevé" : "attention", volPts, (volPts >= 7.5 ? "Volume important : " : "Volume à traiter : ") + toProcess.toLocaleString("fr-FR") + " documents" + volNote,
+      add("VOL-01", volPts >= 15 ? "élevé" : "attention", volPts, (volPts >= 15 ? "Volume important : " : "Volume à traiter : ") + toProcess.toLocaleString("fr-FR") + " documents" + volNote,
         "Un tri préalable du contenu est indispensable pour maîtriser le coût d'une montée de version ou d'une migration.", "method");
     }
 

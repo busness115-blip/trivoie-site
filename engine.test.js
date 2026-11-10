@@ -36,8 +36,8 @@ t("plateforme 4.3 typique", () => {
     auditActive: "oui", usedPct: 45, lumira: 0, dashboards: 12 }).data;
   const r = E.analyse(d);
   // 100 - 25 (CSM) - 7,6 (UNV 23 : 4 + 0,3 x 22 = 10,6, moins 3 car UNX 40 >= UNV 23)
-  // - 2,7 (obsolètes : 12 Dashboards, 2 + 0,06 x 11) - 2,8 (volume : 2 750 documents ouverts à traiter) = 61,9 soit 62
-  assert.equal(r.score, 62);
+  // - 2,7 (obsolètes : 12 Dashboards, 2 + 0,06 x 11) - 5,5 (volume : 2 750 documents ouverts à traiter, 1 point par 500) = 59,2 soit 59
+  assert.equal(r.score, 59);
   assert.equal(r.toProcess, 6112 - Math.round(6112 * 0.55));
   assert.equal(r.level, "À organiser");
   assert.equal(r.size, "M");
@@ -52,8 +52,8 @@ t("plateforme 4.3 typique", () => {
 t("version 4.2 sans audit, gros volume : urgent", () => {
   const d = E.validate({ version: "4.2", webi: 12000, unv: 80, users: 1500, auditActive: "non" }).data;
   const r = E.analyse(d);
-  // 100 - 35 - 20 - 10 (audit) - 10 (volume) = 25
-  assert.equal(r.score, 25);
+  // 100 - 35 - 20 - 10 (audit) - 20 (volume, plafond) = 15
+  assert.equal(r.score, 15);
   assert.equal(r.level, "Urgent");
   assert.equal(r.size, "L");
 });
@@ -62,7 +62,7 @@ t("BI 2025 : pas de pénalité UNV, échéance 2027", () => {
   const d = E.validate({ version: "2025", webi: 500, unv: 5, users: 50, auditActive: "oui", usedPct: 80 }).data;
   const r = E.analyse(d);
   assert.ok(!r.findings.some(f => f.id === "UNV-01"));
-  assert.equal(r.score, 90);
+  assert.equal(r.score, 89);
   assert.equal(r.level, "Préparée");
 });
 
@@ -129,7 +129,7 @@ t("risque : inverse de l'indice, plancher « élevé » pour une version 4.x", (
   const b = E.analyse(E.validate({ version: "2025", webi: 100, users: 10, auditActive: "oui" }).data);
   assert.equal(b.risk, 10); assert.equal(b.riskLevel, "faible");
   const c = E.analyse(E.validate({ version: "4.2", webi: 12000, unv: 80, users: 1500, auditActive: "non" }).data);
-  assert.equal(c.risk, 75); assert.equal(c.riskLevel, "critique");
+  assert.equal(c.risk, 85); assert.equal(c.riskLevel, "critique");
 });
 
 t("date limite de commande : 10 jours ouvrés avant le 31/12/2026, Noël exclu", () => {
@@ -149,11 +149,11 @@ t("champ « documents ouverts (%) » : le volume à traiter et le risque suivent
   const hi = run({ usedPct: 100 }), lo = run({ usedPct: 20 });
   assert.equal(hi.docs, 6302);
   assert.equal(hi.toProcess, 6302);
-  assert.equal(pen(hi, "VOL-01"), 6.3);
+  assert.equal(pen(hi, "VOL-01"), 12.6);
   assert.equal(lo.toProcess, 6302 - Math.round(6302 * 0.8));
-  assert.equal(pen(lo, "VOL-01"), 1.3);
-  assert.equal(lo.risk, 38);
-  assert.equal(hi.risk, 43);
+  assert.equal(pen(lo, "VOL-01"), 2.5);
+  assert.equal(lo.risk, 39);
+  assert.equal(hi.risk, 50);
   assert.equal(lo.size, hi.size);
   assert.equal(lo.price, hi.price);
   assert.ok(run({ usedPct: 20 }).unused > run({ usedPct: 80 }).unused);
@@ -182,15 +182,15 @@ t("champ « documents ouverts (%) » : ignoré si l'audit n'est pas actif", () =
   assert.equal(a.unused, null);
 });
 
-t("volume : 0,1 point par 100 documents à traiter, plafonné à 10", () => {
+t("volume : 0,2 point par 100 documents à traiter, plafonné à 20", () => {
   const v = (n) => pen(run({ webi: n, crystal: 0, analysis: 0, otherDocs: 0, dashboards: 0, usedPct: 100 }), "VOL-01");
-  assert.equal(v(40), 0);
-  assert.equal(v(500), 0.5);
-  assert.equal(v(1499), 1.5);
-  assert.equal(v(4000), 4);
-  assert.equal(v(9400), 9.4);
-  assert.equal(v(10000), 10);
-  assert.equal(v(50000), 10);
+  assert.equal(v(20), 0);
+  assert.equal(v(500), 1);
+  assert.equal(v(1499), 3);
+  assert.equal(v(4000), 8);
+  assert.equal(v(9400), 18.8);
+  assert.equal(v(10000), 20);
+  assert.equal(v(50000), 20);
 });
 
 t("univers UNV : pénalité proportionnelle au nombre, plafonnée à 20", () => {
