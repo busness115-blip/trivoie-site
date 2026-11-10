@@ -233,6 +233,8 @@ PRIVACY = """<main><div class="wrap"><p class="crumbs"><a href="/">Trivoie</a> &
 <p>Le calcul du scan s'effectue entièrement dans votre navigateur. Les nombres que vous saisissez ne sont pas transmis à nos serveurs. Le script de collecte automatique ne lit que des nombres et n'exporte aucun nom de document, d'utilisateur ou de serveur, et le mot de passe n'est jamais enregistré. Vous ne nous envoyez le résumé que si vous décidez de nous écrire.</p>
 <h2>Quand vous nous écrivez</h2>
 <p>Si vous nous envoyez un courriel, nous traitons votre adresse et le contenu du message pour répondre à votre demande, sur la base de notre intérêt légitime à répondre aux sollicitations professionnelles ou de l'exécution de mesures précontractuelles. Ces données sont conservées au plus 3 ans après le dernier échange.</p>
+<h2>Prise de rendez-vous</h2>
+<p>Le bouton « Échange gratuit de 20 minutes » ouvre, dans un nouvel onglet, la page de réservation du service Calendly. Les informations saisies sur cette page (nom, adresse de courriel, message) sont traitées par Calendly selon sa propre politique de confidentialité, et peuvent l'être hors de l'Union européenne. AM DATA les utilise uniquement pour organiser l'échange demandé. Tant que vous ne cliquez pas sur ce bouton, aucune donnée n'est transmise à Calendly.</p>
 <h2>Cookies et mesure d'audience</h2>
 <p>Ce site ne dépose aucun cookie et n'utilise aucun outil de mesure d'audience ni aucune police ou ressource hébergée par un tiers. Comme tout hébergeur, GitHub Pages traite techniquement l'adresse IP des visiteurs pour délivrer les pages et assurer la sécurité du service ; ce traitement peut avoir lieu hors de l'Union européenne. AM DATA n'a pas accès à ces journaux et ne les utilise pas.</p>
 <h2>Vos droits</h2>
