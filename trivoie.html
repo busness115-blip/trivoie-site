@@ -133,7 +133,7 @@ legend { font-family: var(--f-mono); font-size: 0.78rem; letter-spacing: 0.08em;
 .gauge { width: 132px; height: 132px; flex: none; }
 .gauge text { font-family: var(--f-display); fill: var(--ink); }
 .level { font-family: var(--f-display); font-weight: 750; font-size: 1.5rem; font-stretch: 90%; }
-.meta { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.meta { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
 .meta div { background: var(--bg); border-radius: var(--radius); padding: 8px 10px; min-width: 0; }
 .meta dt { font-size: 0.75rem; color: var(--muted); font-family: var(--f-mono); text-transform: uppercase; letter-spacing: 0.06em; }
 .meta dd { margin: 0; font-family: var(--f-mono); font-size: 1.05rem; font-variant-numeric: tabular-nums; }
@@ -274,7 +274,7 @@ footer .wrap { display: grid; gap: 8px; }
     <div class="wrap">
       <div class="lead">
         <span class="eyebrow">SAP BusinessObjects BI 4.3 · 31 décembre 2026</span>
-        <h1>Dans <span class="days" id="heroDays">57</span> jours, votre BusinessObjects 4.3 ne sera plus maintenu comme aujourd'hui.</h1>
+        <h1>Dans <span class="days" id="heroDays">57</span> <span id="heroUnit">jours</span>, votre BusinessObjects 4.3 ne sera plus maintenu comme aujourd'hui.</h1>
         <p class="sub">Mesurez en 5 minutes votre niveau de risque et ce qu'il faut traiter avant d'en sortir. L'analyse se fait dans votre navigateur : aucune donnée n'est envoyée.</p>
         <ul class="promises">
           <li>Gratuit, sans inscription</li>
@@ -381,7 +381,7 @@ lay();window.addEventListener('resize',lay);if(!reduce)requestAnimationFrame(tic
             </div>
             <fieldset id="fs-version">
               <div class="field">
-                <label for="version">Version de la plateforme</label>
+                <label for="version" id="lblVersion">Version de la plateforme</label>
                 <select id="version" name="version">
                   <option value="4.3" selected>BI 4.3</option>
                   <option value="4.2">BI 4.2</option>
@@ -406,29 +406,29 @@ lay();window.addEventListener('resize',lay);if(!reduce)requestAnimationFrame(tic
             </fieldset>
             <fieldset id="fs-univ">
               <legend>Univers et utilisateurs</legend>
-              <small class="legend-hint">UNV : univers créés avec Universe Design Tool, ils sont à convertir. UNX : avec Information Design Tool, au moins autant que d'UNV réduit un peu le risque.</small>
+              <small class="legend-hint">UNV : univers créés avec Universe Design Tool, ils sont à convertir. UNX : avec Information Design Tool. Le rapport UNX / UNV réduit la pénalité UNV, de 3 points au maximum (atteint quand il y a au moins autant d'UNX que d'UNV). Les comptes utilisateurs fixent, avec les documents, la taille de la plateforme et le prix du diagnostic.</small>
               <div class="grid2">
                 <div class="field"><label for="unv">Univers UNV</label><input id="unv" inputmode="numeric" value="23"><span class="err" id="err-unv"></span></div>
                 <div class="field"><label for="unx">Univers UNX</label><input id="unx" inputmode="numeric" value="40"><span class="err" id="err-unx"></span></div>
                 <div class="field"><label for="users">Comptes utilisateurs</label><input id="users" inputmode="numeric" value="740"><span class="err" id="err-users"></span></div>
-                <div class="field"><label for="activeUsers">dont connectés en 12 mois (facultatif, 20 % d'inactifs ou plus ajoute un point de vigilance en 4.x)</label><input id="activeUsers" inputmode="numeric" value=""><span class="err" id="err-activeUsers"></span></div>
+                <div class="field"><label for="activeUsers">dont connectés en 12 mois (facultatif : à partir de 20 % d'inactifs, de 2 à 5 points de risque en 4.x)</label><input id="activeUsers" inputmode="numeric" value=""><span class="err" id="err-activeUsers"></span></div>
               </div>
             </fieldset>
             <fieldset id="fs-usage">
-              <legend>Usage</legend>
+              <legend id="lgUsage">Usage</legend>
               <div class="field">
                 <span id="auditLbl" class="lbl-strong">La base d'audit est-elle active ?</span>
                 <div class="radio-row" role="radiogroup" aria-labelledby="auditLbl">
-                  <label><input type="radio" name="auditActive" id="audit-oui" value="oui" checked> Oui</label>
+                  <label><input type="radio" name="auditActive" id="audit-oui" value="oui"> Oui</label>
                   <label><input type="radio" name="auditActive" id="audit-non" value="non"> Non</label>
-                  <label><input type="radio" name="auditActive" id="audit-nsp" value="non"> Je ne sais pas</label>
+                  <label><input type="radio" name="auditActive" id="audit-nsp" value="non" checked> Je ne sais pas</label>
                 </div>
                 <small>Elle enregistre qui ouvre quel document. « Je ne sais pas » est traité comme « Non ».</small>
               </div>
               <div class="field" id="pctField">
                 <label for="usedPct">Documents ouverts au moins une fois en 12 mois (%)</label>
-                <input id="usedPct" inputmode="numeric" value="45">
-                <small>D'après l'audit. Plus ce pourcentage est bas, moins il y a de documents à traiter (ce qui peut faire baisser le niveau de risque). Laissez vide si vous ne l'avez pas.</small>
+                <input id="usedPct" inputmode="numeric" value="" placeholder="ex. 45">
+                <small>D'après l'audit. Seuls ces documents comptent pour le volume « À traiter » : plus ce pourcentage est bas, plus le volume et le risque baissent (1 point de risque par tranche de 500 documents à traiter). Laissez vide si vous ne l'avez pas.</small>
                 <span class="err" id="err-usedPct"></span>
               </div>
             </fieldset>
@@ -463,6 +463,7 @@ lay();window.addEventListener('resize',lay);if(!reduce)requestAnimationFrame(tic
             </div>
             <dl class="meta">
               <div><dt>Documents</dt><dd id="mDocs">0</dd></div>
+              <div><dt>À traiter</dt><dd id="mToProcess">0</dd></div>
               <div><dt>Comptes</dt><dd id="mUsers">0</dd></div>
               <div><dt>Taille</dt><dd id="mSize">M</dd></div>
             </dl>
@@ -506,7 +507,7 @@ lay();window.addEventListener('resize',lay);if(!reduce)requestAnimationFrame(tic
       <div class="section-head">
         <span class="eyebrow">Méthode</span>
         <h2>Comment le niveau de risque est calculé</h2>
-        <p>Chaque point de vigilance détecté ajoute un nombre de points fixe, jusqu'à 100. Les faits viennent de SAP et sont sourcés. Les poids sont une règle Trivoie, publiée ici : ils reflètent le risque et la charge de travail que chaque point ajoute à une sortie de BI 4.3. Ils servent à classer les priorités, pas à chiffrer un projet.</p>
+        <p>Chaque point de vigilance détecté ajoute des points de risque (au dixième de point), jusqu'à 100, et le total est arrondi à l'entier. Pour les volumes saisis (univers, documents, contenus obsolètes, Lumira, comptes inactifs), les points croissent avec le nombre, sans palier : chaque chiffre modifié change le résultat. Les faits viennent de SAP et sont sourcés. Les poids sont une règle Trivoie, publiée ici : ils reflètent le risque et la charge de travail que chaque point ajoute à une sortie de BI 4.3. Ils servent à classer les priorités, pas à chiffrer un projet.</p>
       </div>
       <div class="table-wrap" tabindex="0" role="region" aria-label="Tableau des sources (défilement horizontal)">
         <table>
@@ -514,13 +515,13 @@ lay();window.addEventListener('resize',lay);if(!reduce)requestAnimationFrame(tic
           <tbody>
             <tr><td>Version 4.1 ou 4.2, déjà sortie de la maintenance standard</td><td class="num">35</td><td>Le risque existe déjà aujourd'hui.</td><td>Product Availability Matrix SAP</td></tr>
             <tr><td>BI 4.3 : maintenance spécifique client à partir du 1er janvier 2027</td><td class="num">25</td><td>Sécurité et support, à date fixe, pour toute la plateforme.</td><td>Notes SAP 3486924 et 3763590, résumées par C. Vosloo et InfoSol</td></tr>
-            <tr><td>Univers UNV à convertir : 1 à 10 / 11 à 50 / plus de 50. Moins 3 points si vous avez déjà au moins autant d'univers UNX que d'UNV</td><td class="num">8 / 14 / 20</td><td>Chaque univers se convertit puis se reteste avec ses documents. Des UNX déjà créés montrent qu'une partie du chantier est faite.</td><td>Feuille de route BI 2025</td></tr>
+            <tr><td>Univers UNV à convertir : 4 points pour 1 univers, puis 0,3 point par univers supplémentaire, plafonné à 20 (atteint à 55 univers). Moins 3 points multipliés par le rapport UNX / UNV (3 points au plus)</td><td class="num">4 à 20</td><td>Chaque univers se convertit puis se reteste avec ses documents. Des UNX déjà créés montrent qu'une partie du chantier est engagée.</td><td>Feuille de route BI 2025</td></tr>
             <tr><td>Base d'audit inactive</td><td class="num">10</td><td>Sans mesure d'usage, on migre aussi ce que personne ne lit.</td><td>Vos réponses</td></tr>
-            <tr><td>BI 2025 : maintenance standard jusqu'au 31 décembre 2027</td><td class="num">10</td><td>Nouvelle échéance environ un an plus tard, à anticiper.</td><td>Calendrier SAP BI (Wiiisdom, C. Vosloo)</td></tr>
-            <tr><td>Plus de 10 000 / plus de 2 000 documents à traiter (hors documents non ouverts en 12 mois si l'audit est actif)</td><td class="num">10 / 5</td><td>Plus de contenu, plus de tri et de tests. Le pourcentage d'usage retire ce qui n'est plus ouvert.</td><td>Vos chiffres</td></tr>
-            <tr><td>Contenus obsolètes : Dashboards (Xcelsius), Desktop Intelligence, Explorer, Flash. 1 à 10 / 11 à 100 / plus de 100</td><td class="num">3 / 5 / 8</td><td>Ils ne fonctionnent plus : à reconstruire ou à retirer.</td><td>Notes SAP 2801797 et 2914654</td></tr>
-            <tr><td>Contenus Lumira</td><td class="num">5</td><td>Plus de nouvelle fonctionnalité : à requalifier.</td><td>Feuille de route BI 2025</td></tr>
-            <tr><td>Comptes sans connexion en 12 mois (20 % ou plus), BI 4.1 à 4.3</td><td class="num">5</td><td>Licences et comptes à nettoyer avant la migration, sinon on migre des accès inutiles.</td><td>Vos chiffres</td></tr>
+            <tr><td>BI 2025 : maintenance standard jusqu'au 31 décembre 2027</td><td class="num">10</td><td>Nouvelle échéance un an plus tard, puis BI 2027 attendue au premier trimestre 2027 : une montée de version environ tous les deux ans.</td><td>Calendrier SAP BI (Wiiisdom, C. Vosloo)</td></tr>
+            <tr><td>Documents à traiter : 1 point par tranche de 500 (0,2 point par 100 documents), plafonné à 20 à partir de 10 000 (hors documents non ouverts en 12 mois si l'audit est actif)</td><td class="num">0 à 20</td><td>Plus de contenu, plus de tri et de tests. Le pourcentage d'usage retire ce qui n'est plus ouvert : à 6 000 documents, 50 % d'usage fait passer de 12 à 6 points.</td><td>Vos chiffres</td></tr>
+            <tr><td>Contenus obsolètes : Dashboards (Xcelsius), Desktop Intelligence, Explorer, Flash. 2 points pour 1 contenu, puis 0,06 point par contenu supplémentaire, plafonné à 8 (atteint à 101)</td><td class="num">2 à 8</td><td>Ils ne fonctionnent plus : à reconstruire ou à retirer.</td><td>Notes SAP 2801797 et 2914654</td></tr>
+            <tr><td>Contenus Lumira : 2 points pour 1 contenu, puis 0,3 point par contenu supplémentaire, plafonné à 5 (atteint à 11)</td><td class="num">2 à 5</td><td>Plus de nouvelle fonctionnalité : à requalifier.</td><td>Feuille de route BI 2025</td></tr>
+            <tr><td>Comptes sans connexion en 12 mois, BI 4.1 à 4.3 : à partir de 20 % des comptes, 1 point par tranche de 10 % d'inactifs (de 2 à 5 points)</td><td class="num">2 à 5</td><td>Licences et comptes à nettoyer avant la migration, sinon on migre des accès inutiles.</td><td>Vos chiffres</td></tr>
             <tr><td>Documents non ouverts en 12 mois, ou comptes sans connexion en BI 2025</td><td class="num">0</td><td>Ce sont des économies possibles, pas des risques.</td><td>Vos chiffres</td></tr>
           </tbody>
         </table>
@@ -872,6 +873,9 @@ finally {
 
   var PRICES = { S: 2900, M: 4900, L: 7900 };
 
+  /* Pénalités à une décimale : chaque chiffre saisi déplace le résultat. */
+  function r1(x) { return Math.round(x * 10) / 10; }
+
   function analyse(d) {
     var findings = [];
     var score = 100;
@@ -890,26 +894,26 @@ finally {
         "La version " + d.version + " n'est plus en maintenance standard. Vérifiez sa situation exacte dans la PAM SAP avant toute décision.", "pam");
     } else if (d.version === "2025") {
       add("CSM-03", "attention", 10, "Maintenance standard de BI 2025 jusqu'au 31 décembre 2027",
-        "BI 2025 donne un an de maintenance standard supplémentaire, jusqu'au 31 décembre 2027. La décision suivante est à préparer dès 2027.", "csm");
+        "BI 2025 donne un an de maintenance standard supplémentaire, jusqu'au 31 décembre 2027. SAP prévoit BI 2027 au premier trimestre 2027 (Wiiisdom, Dallas Marks) : rester chez SAP implique une montée de version environ tous les deux ans. La décision suivante est à préparer dès 2027.", "csm");
     }
 
     if (d.unv > 0 && d.version !== "2025") {
-      var p = d.unv <= 10 ? 8 : d.unv <= 50 ? 14 : 20;
-      var half = d.unx >= d.unv;
-      if (half) p -= 3;
+      var credit = r1(3 * Math.min(d.unx / d.unv, 1));
+      var p = r1(Math.min(20, r1(4 + 0.3 * (d.unv - 1))) - credit);
+      var half = credit > 0;
       add("UNV-01", "élevé", p, d.unv + " univers UNV à convertir",
         "Les univers UNV ne sont plus pris en charge après BI 4.3. Ils doivent être convertis en UNX avant une montée en BI 2025, et les documents qui les utilisent doivent être retestés." +
-        (half ? " Vous avez déjà " + d.unx.toLocaleString("fr-FR") + " univers UNX, au moins autant que d'univers UNV : une partie du chantier est faite, la pénalité est réduite de 3 points." : ""), "bi2025");
+        (half ? " Vous avez déjà " + d.unx.toLocaleString("fr-FR") + " univers UNX pour " + d.unv.toLocaleString("fr-FR") + " UNV : une partie du chantier semble engagée, la pénalité est réduite de " + String(credit).replace(".", ",") + " points." : ""), "bi2025");
     }
 
     if (d.lumira > 0) {
-      add("CMP-01", "attention", 5, d.lumira + " applications ou documents Lumira",
+      add("CMP-01", "attention", r1(Math.min(5, 2 + 0.3 * (d.lumira - 1))), d.lumira + " applications ou documents Lumira",
         "Lumira Designer reste maintenu en BI 2025, mais sans nouvelle fonctionnalité. La situation de Lumira Discovery est à vérifier dans la PAM SAP. Ces contenus sont à requalifier dans le plan de sortie.", "bi2025");
     }
 
     var obsolete = d.dashboards + (d.legacy || 0);
     if (obsolete > 0) {
-      var po = obsolete <= 10 ? 3 : obsolete <= 100 ? 5 : 8;
+      var po = r1(Math.min(8, 2 + 0.06 * (obsolete - 1)));
       add("CMP-02", "élevé", po, obsolete + " contenus obsolètes (Dashboards, Desktop Intelligence, Explorer, Flash)",
         "Ces technologies ne sont plus prises en charge depuis BI 4.2 SP09 et BI 4.3. SAP fournit un script qui les supprime du référentiel. Elles sont à reconstruire ou à retirer avant toute montée de version.", "deprecated");
     }
@@ -940,7 +944,7 @@ finally {
         var share = Math.round(100 * inactive / d.users);
         var legacyV = d.version === "4.3" || d.version === "4.2" || d.version === "4.1";
         if (legacyV) {
-          add("USG-03", "attention", 5, inactive.toLocaleString("fr-FR") + " comptes sans connexion depuis 12 mois",
+          add("USG-03", "attention", r1(Math.min(5, Math.max(2, 10 * inactive / d.users))), inactive.toLocaleString("fr-FR") + " comptes sans connexion depuis 12 mois",
             "Soit " + share + " % des comptes. Avec une couverture de sécurité réduite, chaque compte inutile est une surface d'exposition de plus : les désactiver allège aussi la migration et peut réduire les licences.", "method");
         } else {
           findings.push({ id: "USG-03", severity: "opportunité", penalty: 0,
@@ -952,15 +956,13 @@ finally {
     }
 
     var volNote = toProcess < docs ? " (sur " + docs.toLocaleString("fr-FR") + " au total, hors documents non ouverts en 12 mois)" : "";
-    if (toProcess > 10000) {
-      add("VOL-01", "élevé", 10, "Volume important : " + toProcess.toLocaleString("fr-FR") + " documents à traiter" + volNote,
+    var volPts = r1(Math.min(20, toProcess / 500));
+    if (volPts > 0) {
+      add("VOL-01", volPts >= 15 ? "élevé" : "attention", volPts, (volPts >= 15 ? "Volume important : " : "Volume à traiter : ") + toProcess.toLocaleString("fr-FR") + " documents" + volNote,
         "Un tri préalable du contenu est indispensable pour maîtriser le coût d'une montée de version ou d'une migration.", "method");
-    } else if (toProcess > 2000) {
-      add("VOL-02", "attention", 5, "Volume moyen : " + toProcess.toLocaleString("fr-FR") + " documents à traiter" + volNote,
-        "Un tri préalable du contenu réduira la durée du projet.", "method");
     }
 
-    score = Math.max(0, Math.min(100, score));
+    score = Math.round(Math.max(0, Math.min(100, score)));
     var level = score >= 70 ? "Préparée" : score >= 40 ? "À organiser" : "Urgent";
     /* Niveau de risque affiché : 100 moins l'indice. Une version 4.x a une échéance fixe :
        son risque n'est jamais présenté en dessous de « élevé ». */
@@ -1069,7 +1071,7 @@ finally {
 
   function renderCountdown() {
     var days = daysUntil(new Date(2027, 0, 1));
-    if (days > 0) $("heroDays").textContent = String(days);
+    if (days > 0) { $("heroDays").textContent = String(days); $("heroUnit").textContent = days === 1 ? "jour" : "jours"; }
     else $("heroDays").parentNode.textContent = "Depuis le 1er janvier 2027, BusinessObjects 4.3 n'est plus maintenu comme avant.";
     var box = $("flaps"); box.textContent = "";
     (days > 0 ? "J-" + days : "CSM").split("").forEach(function (c) {
@@ -1099,7 +1101,9 @@ finally {
     $("fs-univ").hidden = fileMode;
     $("recapWrap").hidden = !fileMode;
     $("exampleNote").hidden = fileMode || touched;
-    $("formTitle").textContent = fileMode ? "Complétez ces deux informations" : "Vos chiffres";
+    $("formTitle").textContent = fileMode ? "Deux réponses à ajouter" : "Vos chiffres";
+    $("lblVersion").textContent = fileMode ? "1. Version de votre plateforme (choisissez dans la liste)" : "Version de la plateforme";
+    $("lgUsage").textContent = fileMode ? "2. Base d'audit" : "Usage";
   }
 
   function render() {
@@ -1142,6 +1146,7 @@ finally {
       dl.appendChild(st2); dl.appendChild(document.createTextNode(" Le diagnostic vous donne un plan chiffré en 10 jours ouvrés pour la réduire au plus vite."));
     }
     $("mDocs").textContent = nf.format(r.docs);
+    $("mToProcess").textContent = nf.format(r.toProcess) + (r.docs > 0 && r.toProcess < r.docs ? " (" + Math.round(100 * r.toProcess / r.docs) + " %)" : "");
     $("mUsers").textContent = nf.format(v.data.users);
     $("mSize").textContent = r.size; $("sizeInline").textContent = r.size; $("sizeDef").textContent = SIZE_DEF[r.size];
     $("price").textContent = nf.format(r.price) + " € HT";
@@ -1162,7 +1167,7 @@ finally {
       var chip = document.createElement("span"); chip.className = "chip"; chip.textContent = f.severity;
       var title = document.createElement("strong"); title.textContent = f.title;
       head.appendChild(chip); head.appendChild(title);
-      if (f.penalty > 0) { var pts = document.createElement("span"); pts.className = "pts"; pts.textContent = "−" + f.penalty + " points"; head.appendChild(pts); }
+      if (f.penalty > 0) { var pts = document.createElement("span"); pts.className = "pts"; pts.textContent = "−" + String(f.penalty).replace(".", ",") + " points"; head.appendChild(pts); }
       var p = document.createElement("p"); p.textContent = f.detail;
       body.appendChild(head); body.appendChild(p);
       if (f.source.url.charAt(0) !== "#") {
@@ -1250,7 +1255,7 @@ finally {
         div.appendChild(dt); div.appendChild(dd); dl.appendChild(div);
       });
       $("fileStatus").className = o.coherent ? "status ok" : "status bad";
-      $("fileStatus").textContent = o.coherent ? "Fichier lu. Complétez la version et l'usage juste en dessous."
+      $("fileStatus").textContent = o.coherent ? "Fichier lu. Il reste deux réponses à donner juste en dessous : 1. la version de votre plateforme, 2. si la base d'audit est active (si oui, la part des documents ouverts en 12 mois)."
         : "Fichier lu, mais les deux méthodes de comptage du script ne donnent pas le même total : les chiffres sont peut-être incomplets. Écrivez-nous pour vérifier.";
       render();
     } catch (err) {

@@ -1,7 +1,7 @@
 # Backlog de sujets (un par ligne, [ ] à faire, [x] fait)
 
 ## Pages du site
-- [ ] Calendrier de fin de maintenance de toutes les versions SAP BusinessObjects (4.1, 4.2, 4.3, BI 2025), dates sourcées
+- [x] Calendrier de fin de maintenance de toutes les versions SAP BusinessObjects (fait le 11/11/2026 : calendrier-fin-maintenance-sap-businessobjects-versions)
 - [x] Migrer de SAP BusinessObjects vers Power BI (fait le 10/11/2026 : migration-businessobjects-power-bi)
 - [x] BI 2027, audit, consultant, alternatives (faits le 10/11/2026)
 - [ ] Crystal Reports après la fin de maintenance de la 4.3 : options
