@@ -24,6 +24,7 @@
 - [Consultant SAP BusinessObjects indépendant](https://trivoie.fr/consultant-sap-businessobjects/): Consultant SAP BusinessObjects freelance, plus de 10 ans d'expérience : administration BI 4.2 et 4.3, Web Intelligence, TMA, audit et sortie de la 4.3.
 - [Audit SAP BusinessObjects : ce qu'il doit contenir](https://trivoie.fr/audit-sap-businessobjects/): Que contient un audit de plateforme SAP BusinessObjects : inventaire, usage réel, univers UNV, contenus obsolètes, sécurité, planifications. Méthode et livrables.
 - [Alternatives à SAP BusinessObjects : les options et les critères pour choisir](https://trivoie.fr/alternatives-sap-businessobjects/): Remplacer SAP BusinessObjects : BI 2025 et BI 2027, SAP Analytics Cloud, Power BI, Tableau, Qlik. Les critères qui départagent avant de décider.
+- [Calendrier de fin de maintenance de SAP BusinessObjects : 4.1, 4.2, 4.3, BI 2025 et BI 2027](https://trivoie.fr/calendrier-fin-maintenance-sap-businessobjects-versions/): Dates de fin de maintenance de SAP BusinessObjects 4.1, 4.2, 4.3, BI 2025 et BI 2027, avec leurs sources, et ce que cela change pour votre parc.
 
 ## Faits clés
 
