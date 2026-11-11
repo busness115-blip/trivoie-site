@@ -26,19 +26,20 @@ t("validation : espaces et virgules acceptés", () => {
   assert.equal(v.data.users, 12);
 });
 
-t("pourcentage hors bornes refusé seulement si audit actif", () => {
-  assert.equal(E.validate({ auditActive: "oui", usedPct: "140" }).valid, false);
-  assert.equal(E.validate({ auditActive: "non", usedPct: "140" }).valid, true);
+t("documents non ouverts au-delà du total refusés seulement si audit actif", () => {
+  assert.equal(E.validate({ auditActive: "oui", webi: "100", unusedDocs: "140" }).valid, false);
+  assert.equal(E.validate({ auditActive: "oui", webi: "100", unusedDocs: "100" }).valid, true);
+  assert.equal(E.validate({ auditActive: "non", webi: "100", unusedDocs: "140" }).valid, true);
 });
 
 t("plateforme 4.3 typique", () => {
   const d = E.validate({ version: "4.3", webi: 5800, crystal: 300, unv: 23, unx: 40, users: 740,
-    auditActive: "oui", usedPct: 45, lumira: 0, dashboards: 12 }).data;
+    auditActive: "oui", unusedDocs: 3362, lumira: 0, dashboards: 12 }).data;
   const r = E.analyse(d);
   // 100 - 25 (CSM) - 7,6 (UNV 23 : 4 + 0,3 x 22 = 10,6, moins 3 car UNX 40 >= UNV 23)
   // - 2,7 (obsolètes : 12 Dashboards, 2 + 0,06 x 11) - 5,5 (volume : 2 750 documents ouverts à traiter, 1 point par 500) = 59,2 soit 59
   assert.equal(r.score, 59);
-  assert.equal(r.toProcess, 6112 - Math.round(6112 * 0.55));
+  assert.equal(r.toProcess, 6112 - 3362);
   assert.equal(r.level, "À organiser");
   assert.equal(r.size, "M");
   assert.equal(r.price, 4900);
@@ -59,7 +60,7 @@ t("version 4.2 sans audit, gros volume : urgent", () => {
 });
 
 t("BI 2025 : pas de pénalité UNV, échéance 2027", () => {
-  const d = E.validate({ version: "2025", webi: 500, unv: 5, users: 50, auditActive: "oui", usedPct: 80 }).data;
+  const d = E.validate({ version: "2025", webi: 500, unv: 5, users: 50, auditActive: "oui", unusedDocs: 100 }).data;
   const r = E.analyse(d);
   assert.ok(!r.findings.some(f => f.id === "UNV-01"));
   assert.equal(r.score, 89);
@@ -141,49 +142,74 @@ console.log(n + " tests réussis");
 
 /* Effet de chaque champ du formulaire sur le résultat. */
 const base = { version: "4.3", webi: 5800, crystal: 300, analysis: 40, lumira: 0, dashboards: 12, legacy: 0, otherDocs: 150,
-  unv: 23, unx: 10, users: 740, activeUsers: 740, auditActive: "oui", usedPct: 100 };
+  unv: 23, unx: 10, users: 740, activeUsers: 740, auditActive: "oui", unusedDocs: 0 };
 const run = (o) => E.analyse(E.validate(Object.assign({}, base, o)).data);
 const pen = (r, id) => { const f = r.findings.find(x => x.id === id); return f ? f.penalty : 0; };
 
-t("champ « documents ouverts (%) » : le volume à traiter et le risque suivent le pourcentage", () => {
-  const hi = run({ usedPct: 100 }), lo = run({ usedPct: 20 });
-  assert.equal(hi.docs, 6302);
-  assert.equal(hi.toProcess, 6302);
-  assert.equal(pen(hi, "VOL-01"), 12.6);
-  assert.equal(lo.toProcess, 6302 - Math.round(6302 * 0.8));
-  assert.equal(pen(lo, "VOL-01"), 2.5);
-  assert.equal(lo.risk, 39);
-  assert.equal(hi.risk, 50);
-  assert.equal(lo.size, hi.size);
-  assert.equal(lo.price, hi.price);
-  assert.ok(run({ usedPct: 20 }).unused > run({ usedPct: 80 }).unused);
+t("champ « documents non ouverts » : vide et 0 donnent exactement le même résultat", () => {
+  const e = run({ unusedDocs: "" }), z = run({ unusedDocs: "0" }), u = run({ unusedDocs: undefined });
+  for (const k of ["score", "risk", "riskLevel", "toProcess", "size", "price"]) { assert.equal(e[k], z[k]); assert.equal(e[k], u[k]); }
+  assert.equal(e.findings.length, z.findings.length);
+  assert.equal(e.unused, null);
+  assert.equal(z.unused, null);
 });
 
-t("champ « documents ouverts (%) » : chaque dizaine déplace le volume et le risque ne baisse jamais quand l'usage monte", () => {
-  let prev = -1, prevTp = -1; const seen = new Set();
-  for (let p = 0; p <= 100; p += 10) {
-    const r = run({ usedPct: p });
-    assert.equal(r.toProcess, 6302 - Math.round(6302 * (100 - p) / 100));
-    assert.ok(r.toProcess > prevTp);
-    assert.ok(r.risk >= prev);
+t("champ « documents non ouverts » : le risque ne monte jamais, baisse à chaque tranche et suit le nombre saisi", () => {
+  const docs = 6302; let prev = Infinity, prevTp = Infinity; const seen = new Set();
+  for (let n = 0; n <= docs; n += 100) {
+    const r = run({ unusedDocs: n });
+    assert.equal(r.toProcess, docs - n);
+    assert.ok(r.toProcess < prevTp || n === 0);
+    assert.ok(r.risk <= prev, "le risque ne monte jamais quand on retire des documents");
     prev = r.risk; prevTp = r.toProcess; seen.add(r.risk);
   }
-  assert.ok(seen.size >= 6, "au moins 6 niveaux de risque différents entre 0 et 100 %");
-  assert.ok(run({ usedPct: 10 }).risk < run({ usedPct: 90 }).risk);
-  assert.equal(run({ usedPct: 0 }).toProcess, 0);
-  assert.equal(pen(run({ usedPct: 0 }), "VOL-01"), 0);
-  assert.notEqual(pen(run({ usedPct: 41 }), "VOL-01"), pen(run({ usedPct: 45 }), "VOL-01"));
+  assert.ok(seen.size >= 10, "au moins 10 niveaux de risque différents entre 0 et le total");
+  assert.equal(pen(run({ unusedDocs: docs }), "VOL-01"), 0);
+  assert.equal(run({ unusedDocs: 3000 }).risk, run({ unusedDocs: 0 }).risk - 6);
+  assert.equal(run({ unusedDocs: 0 }).risk, 50);
+  assert.ok(run({ unusedDocs: 1 }).risk >= run({ unusedDocs: 0 }).risk - 1, "1 document de plus ne fait jamais bouger de plus d'un point");
+  assert.ok(run({ unusedDocs: 4000 }).risk < run({ unusedDocs: 500 }).risk);
 });
 
-t("champ « documents ouverts (%) » : ignoré si l'audit n'est pas actif", () => {
-  const a = run({ auditActive: "non", usedPct: 20 }), b = run({ auditActive: "non", usedPct: 90 });
-  assert.equal(a.risk, b.risk);
+t("champ « documents non ouverts » : un pas d'un document ne déplace jamais le risque de plus d'un point", () => {
+  let prev = run({ unusedDocs: 0 }).risk;
+  for (let n = 1; n <= 6302; n++) {
+    const r = run({ unusedDocs: n }).risk;
+    assert.ok(prev - r <= 1 && r <= prev, "saut anormal à " + n + " : " + prev + " -> " + r);
+    prev = r;
+  }
+});
+
+t("champ « documents non ouverts » : refusé au-delà du total, ignoré si l'audit n'est pas actif", () => {
+  assert.equal(E.validate(Object.assign({}, base, { unusedDocs: 6303 })).valid, false);
+  assert.equal(E.validate(Object.assign({}, base, { unusedDocs: 6302 })).valid, true);
+  const a = run({ auditActive: "non", unusedDocs: 100 }), b = run({ auditActive: "non", unusedDocs: 5000 }), c = run({ auditActive: "non", unusedDocs: "" });
+  assert.equal(a.risk, b.risk); assert.equal(a.risk, c.risk);
   assert.equal(a.toProcess, a.docs);
   assert.equal(a.unused, null);
 });
 
+t("niveau de risque : toujours entre 0 et 100, entier, cohérent sur 20 000 combinaisons aléatoires", () => {
+  let seed = 7; const rnd = () => (seed = (seed * 1103515245 + 12345) % 2147483648) / 2147483648;
+  const ver = ["4.1", "4.2", "4.3", "2025"];
+  for (let i = 0; i < 20000; i++) {
+    const o = { version: ver[Math.floor(rnd() * 4)], webi: String(Math.floor(rnd() * 12000)), crystal: String(Math.floor(rnd() * 800)),
+      analysis: String(Math.floor(rnd() * 50)), lumira: String(Math.floor(rnd() * 30)), dashboards: String(Math.floor(rnd() * 60)),
+      unv: String(Math.floor(rnd() * 120)), unx: String(Math.floor(rnd() * 120)), users: String(Math.floor(rnd() * 3000)),
+      auditActive: rnd() < 0.5 ? "oui" : "non" };
+    const v0 = E.validate(Object.assign({}, o, { unusedDocs: "" })).data, r0 = E.analyse(v0);
+    const z = E.analyse(E.validate(Object.assign({}, o, { unusedDocs: "0" })).data);
+    assert.equal(r0.risk, z.risk, "vide != 0");
+    assert.ok(Number.isInteger(r0.risk) && r0.risk >= 0 && r0.risk <= 100);
+    assert.equal(r0.risk + r0.score, 100);
+    const half = Math.floor(r0.docs / 2);
+    const rh = E.analyse(E.validate(Object.assign({}, o, { unusedDocs: String(half) })).data);
+    assert.ok(rh.risk <= r0.risk, "retirer des documents ne peut pas augmenter le risque");
+  }
+});
+
 t("volume : 0,2 point par 100 documents à traiter, plafonné à 20", () => {
-  const v = (n) => pen(run({ webi: n, crystal: 0, analysis: 0, otherDocs: 0, dashboards: 0, usedPct: 100 }), "VOL-01");
+  const v = (n) => pen(run({ webi: n, crystal: 0, analysis: 0, otherDocs: 0, dashboards: 0, unusedDocs: 0 }), "VOL-01");
   assert.equal(v(20), 0);
   assert.equal(v(500), 1);
   assert.equal(v(1499), 3);

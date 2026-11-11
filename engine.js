@@ -65,12 +65,15 @@
     data.activeUsers = act === null || isNaN(act) || act > data.users ? null : act;
     data.version = raw.version || "4.3";
     data.auditActive = raw.auditActive === true || raw.auditActive === "oui";
-    var pct = toInt(raw.usedPct);
-    if (data.auditActive && raw.usedPct !== "" && raw.usedPct !== undefined && raw.usedPct !== null) {
-      if (isNaN(pct) || pct > 100) errors.usedPct = "Entrez un pourcentage entre 0 et 100.";
-      else data.usedPct = pct;
-    } else {
-      data.usedPct = null;
+    /* Documents non ouverts depuis 12 mois (nombre), lus dans la base d'audit.
+       Vide = 0 : « je n'en ai pas identifié » donne exactement le même résultat que 0. */
+    var unusedN = toInt(raw.unusedDocs);
+    var totalForCap = totalDocs(data);
+    data.unusedDocs = 0;
+    if (data.auditActive && unusedN !== null) {
+      if (isNaN(unusedN)) errors.unusedDocs = "Entrez un nombre entier positif.";
+      else if (unusedN > totalForCap) errors.unusedDocs = "Ne peut pas dépasser le nombre total de documents (" + totalForCap.toLocaleString("fr-FR") + ").";
+      else data.unusedDocs = unusedN;
     }
     return { data: data, errors: errors, valid: Object.keys(errors).length === 0 };
   }
@@ -138,18 +141,16 @@
     }
 
     var unused = null;
-    /* Documents à traiter : si l'audit est actif et que le pourcentage d'usage est connu,
-       seuls les documents réellement ouverts comptent pour le volume (les autres sont à décommissionner). */
+    /* Documents à traiter : l'audit actif permet de retirer les documents non ouverts en 12 mois
+       (à décommissionner). Un champ vide ou 0 signifie « aucun identifié » : volume inchangé. */
     var toProcess = docs;
-    if (d.auditActive && d.usedPct !== null && docs > 0) {
-      unused = Math.round(docs * (100 - d.usedPct) / 100);
+    if (d.auditActive && d.unusedDocs > 0 && docs > 0) {
+      unused = Math.min(d.unusedDocs, docs);
       toProcess = docs - unused;
-      if (d.usedPct < 100) {
-        findings.push({ id: "USG-02", severity: "opportunité", penalty: 0,
-          title: "Environ " + unused.toLocaleString("fr-FR") + " documents non ouverts depuis 12 mois",
-          detail: "Ces documents sont candidats au décommissionnement avant toute migration : autant de travail et de coût en moins.",
-          source: SOURCES.method });
-      }
+      findings.push({ id: "USG-02", severity: "opportunité", penalty: 0,
+        title: unused.toLocaleString("fr-FR") + " documents non ouverts depuis 12 mois",
+        detail: "Ces documents sont candidats au décommissionnement avant toute migration : autant de travail et de coût en moins.",
+        source: SOURCES.method });
     }
 
     if (d.activeUsers !== null && d.activeUsers !== undefined && d.users > 0) {
