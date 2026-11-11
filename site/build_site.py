@@ -155,7 +155,7 @@ def analytics_tag():
     a = ANALYTICS
     if not a["website_id"]:
         return ""
-    return '<script defer src="%s" data-website-id="%s" data-do-not-track="true" data-domains="trivoie.fr"></script>' % (a["script"], a["website_id"])
+    return '<script defer src="%s" data-website-id="%s" data-do-not-track="true"></script>' % (a["script"], a["website_id"])
 
 
 def foot_label(p):
