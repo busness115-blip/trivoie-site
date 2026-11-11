@@ -155,7 +155,7 @@ def analytics_tag():
     a = ANALYTICS
     if not a["website_id"]:
         return ""
-    return '<script defer src="%s" data-website-id="%s" data-do-not-track="true"></script>' % (a["script"], a["website_id"])
+    return '<script defer src="%s" data-website-id="%s"></script>' % (a["script"], a["website_id"])
 
 
 def foot_label(p):
@@ -279,10 +279,27 @@ if ANALYTICS["website_id"]:
     AUDIENCE = ("<p>Ce site ne dépose aucun cookie. Pour savoir combien de personnes le consultent et d'où elles viennent, il utilise Umami Cloud, un outil de mesure d'audience dont le script n'utilise pas de cookie (source : documentation d'Umami). "
                 "Sont comptés les pages consultées, le site d'origine du visiteur, le pays, le type d'appareil et de navigateur, et quelques actions sans lien avec vos saisies (par exemple un clic sur un bouton de contact). "
                 "Les nombres saisis dans le scan ne sont jamais transmis. Les statistiques servent uniquement à AM DATA, pour améliorer le site, et ne sont ni croisées avec d'autres données ni revendues. "
-                "L'outil respecte le signal « Ne pas suivre » de votre navigateur. Vous pouvez vous opposer à cette mesure en écrivant à %s.</p>"
+                "Vous pouvez vous opposer à cette mesure en écrivant à %s.</p>"
                 "<p>Comme tout hébergeur, GitHub Pages traite techniquement l'adresse IP des visiteurs pour délivrer les pages ; ce traitement peut avoir lieu hors de l'Union européenne. AM DATA n'a pas accès à ces journaux.</p>") % EMAIL
 else:
     AUDIENCE = ("<p>Ce site ne dépose aucun cookie et n'utilise aucun outil de mesure d'audience ni aucune police ou ressource hébergée par un tiers. Comme tout hébergeur, GitHub Pages traite techniquement l'adresse IP des visiteurs pour délivrer les pages et assurer la sécurité du service ; ce traitement peut avoir lieu hors de l'Union européenne. AM DATA n'a pas accès à ces journaux et ne les utilise pas.</p>")
+
+DIAG = """<main><div class="wrap"><h1>Diagnostic de la mesure d'audience</h1>
+<p>Cette page vérifie, depuis votre navigateur, que la mesure fonctionne. Elle n'est pas référencée.</p>
+<ul id="diag" style="line-height:1.9"></ul>
+<p><button type="button" id="dsend" style="padding:.6em 1em;font:inherit;cursor:pointer">Envoyer un événement de test</button> <span id="dres"></span></p>
+<script>
+(function(){var ul=document.getElementById("diag");function row(ok,t){var li=document.createElement("li");li.textContent=(ok===null?"ℹ ":ok?"✔ ":"✘ ")+t;ul.appendChild(li);}
+var viol=[];document.addEventListener("securitypolicyviolation",function(e){viol.push(e.blockedURI+" ("+e.violatedDirective+")");});
+row(null,"Adresse : "+location.protocol+"//"+location.host+location.pathname);
+row(null,"Signal « Ne pas suivre » : "+(navigator.doNotTrack||window.doNotTrack||"non envoyé")+" | Global Privacy Control : "+(navigator.globalPrivacyControl?"oui":"non"));
+var tag=document.querySelector('script[data-website-id]');row(!!tag,"Balise de mesure présente dans la page"+(tag?" (identifiant "+tag.getAttribute("data-website-id").slice(0,8)+"...)":""));
+function after(){row(!!(window.umami&&window.umami.track),"Script Umami chargé (objet umami disponible)"+(window.umami?"":" : bloqué par votre navigateur, une extension ou un contenu bloqué"));
+fetch("https://cloud.umami.is/script.js",{mode:"no-cors"}).then(function(){row(true,"Le serveur cloud.umami.is répond depuis votre connexion");}).catch(function(){row(false,"cloud.umami.is inaccessible depuis ce navigateur (bloqueur, réseau ou VPN)");});
+if(viol.length)row(false,"Politique de sécurité : "+viol.join(", "));}
+if(document.readyState==="complete")after();else window.addEventListener("load",after);
+document.getElementById("dsend").addEventListener("click",function(){var r=document.getElementById("dres");try{if(window.umami&&window.umami.track){window.umami.track("test-diagnostic");r.textContent="Événement « test-diagnostic » envoyé : regardez Umami, vue Temps réel.";}else r.textContent="Impossible : le script Umami n'est pas chargé.";}catch(e){r.textContent="Erreur : "+e.message;}});})();
+</script></div></main>"""
 
 PRIVACY = """<main><div class="wrap"><p class="crumbs"><a href="/">Trivoie</a> &rsaquo; Confidentialité</p><h1>Politique de confidentialité</h1>
 <h2>Responsable du traitement</h2>
@@ -426,6 +443,7 @@ if __name__ == "__main__":
     for p in PAGES:
         build_article(p, PAGES)
     build_hub()
+    write("/diagnostic-mesure/index.html", page_shell("Diagnostic de la mesure", "Vérification technique de la mesure d'audience.", "/diagnostic-mesure/", DIAG, noindex=True))
     write("/mentions-legales/index.html", page_shell("Mentions légales", "Mentions légales du site Trivoie, service d'AM DATA.", "/mentions-legales/", LEGAL))
     write("/confidentialite/index.html", page_shell("Politique de confidentialité", "Données traitées par le site Trivoie : aucune pour le scan, aucun cookie.", "/confidentialite/", PRIVACY))
     print("ok", DOMAIN)
