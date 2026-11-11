@@ -33,3 +33,8 @@ Faits recoupés le 10/11/2026 par au moins deux analyses indépendantes (Wiiisdo
 ## Pages et pied de page (10/11/2026)
 - Toute nouvelle page se crée dans site/content/NN_nom.py (dict PAGE). Elle apparaît automatiquement dans le pied de page de toutes les pages, l'index des guides, la section guides de l'accueil, le sitemap et llms.txt. Libellé court du pied de page : clé "nav" du dict, sinon FOOT_LABELS dans build_site.py.
 - Après chaque modification : python3 build.py, python3 site/build_site.py, python3 make_artifact.py, puis déployer le site ET republier l'artefact (artifact-home.html).
+
+## Mesure d'audience (Umami Cloud, sans cookie)
+- Config dans site/build_site.py : ANALYTICS["website_id"] (vide = rien chargé, CSP fermée, page confidentialité « aucun outil »). Renseigné : script, CSP (script-src + connect-src), texte de confidentialité s'adaptent seuls. Test local : TRIVOIE_UMAMI_ID=xxx python3 site/build_site.py.
+- Événements : attributs data-umami-event dans template.html + track("scan-commence" / "fichier-importe"). Jamais de valeur saisie dans un événement.
+- Liens LinkedIn : ajouter ?utm_source=linkedin&utm_medium=post&utm_campaign=<nom>.

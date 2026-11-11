@@ -138,6 +138,26 @@ FOOT_LABELS = {
     "audit-sap-businessobjects": "Audit SAP BusinessObjects",
     "alternatives-sap-businessobjects": "Alternatives à BusinessObjects",
 }
+# Mesure d'audience (Umami Cloud, sans cookie). Tant que WEBSITE_ID est vide, rien n'est chargé,
+# la politique de sécurité reste fermée et la page confidentialité annonce « aucun outil de mesure ».
+ANALYTICS = {"website_id": os.environ.get("TRIVOIE_UMAMI_ID", ""), "script": "https://cloud.umami.is/script.js",
+             "script_host": "https://cloud.umami.is", "api_host": "https://api-gateway.umami.dev"}
+
+
+def csp(frame_ancestors=False):
+    a = ANALYTICS
+    on = bool(a["website_id"])
+    return ("default-src 'self'; script-src 'self' 'unsafe-inline'%s; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src %s;%s base-uri 'self'; form-action 'none'"
+            % (" " + a["script_host"] if on else "", ("'self' " + a["api_host"] + " " + a["script_host"]) if on else "'none'", " frame-ancestors 'none';" if frame_ancestors else ""))
+
+
+def analytics_tag():
+    a = ANALYTICS
+    if not a["website_id"]:
+        return ""
+    return '<script defer src="%s" data-website-id="%s" data-do-not-track="true" data-domains="trivoie.fr"></script>' % (a["script"], a["website_id"])
+
+
 def foot_label(p):
     return p.get("nav") or FOOT_LABELS.get(p["slug"]) or p["h1"].split(" : ")[0]
 NAV_FOOT = ('<nav aria-label="Guides"><a href="/guides/">Tous les guides</a>'
@@ -152,7 +172,7 @@ def head(title, desc, path, extra_ld=None, og_type="website", css=True, noindex=
     url = DOMAIN + path
     ld = {"@context": "https://schema.org", "@graph": [ORG] + (extra_ld or [])}
     h = ['<meta charset="utf-8">', '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">',
-         '<meta http-equiv="Content-Security-Policy" content="default-src \'self\'; script-src \'self\' \'unsafe-inline\'; style-src \'self\' \'unsafe-inline\'; img-src \'self\' data:; font-src \'self\'; connect-src \'none\'; base-uri \'self\'; form-action \'none\'">',
+         '<meta http-equiv="Content-Security-Policy" content="%s">' % csp(),
          "<title>%s | Trivoie</title>" % html.escape(title) if "Trivoie" not in title else "<title>%s</title>" % html.escape(title),
          '<meta name="description" content="%s">' % html.escape(desc, quote=True),
          '<link rel="canonical" href="%s">' % url,
@@ -165,7 +185,7 @@ def head(title, desc, path, extra_ld=None, og_type="website", css=True, noindex=
          '<link rel="alternate" hreflang="fr" href="%s">' % url, '<link rel="alternate" hreflang="x-default" href="%s">' % url,
          '<meta name="twitter:card" content="summary_large_image">', '<meta name="twitter:title" content="%s">' % html.escape(title, quote=True),
          '<meta name="twitter:description" content="%s">' % html.escape(desc, quote=True), '<meta name="twitter:image" content="%s/og.png">' % DOMAIN, '<meta name="theme-color" content="#15212a">',
-         FAVICON, PRELOAD,
+         FAVICON, PRELOAD, analytics_tag(),
          '<script type="application/ld+json">%s</script>' % json.dumps(ld, ensure_ascii=False, separators=(",", ":"))]
     return "\n".join(h)
 
@@ -255,6 +275,15 @@ LEGAL = """<main><div class="wrap"><p class="crumbs"><a href="/">Trivoie</a> &rs
 <p>Les informations de ce site sont fournies à titre indicatif et ne remplacent pas la documentation officielle de SAP. Les dates et règles de maintenance doivent être vérifiées auprès de SAP avant toute décision.</p>
 <p><a href="/">Retour à l'accueil</a></p></div></main>""" % {"mail": EMAIL}
 
+if ANALYTICS["website_id"]:
+    AUDIENCE = ("<p>Ce site ne dépose aucun cookie. Pour savoir combien de personnes le consultent et d'où elles viennent, il utilise Umami Cloud, un outil de mesure d'audience dont le script n'utilise pas de cookie (source : documentation d'Umami). "
+                "Sont comptés les pages consultées, le site d'origine du visiteur, le pays, le type d'appareil et de navigateur, et quelques actions sans lien avec vos saisies (par exemple un clic sur un bouton de contact). "
+                "Les nombres saisis dans le scan ne sont jamais transmis. Les statistiques servent uniquement à AM DATA, pour améliorer le site, et ne sont ni croisées avec d'autres données ni revendues. "
+                "L'outil respecte le signal « Ne pas suivre » de votre navigateur. Vous pouvez vous opposer à cette mesure en écrivant à %s.</p>"
+                "<p>Comme tout hébergeur, GitHub Pages traite techniquement l'adresse IP des visiteurs pour délivrer les pages ; ce traitement peut avoir lieu hors de l'Union européenne. AM DATA n'a pas accès à ces journaux.</p>") % EMAIL
+else:
+    AUDIENCE = ("<p>Ce site ne dépose aucun cookie et n'utilise aucun outil de mesure d'audience ni aucune police ou ressource hébergée par un tiers. Comme tout hébergeur, GitHub Pages traite techniquement l'adresse IP des visiteurs pour délivrer les pages et assurer la sécurité du service ; ce traitement peut avoir lieu hors de l'Union européenne. AM DATA n'a pas accès à ces journaux et ne les utilise pas.</p>")
+
 PRIVACY = """<main><div class="wrap"><p class="crumbs"><a href="/">Trivoie</a> &rsaquo; Confidentialité</p><h1>Politique de confidentialité</h1>
 <h2>Responsable du traitement</h2>
 <p>AM DATA, entreprise individuelle, SIREN 939 133 781, 32 rue Boyer, 75020 Paris. Contact : %(mail)s</p>
@@ -265,10 +294,10 @@ PRIVACY = """<main><div class="wrap"><p class="crumbs"><a href="/">Trivoie</a> &
 <h2>Prise de rendez-vous</h2>
 <p>Le bouton « Échange gratuit de 20 minutes » ouvre, dans un nouvel onglet, la page de réservation du service Calendly. Les informations saisies sur cette page (nom, adresse de courriel, message) sont traitées par Calendly selon sa propre politique de confidentialité, et peuvent l'être hors de l'Union européenne. AM DATA les utilise uniquement pour organiser l'échange demandé. Tant que vous ne cliquez pas sur ce bouton, aucune donnée n'est transmise à Calendly.</p>
 <h2>Cookies et mesure d'audience</h2>
-<p>Ce site ne dépose aucun cookie et n'utilise aucun outil de mesure d'audience ni aucune police ou ressource hébergée par un tiers. Comme tout hébergeur, GitHub Pages traite techniquement l'adresse IP des visiteurs pour délivrer les pages et assurer la sécurité du service ; ce traitement peut avoir lieu hors de l'Union européenne. AM DATA n'a pas accès à ces journaux et ne les utilise pas.</p>
+%(audience)s
 <h2>Vos droits</h2>
 <p>Vous pouvez demander l'accès, la rectification ou l'effacement de vos données, vous opposer à leur traitement ou en demander la limitation en écrivant à %(mail)s. Vous pouvez aussi saisir la CNIL (www.cnil.fr).</p>
-<p><a href="/">Retour à l'accueil</a></p></div></main>""" % {"mail": EMAIL}
+<p><a href="/">Retour à l'accueil</a></p></div></main>""" % {"mail": EMAIL, "audience": AUDIENCE}
 
 
 def build_index():
@@ -378,12 +407,12 @@ Header always set Strict-Transport-Security "max-age=31536000"
 Header always set X-Content-Type-Options "nosniff"
 Header always set Referrer-Policy "strict-origin-when-cross-origin"
 Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
-Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'none'"
+Header always set Content-Security-Policy "__CSP__"
 <FilesMatch "\\.(woff2|png|svg)$">
 Header set Cache-Control "public, max-age=31536000, immutable"
 </FilesMatch>
 </IfModule>
-""")
+""".replace("__CSP__", csp(True)))
     write("/404.html", page_shell("Page introuvable", "Cette page n'existe pas.", "/404.html",
           '<main><div class="wrap"><h1>Page introuvable</h1><p>Cette page n\'existe pas ou a été déplacée.</p><p><a href="/">Retour à l\'accueil</a></p></div></main>', noindex=True))
 
