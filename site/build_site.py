@@ -141,14 +141,14 @@ FOOT_LABELS = {
 # Mesure d'audience (Umami Cloud, sans cookie). Tant que WEBSITE_ID est vide, rien n'est chargé,
 # la politique de sécurité reste fermée et la page confidentialité annonce « aucun outil de mesure ».
 ANALYTICS = {"website_id": os.environ.get("TRIVOIE_UMAMI_ID", "4396576b-6679-48bc-9158-52b20910a3ea"), "script": "https://cloud.umami.is/script.js",
-             "script_host": "https://cloud.umami.is", "api_host": "https://api-gateway.umami.dev"}
+             "script_host": "https://cloud.umami.is", "api_host": "https://gateway.umami.is"}
 
 
 def csp(frame_ancestors=False):
     a = ANALYTICS
     on = bool(a["website_id"])
     return ("default-src 'self'; script-src 'self' 'unsafe-inline'%s; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src %s;%s base-uri 'self'; form-action 'none'"
-            % (" " + a["script_host"] if on else "", ("'self' " + a["api_host"] + " " + a["script_host"]) if on else "'none'", " frame-ancestors 'none';" if frame_ancestors else ""))
+            % (" " + a["script_host"] if on else "", ("'self' " + a["api_host"]) if on else "'none'", " frame-ancestors 'none';" if frame_ancestors else ""))
 
 
 def analytics_tag():
@@ -295,10 +295,9 @@ row(null,"Adresse : "+location.protocol+"//"+location.host+location.pathname);
 row(null,"Signal « Ne pas suivre » : "+(navigator.doNotTrack||window.doNotTrack||"non envoyé")+" | Global Privacy Control : "+(navigator.globalPrivacyControl?"oui":"non"));
 var tag=document.querySelector('script[data-website-id]');row(!!tag,"Balise de mesure présente dans la page"+(tag?" (identifiant "+tag.getAttribute("data-website-id").slice(0,8)+"...)":""));
 function after(){row(!!(window.umami&&window.umami.track),"Script Umami chargé (objet umami disponible)"+(window.umami?"":" : bloqué par votre navigateur, une extension ou un contenu bloqué"));
-fetch("https://cloud.umami.is/script.js",{mode:"no-cors"}).then(function(){row(true,"Le serveur cloud.umami.is répond depuis votre connexion");}).catch(function(){row(false,"cloud.umami.is inaccessible depuis ce navigateur (bloqueur, réseau ou VPN)");});
 if(viol.length)row(false,"Politique de sécurité : "+viol.join(", "));}
 if(document.readyState==="complete")after();else window.addEventListener("load",after);
-document.getElementById("dsend").addEventListener("click",function(){var r=document.getElementById("dres");try{if(window.umami&&window.umami.track){window.umami.track("test-diagnostic");r.textContent="Événement « test-diagnostic » envoyé : regardez Umami, vue Temps réel.";}else r.textContent="Impossible : le script Umami n'est pas chargé.";}catch(e){r.textContent="Erreur : "+e.message;}});})();
+document.getElementById("dsend").addEventListener("click",function(){var r=document.getElementById("dres");try{if(window.umami&&window.umami.track){window.umami.track("test-diagnostic");r.textContent="Événement envoyé, vérification...";setTimeout(function(){r.textContent=viol.length?"ÉCHEC : l'envoi est bloqué par la politique de sécurité : "+viol.join(", "):"Événement « test-diagnostic » envoyé : regardez Umami, vue Temps réel.";},1200);}else r.textContent="Impossible : le script Umami n'est pas chargé.";}catch(e){r.textContent="Erreur : "+e.message;}});})();
 </script></div></main>"""
 
 PRIVACY = """<main><div class="wrap"><p class="crumbs"><a href="/">Trivoie</a> &rsaquo; Confidentialité</p><h1>Politique de confidentialité</h1>
