@@ -35,6 +35,6 @@ Faits recoupés le 10/11/2026 par au moins deux analyses indépendantes (Wiiisdo
 - Après chaque modification : python3 build.py, python3 site/build_site.py, python3 make_artifact.py, puis déployer le site ET republier l'artefact (artifact-home.html).
 
 ## Mesure d'audience (Umami Cloud, sans cookie)
-- Config dans site/build_site.py : ANALYTICS["website_id"] (vide = rien chargé, CSP fermée, page confidentialité « aucun outil »). Renseigné : script, CSP (script-src + connect-src), texte de confidentialité s'adaptent seuls. Test local : TRIVOIE_UMAMI_ID=xxx python3 site/build_site.py.
+- Config dans site/build_site.py : ANALYTICS["website_id"] (vide = rien chargé, CSP fermée, page confidentialité « aucun outil »). Renseigné : script, CSP (script-src + connect-src), texte de confidentialité s'adaptent seuls. Test local : TRIVOIE_UMAMI_ID=autre-id python3 site/build_site.py.
 - Événements : attributs data-umami-event dans template.html + track("scan-commence" / "fichier-importe"). Jamais de valeur saisie dans un événement.
 - Liens LinkedIn : ajouter ?utm_source=linkedin&utm_medium=post&utm_campaign=<nom>.

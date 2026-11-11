@@ -140,7 +140,7 @@ FOOT_LABELS = {
 }
 # Mesure d'audience (Umami Cloud, sans cookie). Tant que WEBSITE_ID est vide, rien n'est chargé,
 # la politique de sécurité reste fermée et la page confidentialité annonce « aucun outil de mesure ».
-ANALYTICS = {"website_id": os.environ.get("TRIVOIE_UMAMI_ID", ""), "script": "https://cloud.umami.is/script.js",
+ANALYTICS = {"website_id": os.environ.get("TRIVOIE_UMAMI_ID", "4396576b-6679-48bc-9158-52b20910a3ea"), "script": "https://cloud.umami.is/script.js",
              "script_host": "https://cloud.umami.is", "api_host": "https://api-gateway.umami.dev"}
 
 
