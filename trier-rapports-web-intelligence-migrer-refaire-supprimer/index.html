@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cloud.umami.is; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://gateway.umami.is; base-uri 'self'; form-action 'none'">
+<title>Trier ses rapports Web Intelligence avant la migration | Trivoie</title>
+<meta name="description" content="Web Intelligence : classez vos rapports en trois groupes, à migrer, à refaire ou à supprimer, avant la fin de maintenance de la 4.3. Méthode et sources.">
+<link rel="canonical" href="https://trivoie.fr/trier-rapports-web-intelligence-migrer-refaire-supprimer/">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:site_name" content="Trivoie">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Trier ses rapports Web Intelligence avant la migration">
+<meta property="og:description" content="Web Intelligence : classez vos rapports en trois groupes, à migrer, à refaire ou à supprimer, avant la fin de maintenance de la 4.3. Méthode et sources.">
+<meta property="og:url" content="https://trivoie.fr/trier-rapports-web-intelligence-migrer-refaire-supprimer/">
+<meta property="og:image" content="https://trivoie.fr/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Trivoie : la fin de maintenance de SAP BusinessObjects 4.3, trois voies">
+<link rel="alternate" hreflang="fr" href="https://trivoie.fr/trier-rapports-web-intelligence-migrer-refaire-supprimer/">
+<link rel="alternate" hreflang="x-default" href="https://trivoie.fr/trier-rapports-web-intelligence-migrer-refaire-supprimer/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Trier ses rapports Web Intelligence avant la migration">
+<meta name="twitter:description" content="Web Intelligence : classez vos rapports en trois groupes, à migrer, à refaire ou à supprimer, avant la fin de maintenance de la 4.3. Méthode et sources.">
+<meta name="twitter:image" content="https://trivoie.fr/og.png">
+<meta name="theme-color" content="#15212a">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/archivo-wdth.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/plex-sans-400.woff2" as="font" type="font/woff2" crossorigin>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="4396576b-6679-48bc-9158-52b20910a3ea"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"ProfessionalService","@id":"https://trivoie.fr/#org","name":"Trivoie","legalName":"AM DATA","url":"https://trivoie.fr/","email":"contact@trivoie.fr","taxID":"939 133 781","description":"Diagnostic indépendant et à prix fixe de la sortie de SAP BusinessObjects 4.3, avant la fin de maintenance du 31 décembre 2026.","address":{"@type":"PostalAddress","streetAddress":"32 rue Boyer","postalCode":"75020","addressLocality":"Paris","addressCountry":"FR"},"areaServed":"FR","founder":{"@type":"Person","name":"Abderrahim Mouloud"},"knowsLanguage":"fr","knowsAbout":["SAP BusinessObjects","Web Intelligence","Crystal Reports","Migration BI","Maintenance logicielle"]},{"@type":"Article","@id":"https://trivoie.fr/trier-rapports-web-intelligence-migrer-refaire-supprimer/#article","headline":"Web Intelligence : trier ses rapports à migrer, à refaire ou à supprimer","description":"Web Intelligence : classez vos rapports en trois groupes, à migrer, à refaire ou à supprimer, avant la fin de maintenance de la 4.3. Méthode et sources.","inLanguage":"fr-FR","datePublished":"2026-11-13","dateModified":"2026-11-13","mainEntityOfPage":"https://trivoie.fr/trier-rapports-web-intelligence-migrer-refaire-supprimer/","author":{"@id":"https://trivoie.fr/#org"},"publisher":{"@id":"https://trivoie.fr/#org"},"image":"https://trivoie.fr/og.png"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Trivoie","item":"https://trivoie.fr/"},{"@type":"ListItem","position":2,"name":"Web Intelligence : trier ses rapports à migrer, à refaire ou à supprimer","item":"https://trivoie.fr/trier-rapports-web-intelligence-migrer-refaire-supprimer/"}]},{"@type":"FAQPage","@id":"https://trivoie.fr/trier-rapports-web-intelligence-migrer-refaire-supprimer/#faq","mainEntity":[{"@type":"Question","name":"Web Intelligence disparaît-il avec la fin de maintenance de la 4.3 ?","acceptedAnswer":{"@type":"Answer","text":"Non. Web Intelligence figure dans BI 2025, avec des nouveautés décrites par SAP. Ce sont certains composants autour (univers UNV, Live Office) qui imposent des travaux."}},{"@type":"Question","name":"Comment savoir quels rapports Web Intelligence sont inutilisés ?","acceptedAnswer":{"@type":"Answer","text":"En mesurant l'usage plutôt qu'en interrogeant les équipes : les requêtes Query Builder donnent la dernière consultation de chaque document. Le seuil d'inactivité est à fixer avec les métiers."}},{"@type":"Question","name":"Mes documents Web Intelligence sur univers UNV fonctionneront-ils dans BI 2025 ?","acceptedAnswer":{"@type":"Answer","text":"Le format UNV n'y est pas pris en charge. Selon l'article de SAP sur BI 2025, un document bâti sur un univers supprimé peut être ouvert pour changer sa source, mais plus actualisé. Il faut convertir l'univers en UNX puis repointer le document."}},{"@type":"Question","name":"Faut-il supprimer avant de migrer ?","acceptedAnswer":{"@type":"Answer","text":"Oui, c'est le plus rentable, après sauvegarde. Wiiisdom indique que le nettoyage réduit la charge de travail et la durée de la migration."}}]}]}</script>
+<style>
+@font-face{font-family:"Archivo";font-style:normal;font-weight:100 900;font-stretch:62% 125%;font-display:swap;src:url(/fonts/archivo-wdth.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-style:normal;font-weight:400;font-display:swap;src:url(/fonts/plex-sans-400.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-style:normal;font-weight:500;font-display:swap;src:url(/fonts/plex-sans-500.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-style:normal;font-weight:600;font-display:swap;src:url(/fonts/plex-sans-600.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:400;font-display:swap;src:url(/fonts/plex-mono-400.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:500;font-display:swap;src:url(/fonts/plex-mono-500.woff2) format("woff2")}
+
+:root {
+  --bg: #eef2f1; --surface: #ffffff; --ink: #15212a; --muted: #56636c; --line: #d3dbda;
+  --accent: #0c5a6b; --accent-ink: #ffffff; --accent-soft: #dcebee;
+  --ok: #226a3f; --warn: #875608; --crit: #b0372b; --info: #375aa6;
+  --ok-soft: #e1f0e6; --warn-soft: #f6ead6; --crit-soft: #f6e0dd; --info-soft: #e2e8f5;
+  --call-ink: #ffffff; --call-ring: rgba(34, 106, 63, 0.42);
+  --board: #15212a; --board-ink: #f2c94c;
+  --f-display: "Archivo", "Arial Narrow", Arial, sans-serif;
+  --f-body: "IBM Plex Sans", "Segoe UI", Roboto, Arial, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --radius: 6px;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0e1418; --surface: #162027; --ink: #e5ecee; --muted: #9aa8af; --line: #2a3742;
+  --accent: #56b6c8; --accent-ink: #0b1418; --accent-soft: #173640;
+  --ok: #5fbf84; --warn: #e3ab4e; --crit: #e57a68; --info: #8aa6e6;
+  --ok-soft: #173326; --warn-soft: #3a2c13; --crit-soft: #3d1d19; --info-soft: #1c2742;
+  --call-ink: #0b1418; --call-ring: rgba(95, 191, 132, 0.40);
+  --board: #070b0e; --board-ink: #f2c94c; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0e1418; --surface: #162027; --ink: #e5ecee; --muted: #9aa8af; --line: #2a3742;
+  --accent: #56b6c8; --accent-ink: #0b1418; --accent-soft: #173640;
+  --ok: #5fbf84; --warn: #e3ab4e; --crit: #e57a68; --info: #8aa6e6;
+  --ok-soft: #173326; --warn-soft: #3a2c13; --crit-soft: #3d1d19; --info-soft: #1c2742;
+  --call-ink: #0b1418; --call-ring: rgba(95, 191, 132, 0.40);
+  --board: #070b0e; --board-ink: #f2c94c; color-scheme: dark }
+
+
+
+.gloss dt { font-weight: 600; margin-top: 16px; }
+.gloss dd { margin: 4px 0 0; color: var(--muted); }
+.steps li { margin: 10px 0; }
+.hub-list { list-style: none; padding: 0; display: grid; gap: 12px; }
+.hub-list li { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; }
+.hub-list a { font-weight: 600; }
+.hub-list p { margin: 6px 0 0; color: var(--muted); }
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 17px; line-height: 1.65; }
+a { color: var(--accent); }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.wrap { max-width: 780px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+header.top { background: var(--board); color: #fff; }
+header.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 14px; flex-wrap: wrap; }
+.brand { font-family: var(--f-display); font-stretch: 85%; font-weight: 800; font-size: 1.5rem; color: #fff; text-decoration: none; letter-spacing: .01em; }
+.brand span { color: var(--board-ink); }
+header.top nav { display: flex; gap: 16px; flex-wrap: wrap; }
+header.top nav a { color: #dbe6ea; text-decoration: none; font-size: .95rem; }
+header.top nav a:hover { text-decoration: underline; }
+main { padding-block: 40px 56px; }
+.crumbs { font-size: .9rem; color: var(--muted); margin: 0 0 18px; }
+.crumbs a { color: var(--muted); }
+h1, h2, h3 { font-family: var(--f-display); font-stretch: 88%; line-height: 1.15; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(1.9rem, 5vw, 2.7rem); font-weight: 800; }
+h2 { font-size: 1.55rem; font-weight: 750; margin-top: 2.2em; }
+h3 { font-size: 1.15rem; font-weight: 700; margin-top: 1.4em; }
+p, li { max-width: 68ch; }
+.lead { font-size: 1.15rem; color: var(--muted); margin: 18px 0 0; }
+.meta { font-size: .88rem; color: var(--muted); margin-top: 14px; }
+ul, ol { padding-left: 1.3em; }
+li { margin: .35em 0; }
+code { font-family: var(--f-mono); font-size: .86em; background: var(--accent-soft); padding: 1px 5px; border-radius: 4px; overflow-wrap: anywhere; }
+.tbl { overflow-x: auto; margin: 16px 0; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+table { border-collapse: collapse; width: 100%; min-width: 520px; font-size: .95rem; }
+th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-family: var(--f-display); font-stretch: 90%; background: var(--accent-soft); }
+tr:last-child td { border-bottom: 0; }
+.cta { margin: 44px 0 0; padding: 22px; background: var(--board); color: #fff; border-radius: var(--radius); }
+.cta h2 { margin: 0 0 8px; font-size: 1.4rem; color: #fff; }
+.cta p { margin: 0 0 14px; color: #dbe6ea; }
+.btn { display: inline-block; padding: 12px 20px; background: var(--board-ink); color: #15212a; font-weight: 700; border-radius: var(--radius); text-decoration: none; }
+.btn:hover { filter: brightness(1.05); }
+.faq details { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 16px; margin: 8px 0; }
+.faq summary { cursor: pointer; font-weight: 600; }
+.faq p { margin: 8px 0 0; color: var(--muted); }
+.related ul { list-style: none; padding: 0; }
+.related li { margin: 8px 0; }
+.sources { margin-top: 2.2em; font-size: .92rem; color: var(--muted); }
+.sources h2 { font-size: 1.1rem; margin-top: 0; }
+footer.site { border-top: 1px solid var(--line); background: var(--surface); }
+footer.site .wrap { padding-block: 24px; font-size: .88rem; color: var(--muted); }
+footer.site nav { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 10px; }
+footer.site p { margin: 6px 0; max-width: none; }
+@media (max-width: 600px) { body { font-size: 16px; } main { padding-block: 28px 40px; } }
+
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap"><a class="brand" href="/">Tri<span>voie</span></a>
+<nav aria-label="Navigation"><a href="/#scan">Scan gratuit</a><a href="/fin-maintenance-sap-businessobjects-4-3/">Fin de maintenance</a><a href="/diagnostic-sortie-businessobjects/">Diagnostic</a></nav></div></header>
+<main><div class="wrap"><p class="crumbs"><a href="/">Trivoie</a> &rsaquo; Trier ses rapports Web Intelligence avant la migration</p><h1>Web Intelligence : trier ses rapports à migrer, à refaire ou à supprimer</h1><p class="lead">Les documents Web Intelligence forment l&#x27;essentiel du parc d&#x27;un grand nombre d&#x27;installations SAP BusinessObjects. Avant de choisir entre rester chez SAP, passer à BI 2025 ou migrer ailleurs, un tri en trois groupes évite de payer pour déplacer des rapports que personne n&#x27;ouvre. Voici la méthode, avec les points techniques recoupés par plusieurs sources.</p><p class="meta">Par AM DATA, expert SAP BusinessObjects. Mis à jour le 13 novembre 2026.</p>
+<h2>Pourquoi trier avant de décider</h2>
+<p>La maintenance standard de BI 4.3 s'arrête le 31 décembre 2026 (voir notre <a href="/fin-maintenance-sap-businessobjects-4-3/">guide sur la fin de maintenance</a>). Quel que soit le scénario retenu, le coût dépend d'abord du nombre de documents à traiter. Wiiisdom écrit que le nettoyage réduit la charge de travail, raccourcit la migration et facilite le dépannage. Trier est donc la première étape, avant tout chiffrage.</p>
+
+<h2>Web Intelligence reste au catalogue de BI 2025</h2>
+<p>Web Intelligence n'est pas retiré. SAP consacre un article de la communauté aux nouveautés de Web Intelligence dans BI 2025, et Dallas Marks, contributeur de la communauté SAP, le décrit comme l'une des applications les plus populaires de la suite, modernisée pour BI 2025. Rester sur la plateforme SAP est donc une option crédible pour les documents qui ont de la valeur. Ce sont les éléments qui les entourent qui peuvent imposer des travaux.</p>
+
+<h2>Les trois groupes</h2>
+<div class="tbl" tabindex="0" role="region" aria-label="Tableau 1 (défilement horizontal)"><table>
+<thead><tr><th>Groupe</th><th>Critères de classement</th><th>Action</th></tr></thead>
+<tbody>
+<tr><td>À supprimer</td><td>Aucune ouverture récente, propriétaire parti, doublon d'un autre document, version de test</td><td>Archiver puis retirer du parc avant tout travail</td></tr>
+<tr><td>À migrer</td><td>Utilisé régulièrement, source de données supportée, mise en page simple</td><td>Conserver tel quel (BI 2025) ou transposer vers l'outil cible</td></tr>
+<tr><td>À refaire</td><td>Utilisé, mais dépendant d'une source ou d'un composant qui disparaît, ou devenu trop complexe</td><td>Reconstruire en partant du besoin, pas du document</td></tr>
+</tbody></table></div>
+<p>Cette grille est une méthode de travail, pas une règle de SAP. Les seuils (durée d'inactivité, nombre d'utilisateurs) sont à fixer avec les métiers.</p>
+
+<h2>Repérer ce qui ne sert plus</h2>
+<p>Le plus fiable est de mesurer l'usage réel plutôt que de demander aux équipes. Les <a href="/compter-documents-sap-businessobjects-query-builder/">requêtes Query Builder</a> permettent de compter les documents et leur dernière consultation, et le guide sur le <a href="/nettoyer-parc-businessobjects-documents-inutilises/">nettoyage du parc</a> détaille la démarche. À titre d'exemple de seuil, l'outil d'audit de Wiiisdom signale les contenus non utilisés depuis 13 mois ; ce choix est celui de cet éditeur, vous pouvez en retenir un autre. Avant toute suppression, faites une sauvegarde : Wiiisdom insiste sur ce point, car une conversion peut échouer ou créer des problèmes.</p>
+
+<h2>Repérer ce qui doit être refait</h2>
+<p>Trois points techniques font passer un document du groupe « à migrer » au groupe « à refaire » si vous visez BI 2025.</p>
+<ul>
+<li><strong>Les univers UNV.</strong> Le format UNV n'est pas pris en charge dans BI 2025, selon SAP (article sur les nouveautés de Web Intelligence) et Dallas Marks. Les univers doivent être convertis en UNX, voir <a href="/convertir-univers-unv-en-unx/">convertir un univers UNV en UNX</a>. Selon l'article de SAP, un document bâti sur un univers supprimé peut encore être ouvert pour changer sa source, mais plus actualisé.</li>
+<li><strong>Les univers multisources.</strong> Dallas Marks indique qu'il n'existe pas de chemin automatique pour les ramener à une source unique : ils sont à reconstruire. Wiiisdom donne la même consigne pour les univers multisources UNX, à convertir en univers à source unique.</li>
+<li><strong>Les documents Live Office, Analysis for OLAP et Lumira.</strong> Wiiisdom les classe parmi les contenus à reconstruire dans Web Intelligence ou dans un autre outil SAP. Dallas Marks précise de son côté que Live Office ne sera pas dans BI 2025 et que Crystal Reports for Enterprise n'en fait plus partie (voir <a href="/crystal-reports-fin-maintenance-4-3-options/">Crystal Reports après la 4.3</a>).</li>
+</ul>
+<p>Si vous visez un autre outil que BI 2025, la grille change : le critère devient la possibilité de reproduire le document, pas son format. Les pistes sont dans le guide <a href="/migration-businessobjects-power-bi/">migrer vers Power BI</a> et dans le panorama des <a href="/alternatives-sap-businessobjects/">alternatives</a>.</p>
+
+<h2>Valider après chaque lot</h2>
+<p>Wiiisdom recommande de vérifier que les documents fonctionnent après une conversion, avec des tests de régression automatisés si le volume le justifie, en commençant par les documents publics, qui ont le plus d'exposition, et par les rapports sensibles. Dans tous les cas, comparez les chiffres du rapport d'origine à ceux du rapport migré sur un même jeu de données.</p>
+
+<h2>Et si le tri ne se fait pas en interne</h2>
+<p>AM DATA n'est revendeur ni de SAP ni de Microsoft. Le <a href="/diagnostic-sortie-businessobjects/">Diagnostic Sortie BO</a> réalise ce tri sur votre parc et en tire un scénario chiffré, que vous restiez chez SAP ou que vous partiez.</p>
+
+<h2>Sources</h2>
+<ul>
+<li><a href="https://community.sap.com/t5/technology-blog-posts-by-sap/sap-bi-2025-what-s-new-in-web-intelligence-and-semantic-layer/ba-p/14033408" rel="noopener">SAP BI 2025: What's new in Web Intelligence and Semantic Layer (SAP Community)</a></li>
+<li><a href="https://community.sap.com/t5/technology-blog-posts-by-members/all-that-you-can-t-leave-behind-preparing-for-sap-businessobjects-bi-2025/ba-p/13992468" rel="noopener">All that you can't leave behind: preparing for SAP BusinessObjects BI 2025 (Dallas Marks, SAP Community)</a></li>
+<li><a href="https://wiiisdom.com/blog/how-to-prepare-for-sap-businessobjects-bi-2025/" rel="noopener">How to prepare for SAP BusinessObjects BI 2025 (Wiiisdom)</a></li>
+</ul>
+<p>Les fonctions prises en charge évoluent avec les versions. Vérifiez-les dans la documentation SAP de la version visée.</p>
+<section class="faq"><h2>Questions fréquentes</h2><details><summary>Web Intelligence disparaît-il avec la fin de maintenance de la 4.3 ?</summary><p>Non. Web Intelligence figure dans BI 2025, avec des nouveautés décrites par SAP. Ce sont certains composants autour (univers UNV, Live Office) qui imposent des travaux.</p></details><details><summary>Comment savoir quels rapports Web Intelligence sont inutilisés ?</summary><p>En mesurant l&#x27;usage plutôt qu&#x27;en interrogeant les équipes : les requêtes Query Builder donnent la dernière consultation de chaque document. Le seuil d&#x27;inactivité est à fixer avec les métiers.</p></details><details><summary>Mes documents Web Intelligence sur univers UNV fonctionneront-ils dans BI 2025 ?</summary><p>Le format UNV n&#x27;y est pas pris en charge. Selon l&#x27;article de SAP sur BI 2025, un document bâti sur un univers supprimé peut être ouvert pour changer sa source, mais plus actualisé. Il faut convertir l&#x27;univers en UNX puis repointer le document.</p></details><details><summary>Faut-il supprimer avant de migrer ?</summary><p>Oui, c&#x27;est le plus rentable, après sauvegarde. Wiiisdom indique que le nettoyage réduit la charge de travail et la durée de la migration.</p></details></section><section class="sources"><h2>Sources</h2><ul>
+<li><a href="https://clintvosloo.com/sap-customer-specific-maintenance-bi-43-ds-43-what-it-means" rel="noopener">notes SAP 3486924 et 3763590, résumées par C. Vosloo</a></li><li><a href="https://wiiisdom.com/blog/sap-bi-end-of-life-stages/" rel="noopener">dates de fin de maintenance SAP BI (Wiiisdom)</a></li><li><a href="https://wiiisdom.com/blog/sap-businessobjects-bi-2025/" rel="noopener">SAP BusinessObjects BI 2025 : composants et univers (Wiiisdom)</a></li><li><a href="https://wiiisdom.com/fr/blog/sap-bi-dates-de-fin-de-vie/" rel="noopener">dates de fin de vie SAP BI (Wiiisdom)</a> et <a href="https://dallasmarks.com/toy-story-5-and-bi-2027/" rel="noopener">annonce de BI 2027 (Dallas Marks)</a></li><li><a href="https://dallasmarks.com/getting-ready-for-sap-businessobjects-4-3-support-pack-4/" rel="noopener">notes SAP 2801797 et 2914654 (Dallas Marks)</a></li><li><a href="https://support.sap.com/en/release-upgrade-maintenance.html" rel="noopener">Product Availability Matrix SAP</a></li></ul>
+<p>Les dates et règles de maintenance peuvent évoluer. Vérifiez-les dans le portail SAP (Product Availability Matrix et notes citées) avant toute décision.</p></section><aside class="cta"><h2>Mesurez votre risque en 5 minutes</h2><p>Le scan est gratuit, sans inscription. Il calcule dans votre navigateur un niveau de risque et la taille de votre plateforme.</p><a class="btn" href="/#scan">Mesurer mon risque</a></aside><section class="related"><h2>À lire aussi</h2><ul><li><a href="/nettoyer-parc-businessobjects-documents-inutilises/">Nettoyer son parc BusinessObjects avant de migrer : repérer l&#x27;inutilisé</a></li><li><a href="/convertir-univers-unv-en-unx/">Convertir ses univers UNV en UNX : méthode et points de vigilance</a></li><li><a href="/diagnostic-sortie-businessobjects/">Diagnostic Sortie BO : une décision chiffrée en 10 jours ouvrés</a></li><li><a href="/checklist-migration-sap-businessobjects/">Checklist de migration SAP BusinessObjects en 10 étapes</a></li></ul></section></div></main>
+<footer class="site"><div class="wrap"><nav aria-label="Guides"><a href="/guides/">Tous les guides</a><a href="/fin-maintenance-sap-businessobjects-4-3/">Fin de maintenance 4.3</a><a href="/bi-2025-ou-sortir-de-businessobjects/">BI 2025 ou sortie</a><a href="/diagnostic-sortie-businessobjects/">Diagnostic Sortie BO</a><a href="/compter-documents-sap-businessobjects-query-builder/">Query Builder</a><a href="/maintenance-specifique-client-sap-businessobjects/">Maintenance spécifique client</a><a href="/risque-securite-sap-businessobjects-4-3/">Risque de sécurité 4.3</a><a href="/convertir-univers-unv-en-unx/">Convertir UNV en UNX</a><a href="/contenus-obsoletes-xcelsius-desktop-intelligence-explorer/">Contenus obsolètes</a><a href="/nettoyer-parc-businessobjects-documents-inutilises/">Nettoyer son parc</a><a href="/checklist-migration-sap-businessobjects/">Checklist de migration</a><a href="/questions-a-poser-prestataire-migration-businessobjects/">Choisir son prestataire</a><a href="/diagnostic-businessobjects-secteur-public-marche-60000-euros/">Secteur public</a><a href="/glossaire-sap-businessobjects/">Glossaire</a><a href="/migration-businessobjects-power-bi/">Migrer vers Power BI</a><a href="/sap-businessobjects-bi-2027/">BI 2027</a><a href="/consultant-sap-businessobjects/">Consultant SAP BusinessObjects</a><a href="/audit-sap-businessobjects/">Audit SAP BusinessObjects</a><a href="/alternatives-sap-businessobjects/">Alternatives à BusinessObjects</a><a href="/calendrier-fin-maintenance-sap-businessobjects-versions/">Calendrier des versions</a><a href="/crystal-reports-fin-maintenance-4-3-options/">Crystal Reports</a><a href="/trier-rapports-web-intelligence-migrer-refaire-supprimer/">Trier Web Intelligence</a></nav><nav aria-label="Informations"><a href="/mentions-legales/">Mentions légales</a><a href="/confidentialite/">Confidentialité</a></nav><p><strong>Trivoie</strong> est un service d'AM DATA, entreprise individuelle, SIREN 939 133 781, 32 rue Boyer, 75020 Paris. Contact : contact@trivoie.fr</p><p>SAP, BusinessObjects, Crystal Reports, Lumira et Power BI sont des marques de leurs propriétaires respectifs. Trivoie n'est affilié ni à SAP, ni à Microsoft.</p></div></footer>
+</body>
+</html>
