@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cloud.umami.is; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://gateway.umami.is; base-uri 'self'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cloud.umami.is https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.googletagmanager.com https://*.google.com https://*.google.fr https://*.doubleclick.net https://*.googleadservices.com; font-src 'self'; connect-src 'self' https://gateway.umami.is https://*.googletagmanager.com https://*.google.com https://*.google.fr https://*.doubleclick.net https://*.googleadservices.com https://*.google-analytics.com; frame-src https://td.doubleclick.net; base-uri 'self'; form-action 'none'">
 <title>Fin de maintenance BusinessObjects 4.3 : scan gratuit | Trivoie</title>
 <meta name="description" content="Scan gratuit : mesurez votre risque après la fin de maintenance de SAP BusinessObjects 4.3 (31/12/2026). Puis diagnostic indépendant à prix fixe en 10 jours.">
 <link rel="canonical" href="https://trivoie.fr/">
@@ -1166,6 +1166,8 @@ finally {
       $(f).setAttribute("aria-invalid", msg ? "true" : "false");
     });
     var r = E.analyse(v.data);
+    var errKeys = Object.keys(v.errors).filter(function (f) { return !(mode === "file" && COUNT_FIELDS.indexOf(f) !== -1); });
+    if (touched && !errKeys.length && Object.keys(touchedIds).length >= 3) scanDone();
     var hot = r.riskLevel === "critique" || r.riskLevel === "élevé";
     var color = hot ? "var(--crit)" : r.riskLevel === "modéré" ? "var(--warn)" : "var(--ok)";
     $("gaugeArc").setAttribute("stroke-dashoffset", String(314.16 * (1 - r.risk / 100)));
@@ -1252,7 +1254,9 @@ finally {
   }
 
   function markTouched() { touched = true; }
-  FIELDS.concat(["version"]).forEach(function (f) { $(f).addEventListener("input", function () { markTouched(); render(); }); });
+  var scanSent = false, touchedIds = {};
+  function scanDone() { if (scanSent) return; scanSent = true; document.dispatchEvent(new CustomEvent("trivoie:scan-complete")); }
+  FIELDS.concat(["version"]).forEach(function (f) { $(f).addEventListener("input", function () { markTouched(); touchedIds[f] = 1; render(); }); });
   ["audit-oui", "audit-non", "audit-nsp"].forEach(function (id) { $(id).addEventListener("change", function () { markTouched(); render(); }); });
   $("form").addEventListener("submit", function (e) { e.preventDefault(); });
 
@@ -1307,6 +1311,7 @@ finally {
       $("fileStatus").className = o.coherent ? "status ok" : "status bad";
       $("fileStatus").textContent = o.coherent ? "Fichier lu. Il reste deux réponses à donner juste en dessous : 1. la version de votre plateforme, 2. si la base d'audit est active (si oui, le nombre de documents non ouverts en 12 mois)."
         : "Fichier lu, mais les deux méthodes de comptage du script ne donnent pas le même total : les chiffres sont peut-être incomplets. Écrivez-nous pour vérifier.";
+      scanDone();
       render();
     } catch (err) {
       $("fileStatus").className = "status bad";
@@ -1369,5 +1374,6 @@ finally {
   render();
 })();
 </script>
+<script src="/consent.js" defer></script>
 </body>
 </html>
