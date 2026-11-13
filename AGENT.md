@@ -38,3 +38,6 @@ Faits recoupés le 10/11/2026 par au moins deux analyses indépendantes (Wiiisdo
 - Config dans site/build_site.py : ANALYTICS["website_id"] (vide = rien chargé, CSP fermée, page confidentialité « aucun outil »). Renseigné : script, CSP (script-src + connect-src), texte de confidentialité s'adaptent seuls. Test local : TRIVOIE_UMAMI_ID=autre-id python3 site/build_site.py.
 - Événements : attributs data-umami-event dans template.html + track("scan-commence" / "fichier-importe"). Jamais de valeur saisie dans un événement.
 - Liens LinkedIn : ajouter ?utm_source=linkedin&utm_medium=post&utm_campaign=<nom>.
+
+## ATTENTION (13/11/2026) : la branche main contient des changements absents de source
+La branche main a reçu directement la bannière de consentement Google Ads (consent.js, CSP, page Confidentialité). Ne jamais déployer site/out par copie complète : cela les écraserait. Déployer uniquement la nouvelle page, puis appliquer à la main les différences de pied de page, guides, sitemap et llms.txt. À terme, reporter ces changements dans le générateur.
