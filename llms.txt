@@ -26,6 +26,7 @@
 - [Alternatives à SAP BusinessObjects : les options et les critères pour choisir](https://trivoie.fr/alternatives-sap-businessobjects/): Remplacer SAP BusinessObjects : BI 2025 et BI 2027, SAP Analytics Cloud, Power BI, Tableau, Qlik. Les critères qui départagent avant de décider.
 - [Calendrier de fin de maintenance de SAP BusinessObjects : 4.1, 4.2, 4.3, BI 2025 et BI 2027](https://trivoie.fr/calendrier-fin-maintenance-sap-businessobjects-versions/): Dates de fin de maintenance de SAP BusinessObjects 4.1, 4.2, 4.3, BI 2025 et BI 2027, avec leurs sources, et ce que cela change pour votre parc.
 - [Crystal Reports après la fin de maintenance de la 4.3 : quelles options pour vos rapports](https://trivoie.fr/crystal-reports-fin-maintenance-4-3-options/): Crystal Reports 2020, 2025 et Crystal Reports for Enterprise : dates de maintenance recoupées et trois options pour vos rapports après fin 2026.
+- [Web Intelligence : trier ses rapports à migrer, à refaire ou à supprimer](https://trivoie.fr/trier-rapports-web-intelligence-migrer-refaire-supprimer/): Web Intelligence : classez vos rapports en trois groupes, à migrer, à refaire ou à supprimer, avant la fin de maintenance de la 4.3. Méthode et sources.
 
 ## Faits clés
 
