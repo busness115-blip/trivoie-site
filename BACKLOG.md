@@ -7,7 +7,7 @@
 - [x] Crystal Reports après la fin de maintenance de la 4.3 : options (fait le 12/11/2026 : crystal-reports-fin-maintenance-4-3-options)
 - [x] Web Intelligence : comment trier les rapports à migrer, à refaire, à supprimer (fait le 13/11/2026 : trier-rapports-web-intelligence-migrer-refaire-supprimer)
 - [x] Combien de temps prend une migration BusinessObjects : facteurs qui font varier la durée (fait le 14/11/2026 : duree-migration-sap-businessobjects-facteurs)
-- [ ] Sécurité d'une plateforme BI : droits, comptes inactifs, audit avant migration
+- [x] Sécurité d'une plateforme BI : droits, comptes inactifs, audit avant migration (fait le 15/11/2026 : securite-plateforme-bi-droits-comptes-audit-businessobjects)
 - [ ] Lumira Designer et Design Studio : quel avenir
 - [ ] Promotion Management et LCM : déplacer des contenus pendant un projet de montée de version
 - [ ] Plateformes BI et RGPD : données personnelles dans les rapports, sous-traitance
