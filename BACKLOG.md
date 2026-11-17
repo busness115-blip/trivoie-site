@@ -9,7 +9,7 @@
 - [x] Combien de temps prend une migration BusinessObjects : facteurs qui font varier la durée (fait le 14/11/2026 : duree-migration-sap-businessobjects-facteurs)
 - [x] Sécurité d'une plateforme BI : droits, comptes inactifs, audit avant migration (fait le 15/11/2026 : securite-plateforme-bi-droits-comptes-audit-businessobjects)
 - [x] Lumira Designer et Design Studio : quel avenir (fait le 16/11/2026 : lumira-designer-design-studio-avenir)
-- [ ] Promotion Management et LCM : déplacer des contenus pendant un projet de montée de version
+- [x] Promotion Management et LCM : déplacer des contenus pendant un projet de montée de version (fait le 17/11/2026 : promotion-management-lcm-businessobjects-montee-de-version)
 - [ ] Plateformes BI et RGPD : données personnelles dans les rapports, sous-traitance
 - [ ] Secteur santé et collectivités : calendrier budgétaire et marchés publics pour traiter la fin de maintenance
 - [ ] Maintenance spécifique client : checklist pour le DAF (budget, contrat, échéances)
