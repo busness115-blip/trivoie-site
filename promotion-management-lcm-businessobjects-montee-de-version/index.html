@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cloud.umami.is; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://gateway.umami.is; base-uri 'self'; form-action 'none'">
+<title>Promotion Management et LCM : monter de version | Trivoie</title>
+<meta name="description" content="Promotion Management et LCMBIAR dans un projet de montée de version BusinessObjects : ce que l&#x27;outil fait, ses règles, et comment organiser le transfert.">
+<link rel="canonical" href="https://trivoie.fr/promotion-management-lcm-businessobjects-montee-de-version/">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:site_name" content="Trivoie">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Promotion Management et LCM : monter de version">
+<meta property="og:description" content="Promotion Management et LCMBIAR dans un projet de montée de version BusinessObjects : ce que l&#x27;outil fait, ses règles, et comment organiser le transfert.">
+<meta property="og:url" content="https://trivoie.fr/promotion-management-lcm-businessobjects-montee-de-version/">
+<meta property="og:image" content="https://trivoie.fr/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Trivoie : la fin de maintenance de SAP BusinessObjects 4.3, trois voies">
+<link rel="alternate" hreflang="fr" href="https://trivoie.fr/promotion-management-lcm-businessobjects-montee-de-version/">
+<link rel="alternate" hreflang="x-default" href="https://trivoie.fr/promotion-management-lcm-businessobjects-montee-de-version/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Promotion Management et LCM : monter de version">
+<meta name="twitter:description" content="Promotion Management et LCMBIAR dans un projet de montée de version BusinessObjects : ce que l&#x27;outil fait, ses règles, et comment organiser le transfert.">
+<meta name="twitter:image" content="https://trivoie.fr/og.png">
+<meta name="theme-color" content="#15212a">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/archivo-wdth.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/plex-sans-400.woff2" as="font" type="font/woff2" crossorigin>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="4396576b-6679-48bc-9158-52b20910a3ea"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"ProfessionalService","@id":"https://trivoie.fr/#org","name":"Trivoie","legalName":"AM DATA","url":"https://trivoie.fr/","email":"contact@trivoie.fr","taxID":"939 133 781","description":"Diagnostic indépendant et à prix fixe de la sortie de SAP BusinessObjects 4.3, avant la fin de maintenance du 31 décembre 2026.","address":{"@type":"PostalAddress","streetAddress":"32 rue Boyer","postalCode":"75020","addressLocality":"Paris","addressCountry":"FR"},"areaServed":"FR","founder":{"@type":"Person","name":"Abderrahim Mouloud"},"knowsLanguage":"fr","knowsAbout":["SAP BusinessObjects","Web Intelligence","Crystal Reports","Migration BI","Maintenance logicielle"]},{"@type":"Article","@id":"https://trivoie.fr/promotion-management-lcm-businessobjects-montee-de-version/#article","headline":"Promotion Management et LCM : déplacer des contenus BusinessObjects pendant une montée de version","description":"Promotion Management et LCMBIAR dans un projet de montée de version BusinessObjects : ce que l'outil fait, ses règles, et comment organiser le transfert.","inLanguage":"fr-FR","datePublished":"2026-11-17","dateModified":"2026-11-17","mainEntityOfPage":"https://trivoie.fr/promotion-management-lcm-businessobjects-montee-de-version/","author":{"@id":"https://trivoie.fr/#org"},"publisher":{"@id":"https://trivoie.fr/#org"},"image":"https://trivoie.fr/og.png"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Trivoie","item":"https://trivoie.fr/"},{"@type":"ListItem","position":2,"name":"Promotion Management et LCM : déplacer des contenus BusinessObjects pendant une montée de version","item":"https://trivoie.fr/promotion-management-lcm-businessobjects-montee-de-version/"}]},{"@type":"FAQPage","@id":"https://trivoie.fr/promotion-management-lcm-businessobjects-montee-de-version/#faq","mainEntity":[{"@type":"Question","name":"Qu'est-ce que Promotion Management dans BusinessObjects ?","acceptedAnswer":{"@type":"Answer","text":"C'est une application de la console CMC qui promeut des contenus BI entre deux environnements, avec ou sans fichier LCMBIAR, selon SAP Learning et TutorialsPoint."}},{"@type":"Question","name":"Peut-on promouvoir de la 4.3 vers une version plus récente avec Promotion Management ?","acceptedAnswer":{"@type":"Answer","text":"Les sources consultées indiquent que source et destination doivent exécuter la même version de la plateforme. Pour une installation neuve, SAP Learning cite l'outil Promotion Management de la version cible, et TutorialsPoint présente l'Upgrade Management Tool pour importer des objets d'une version antérieure."}},{"@type":"Question","name":"Qu'est-ce qu'un fichier LCMBIAR ?","acceptedAnswer":{"@type":"Answer","text":"C'est une archive compressée qui regroupe des objets BI et que l'on peut utiliser comme source ou destination d'un travail de promotion, selon SAP Learning."}},{"@type":"Question","name":"Que fait « Test Promote » ?","acceptedAnswer":{"@type":"Answer","text":"Il montre ce qui se passerait sans appliquer de changement à la destination, d'après la communauté SAP et SAPinsider. Il est présenté comme une bonne pratique avant chaque travail."}},{"@type":"Question","name":"Peut-on annuler une promotion ?","acceptedAnswer":{"@type":"Answer","text":"Oui. SAP Learning et TutorialsPoint décrivent un retour arrière partiel ou complet des objets promus sur la destination. TutorialsPoint précise qu'il est activé par défaut au niveau du système."}}]}]}</script>
+<style>
+@font-face{font-family:"Archivo";font-style:normal;font-weight:100 900;font-stretch:62% 125%;font-display:swap;src:url(/fonts/archivo-wdth.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-style:normal;font-weight:400;font-display:swap;src:url(/fonts/plex-sans-400.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-style:normal;font-weight:500;font-display:swap;src:url(/fonts/plex-sans-500.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-style:normal;font-weight:600;font-display:swap;src:url(/fonts/plex-sans-600.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:400;font-display:swap;src:url(/fonts/plex-mono-400.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:500;font-display:swap;src:url(/fonts/plex-mono-500.woff2) format("woff2")}
+
+:root {
+  --bg: #eef2f1; --surface: #ffffff; --ink: #15212a; --muted: #56636c; --line: #d3dbda;
+  --accent: #0c5a6b; --accent-ink: #ffffff; --accent-soft: #dcebee;
+  --ok: #226a3f; --warn: #875608; --crit: #b0372b; --info: #375aa6;
+  --ok-soft: #e1f0e6; --warn-soft: #f6ead6; --crit-soft: #f6e0dd; --info-soft: #e2e8f5;
+  --call-ink: #ffffff; --call-ring: rgba(34, 106, 63, 0.42);
+  --board: #15212a; --board-ink: #f2c94c;
+  --f-display: "Archivo", "Arial Narrow", Arial, sans-serif;
+  --f-body: "IBM Plex Sans", "Segoe UI", Roboto, Arial, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --radius: 6px;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0e1418; --surface: #162027; --ink: #e5ecee; --muted: #9aa8af; --line: #2a3742;
+  --accent: #56b6c8; --accent-ink: #0b1418; --accent-soft: #173640;
+  --ok: #5fbf84; --warn: #e3ab4e; --crit: #e57a68; --info: #8aa6e6;
+  --ok-soft: #173326; --warn-soft: #3a2c13; --crit-soft: #3d1d19; --info-soft: #1c2742;
+  --call-ink: #0b1418; --call-ring: rgba(95, 191, 132, 0.40);
+  --board: #070b0e; --board-ink: #f2c94c; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0e1418; --surface: #162027; --ink: #e5ecee; --muted: #9aa8af; --line: #2a3742;
+  --accent: #56b6c8; --accent-ink: #0b1418; --accent-soft: #173640;
+  --ok: #5fbf84; --warn: #e3ab4e; --crit: #e57a68; --info: #8aa6e6;
+  --ok-soft: #173326; --warn-soft: #3a2c13; --crit-soft: #3d1d19; --info-soft: #1c2742;
+  --call-ink: #0b1418; --call-ring: rgba(95, 191, 132, 0.40);
+  --board: #070b0e; --board-ink: #f2c94c; color-scheme: dark }
+
+
+
+.gloss dt { font-weight: 600; margin-top: 16px; }
+.gloss dd { margin: 4px 0 0; color: var(--muted); }
+.steps li { margin: 10px 0; }
+.hub-list { list-style: none; padding: 0; display: grid; gap: 12px; }
+.hub-list li { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; }
+.hub-list a { font-weight: 600; }
+.hub-list p { margin: 6px 0 0; color: var(--muted); }
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 17px; line-height: 1.65; }
+a { color: var(--accent); }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.wrap { max-width: 780px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+header.top { background: var(--board); color: #fff; }
+header.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 14px; flex-wrap: wrap; }
+.brand { font-family: var(--f-display); font-stretch: 85%; font-weight: 800; font-size: 1.5rem; color: #fff; text-decoration: none; letter-spacing: .01em; }
+.brand span { color: var(--board-ink); }
+header.top nav { display: flex; gap: 16px; flex-wrap: wrap; }
+header.top nav a { color: #dbe6ea; text-decoration: none; font-size: .95rem; }
+header.top nav a:hover { text-decoration: underline; }
+main { padding-block: 40px 56px; }
+.crumbs { font-size: .9rem; color: var(--muted); margin: 0 0 18px; }
+.crumbs a { color: var(--muted); }
+h1, h2, h3 { font-family: var(--f-display); font-stretch: 88%; line-height: 1.15; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(1.9rem, 5vw, 2.7rem); font-weight: 800; }
+h2 { font-size: 1.55rem; font-weight: 750; margin-top: 2.2em; }
+h3 { font-size: 1.15rem; font-weight: 700; margin-top: 1.4em; }
+p, li { max-width: 68ch; }
+.lead { font-size: 1.15rem; color: var(--muted); margin: 18px 0 0; }
+.meta { font-size: .88rem; color: var(--muted); margin-top: 14px; }
+ul, ol { padding-left: 1.3em; }
+li { margin: .35em 0; }
+code { font-family: var(--f-mono); font-size: .86em; background: var(--accent-soft); padding: 1px 5px; border-radius: 4px; overflow-wrap: anywhere; }
+.tbl { overflow-x: auto; margin: 16px 0; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+table { border-collapse: collapse; width: 100%; min-width: 520px; font-size: .95rem; }
+th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-family: var(--f-display); font-stretch: 90%; background: var(--accent-soft); }
+tr:last-child td { border-bottom: 0; }
+.cta { margin: 44px 0 0; padding: 22px; background: var(--board); color: #fff; border-radius: var(--radius); }
+.cta h2 { margin: 0 0 8px; font-size: 1.4rem; color: #fff; }
+.cta p { margin: 0 0 14px; color: #dbe6ea; }
+.btn { display: inline-block; padding: 12px 20px; background: var(--board-ink); color: #15212a; font-weight: 700; border-radius: var(--radius); text-decoration: none; }
+.btn:hover { filter: brightness(1.05); }
+.faq details { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 16px; margin: 8px 0; }
+.faq summary { cursor: pointer; font-weight: 600; }
+.faq p { margin: 8px 0 0; color: var(--muted); }
+.related ul { list-style: none; padding: 0; }
+.related li { margin: 8px 0; }
+.sources { margin-top: 2.2em; font-size: .92rem; color: var(--muted); }
+.sources h2 { font-size: 1.1rem; margin-top: 0; }
+footer.site { border-top: 1px solid var(--line); background: var(--surface); }
+footer.site .wrap { padding-block: 24px; font-size: .88rem; color: var(--muted); }
+footer.site nav { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 10px; }
+footer.site p { margin: 6px 0; max-width: none; }
+@media (max-width: 600px) { body { font-size: 16px; } main { padding-block: 28px 40px; } }
+
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap"><a class="brand" href="/">Tri<span>voie</span></a>
+<nav aria-label="Navigation"><a href="/#scan">Scan gratuit</a><a href="/fin-maintenance-sap-businessobjects-4-3/">Fin de maintenance</a><a href="/diagnostic-sortie-businessobjects/">Diagnostic</a></nav></div></header>
+<main><div class="wrap"><p class="crumbs"><a href="/">Trivoie</a> &rsaquo; Promotion Management et LCM : monter de version</p><h1>Promotion Management et LCM : déplacer des contenus BusinessObjects pendant une montée de version</h1><p class="lead">Quand la maintenance standard de la 4.3 s&#x27;arrête le 31 décembre 2026, beaucoup d&#x27;équipes préparent une nouvelle plateforme et doivent y transférer leurs contenus. Promotion Management, souvent appelé LCM, est l&#x27;outil intégré à la console CMC pour déplacer des objets entre environnements. Ce guide rappelle ce qu&#x27;il fait, les règles à connaître, et ce qu&#x27;il ne règle pas à lui seul.</p><p class="meta">Par AM DATA, expert SAP BusinessObjects. Mis à jour le 17 novembre 2026.</p>
+<h2>LCM, Promotion Management, LCMBIAR : les termes</h2>
+<p>Le sigle LCM désigne la gestion du cycle de vie (Life Cycle Management). SAP Learning la décrit comme l'ensemble du processus de conception, de développement et de maintenance d'une solution applicative. Dans la plateforme BusinessObjects, l'outil qui en porte le nom courant est Promotion Management : une application intégrée à la console CMC qui transporte, ou « promeut », des contenus BI entre deux environnements, avec ou sans fichier LCMBIAR (SAP Learning, TutorialsPoint). Un fichier LCMBIAR est une archive compressée qui contient des objets BI ; elle peut servir de source ou de destination d'un travail de promotion (SAP Learning).</p>
+
+<h2>Ce que fait l'outil</h2>
+<div class="tbl" tabindex="0" role="region" aria-label="Tableau 1 (défilement horizontal)"><table>
+<thead><tr><th>Fonction</th><th>Ce que décrivent les sources</th></tr></thead>
+<tbody>
+<tr><td>Travail de promotion</td><td>Un travail est une collection d'objets (utilisateurs, groupes, dossiers, rapports, univers, connexions, droits) que l'on crée, copie, modifie et planifie (SAP Community, SAPinsider, TutorialsPoint)</td></tr>
+<tr><td>Dépendances</td><td>La fonction « Manage Dependencies » calcule les objets liés, comme les univers, connexions et images ; sans cette étape, les dépendances ne sont pas promues avec le travail (SAP Community)</td></tr>
+<tr><td>Sécurité</td><td>Choix entre ne pas promouvoir la sécurité, la promouvoir, ou y ajouter les droits d'application (SAP Community, SAPinsider)</td></tr>
+<tr><td>Test</td><td>« Test Promote » simule le résultat sans modifier la destination (SAP Community, SAPinsider)</td></tr>
+<tr><td>Résultat</td><td>Succès, échec ou succès partiel (SAP Community, TutorialsPoint)</td></tr>
+<tr><td>Retour arrière</td><td>Annulation partielle ou complète des objets promus sur la destination (SAP Learning, TutorialsPoint)</td></tr>
+</tbody></table></div>
+
+<h2>La règle des versions identiques</h2>
+<p>SAP Learning, TutorialsPoint et un article de la communauté SAP indiquent que source et destination doivent exécuter la même version de la plateforme. Pour une montée de version, la compatibilité entre versions se vérifie donc avant tout transfert. SAP Learning décrit deux voies pour BI 2025 : la mise à jour sur place, possible depuis une 4.2 ou une 4.3 si le système d'exploitation est encore pris en charge, ou une installation neuve avec migration des contenus à l'aide de l'outil Promotion Management de la version 2025. TutorialsPoint présente par ailleurs l'Upgrade Management Tool, qui importe des objets d'une version précédente vers la plateforme mise à niveau, en direct ou via un fichier BIAR. Choisir entre ces voies relève de votre architecture ; voir notre <a href="/bi-2025-ou-sortir-de-businessobjects/">comparaison BI 2025 ou sortie de BusinessObjects</a>.</p>
+
+<h2>Ce que l'outil ne règle pas</h2>
+<ul>
+<li><strong>Le tri du contenu.</strong> Promouvoir un parc non nettoyé reporte les problèmes sur la nouvelle plateforme. Le tri décrit dans notre guide sur le <a href="/nettoyer-parc-businessobjects-documents-inutilises/">nettoyage du parc</a> précède le transfert.</li>
+<li><strong>Les contenus non repris.</strong> Les univers UNV ne sont pas pris en charge après la 4.3 : leur <a href="/convertir-univers-unv-en-unx/">conversion en UNX</a> fait partie du projet.</li>
+<li><strong>Le changement continu.</strong> Pendant le projet, des rapports sont modifiés en production. Wiiisdom, éditeur de la suite 360Suite, écrit dans un livret sur la montée de version que geler les changements ou migrer à la main est peu réaliste, et présente la comparaison d'instantanés comme réponse. C'est le point de vue d'un éditeur d'outils ; l'organisation du gel ou du rattrapage reste une décision de projet.</li>
+<li><strong>Les volumes de duplication.</strong> Dans un témoignage publié par Wiiisdom, un prestataire danois indique que Promotion Management ne suffisait pas pour répliquer un environnement maître vers plus de cinquante environnements clients. Ce cas est celui d'un éditeur d'outils décrivant un client à source unique ; il ne se généralise pas à un parc ordinaire.</li>
+</ul>
+
+<h2>Organiser le transfert en six étapes</h2>
+<ol>
+<li>Inventorier les contenus utilisés et décider ce qui est repris, refait ou supprimé.</li>
+<li>Vérifier que source et destination sont dans la même version avant tout travail de promotion, sinon passer par la voie de migration retenue.</li>
+<li>Promouvoir dans un ordre logique, par exemple les droits et groupes, les connexions, les univers, puis les documents, comme le suggère Wiiisdom dans son livret.</li>
+<li>Utiliser « Test Promote » et relire les dépendances avant chaque travail.</li>
+<li>Contrôler le statut final, traiter les succès partiels et garder le retour arrière activé tant que la recette n'est pas terminée.</li>
+<li>Comparer les rapports migrés à l'original, puis documenter le résultat.</li>
+</ol>
+<p>Ces étapes s'intègrent à la <a href="/checklist-migration-sap-businessobjects/">checklist de migration</a> et pèsent sur la <a href="/duree-migration-sap-businessobjects-facteurs/">durée du projet</a>. Quelle que soit la cible, que vous restiez chez SAP ou que vous migriez, un transfert ordonné réduit les surprises. AM DATA n'est revendeur ni de SAP ni de Microsoft ; le <a href="/diagnostic-sortie-businessobjects/">Diagnostic Sortie BO</a> prépare cet inventaire.</p>
+
+<h2>Sources</h2>
+<ul>
+<li><a href="https://learning.sap.com/courses/administrating-servers-in-sap-businessobjects-bi-platform/describing-the-content-management-process" rel="noopener">Describing the Content Management Process (SAP Learning)</a></li>
+<li><a href="https://learning.sap.com/courses/administrating-servers-in-sap-businessobjects-bi-platform/upgrading-paths" rel="noopener">Upgrading Paths (SAP Learning)</a></li>
+<li><a href="https://www.tutorialspoint.com/sap_bo_administration/sap_bo_administration_promotion_management.htm" rel="noopener">SAP BO Administration : Promotion Management (TutorialsPoint)</a></li>
+<li><a href="https://tutorialspoint.com/sap_bo_administration/sap_bo_administration_upgrade_management_tool.htm" rel="noopener">SAP BO Administration : Upgrade Management Tool (TutorialsPoint)</a></li>
+<li><a href="https://blogs.sap.com/2012/10/25/promotion-management-in-bi40" rel="noopener">Promotion Management in BI 4.0 (SAP Community)</a></li>
+<li><a href="https://sapinsider.org/a-step-by-step-guide-for-using-promotion-management-in-businessobjects-4-1/" rel="noopener">A step-by-step guide for using Promotion Management in BusinessObjects 4.1 (SAPinsider)</a></li>
+<li><a href="https://wiiisdom.com/ebook/en/wiiisdom-ebook-optimize-your-sap-businessobjects-upgrade.pdf" rel="noopener">Optimize your SAP BusinessObjects upgrade (Wiiisdom)</a></li>
+<li><a href="https://wiiisdom.com/blog/how-bec-better-serves-its-customers-with-improved-sap-business-objects-promotion-management/" rel="noopener">How BEC better serves its customers with improved Promotion Management (Wiiisdom)</a></li>
+</ul>
+<section class="faq"><h2>Questions fréquentes</h2><details><summary>Qu&#x27;est-ce que Promotion Management dans BusinessObjects ?</summary><p>C&#x27;est une application de la console CMC qui promeut des contenus BI entre deux environnements, avec ou sans fichier LCMBIAR, selon SAP Learning et TutorialsPoint.</p></details><details><summary>Peut-on promouvoir de la 4.3 vers une version plus récente avec Promotion Management ?</summary><p>Les sources consultées indiquent que source et destination doivent exécuter la même version de la plateforme. Pour une installation neuve, SAP Learning cite l&#x27;outil Promotion Management de la version cible, et TutorialsPoint présente l&#x27;Upgrade Management Tool pour importer des objets d&#x27;une version antérieure.</p></details><details><summary>Qu&#x27;est-ce qu&#x27;un fichier LCMBIAR ?</summary><p>C&#x27;est une archive compressée qui regroupe des objets BI et que l&#x27;on peut utiliser comme source ou destination d&#x27;un travail de promotion, selon SAP Learning.</p></details><details><summary>Que fait « Test Promote » ?</summary><p>Il montre ce qui se passerait sans appliquer de changement à la destination, d&#x27;après la communauté SAP et SAPinsider. Il est présenté comme une bonne pratique avant chaque travail.</p></details><details><summary>Peut-on annuler une promotion ?</summary><p>Oui. SAP Learning et TutorialsPoint décrivent un retour arrière partiel ou complet des objets promus sur la destination. TutorialsPoint précise qu&#x27;il est activé par défaut au niveau du système.</p></details></section><section class="sources"><h2>Sources</h2><ul>
+<li><a href="https://clintvosloo.com/sap-customer-specific-maintenance-bi-43-ds-43-what-it-means" rel="noopener">notes SAP 3486924 et 3763590, résumées par C. Vosloo</a></li><li><a href="https://wiiisdom.com/blog/sap-bi-end-of-life-stages/" rel="noopener">dates de fin de maintenance SAP BI (Wiiisdom)</a></li><li><a href="https://wiiisdom.com/blog/sap-businessobjects-bi-2025/" rel="noopener">SAP BusinessObjects BI 2025 : composants et univers (Wiiisdom)</a></li><li><a href="https://wiiisdom.com/fr/blog/sap-bi-dates-de-fin-de-vie/" rel="noopener">dates de fin de vie SAP BI (Wiiisdom)</a> et <a href="https://dallasmarks.com/toy-story-5-and-bi-2027/" rel="noopener">annonce de BI 2027 (Dallas Marks)</a></li><li><a href="https://dallasmarks.com/getting-ready-for-sap-businessobjects-4-3-support-pack-4/" rel="noopener">notes SAP 2801797 et 2914654 (Dallas Marks)</a></li><li><a href="https://support.sap.com/en/release-upgrade-maintenance.html" rel="noopener">Product Availability Matrix SAP</a></li></ul>
+<p>Les dates et règles de maintenance peuvent évoluer. Vérifiez-les dans le portail SAP (Product Availability Matrix et notes citées) avant toute décision.</p></section><aside class="cta"><h2>Mesurez votre risque en 5 minutes</h2><p>Le scan est gratuit, sans inscription. Il calcule dans votre navigateur un niveau de risque et la taille de votre plateforme.</p><a class="btn" href="/#scan">Mesurer mon risque</a></aside><section class="related"><h2>À lire aussi</h2><ul><li><a href="/checklist-migration-sap-businessobjects/">Checklist de migration SAP BusinessObjects en 10 étapes</a></li><li><a href="/duree-migration-sap-businessobjects-facteurs/">Combien de temps prend une migration SAP BusinessObjects : les facteurs qui font varier la durée</a></li><li><a href="/bi-2025-ou-sortir-de-businessobjects/">BI 2025 ou sortir de BusinessObjects : comment choisir</a></li><li><a href="/nettoyer-parc-businessobjects-documents-inutilises/">Nettoyer son parc BusinessObjects avant de migrer : repérer l&#x27;inutilisé</a></li></ul></section></div></main>
+<footer class="site"><div class="wrap"><nav aria-label="Guides"><a href="/guides/">Tous les guides</a><a href="/fin-maintenance-sap-businessobjects-4-3/">Fin de maintenance 4.3</a><a href="/bi-2025-ou-sortir-de-businessobjects/">BI 2025 ou sortie</a><a href="/diagnostic-sortie-businessobjects/">Diagnostic Sortie BO</a><a href="/compter-documents-sap-businessobjects-query-builder/">Query Builder</a><a href="/maintenance-specifique-client-sap-businessobjects/">Maintenance spécifique client</a><a href="/risque-securite-sap-businessobjects-4-3/">Risque de sécurité 4.3</a><a href="/convertir-univers-unv-en-unx/">Convertir UNV en UNX</a><a href="/contenus-obsoletes-xcelsius-desktop-intelligence-explorer/">Contenus obsolètes</a><a href="/nettoyer-parc-businessobjects-documents-inutilises/">Nettoyer son parc</a><a href="/checklist-migration-sap-businessobjects/">Checklist de migration</a><a href="/questions-a-poser-prestataire-migration-businessobjects/">Choisir son prestataire</a><a href="/diagnostic-businessobjects-secteur-public-marche-60000-euros/">Secteur public</a><a href="/glossaire-sap-businessobjects/">Glossaire</a><a href="/migration-businessobjects-power-bi/">Migrer vers Power BI</a><a href="/sap-businessobjects-bi-2027/">BI 2027</a><a href="/consultant-sap-businessobjects/">Consultant SAP BusinessObjects</a><a href="/audit-sap-businessobjects/">Audit SAP BusinessObjects</a><a href="/alternatives-sap-businessobjects/">Alternatives à BusinessObjects</a><a href="/calendrier-fin-maintenance-sap-businessobjects-versions/">Calendrier des versions</a><a href="/crystal-reports-fin-maintenance-4-3-options/">Crystal Reports</a><a href="/duree-migration-sap-businessobjects-facteurs/">Durée de migration</a><a href="/trier-rapports-web-intelligence-migrer-refaire-supprimer/">Trier Web Intelligence</a><a href="/securite-plateforme-bi-droits-comptes-audit-businessobjects/">Droits et comptes BI</a><a href="/lumira-designer-design-studio-avenir/">Lumira Designer</a><a href="/promotion-management-lcm-businessobjects-montee-de-version/">Promotion Management</a></nav><nav aria-label="Informations"><a href="/mentions-legales/">Mentions légales</a><a href="/confidentialite/">Confidentialité</a></nav><p><strong>Trivoie</strong> est un service d'AM DATA, entreprise individuelle, SIREN 939 133 781, 32 rue Boyer, 75020 Paris. Contact : contact@trivoie.fr</p><p>SAP, BusinessObjects, Crystal Reports, Lumira et Power BI sont des marques de leurs propriétaires respectifs. Trivoie n'est affilié ni à SAP, ni à Microsoft.</p></div></footer>
+</body>
+</html>

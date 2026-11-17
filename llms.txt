@@ -30,6 +30,7 @@
 - [Combien de temps prend une migration SAP BusinessObjects : les facteurs qui font varier la durée](https://trivoie.fr/duree-migration-sap-businessobjects-facteurs/): Combien de temps dure une migration SAP BusinessObjects ? Les facteurs qui font varier la durée, avec les sources, sans chiffre moyen inventé.
 - [Sécurité d'une plateforme BI : droits, comptes inactifs et audit avant migration](https://trivoie.fr/securite-plateforme-bi-droits-comptes-audit-businessobjects/): Droits hérités, comptes inactifs, audit natif : que contrôler sur sa plateforme SAP BusinessObjects avant une migration ou une montée de version.
 - [Lumira Designer et Design Studio : quel avenir pour vos tableaux de bord](https://trivoie.fr/lumira-designer-design-studio-avenir/): Lumira Discovery absent de BI 2025, Lumira Designer maintenu sans nouveautés : ce que disent les sources et trois options pour vos tableaux de bord.
+- [Promotion Management et LCM : déplacer des contenus BusinessObjects pendant une montée de version](https://trivoie.fr/promotion-management-lcm-businessobjects-montee-de-version/): Promotion Management et LCMBIAR dans un projet de montée de version BusinessObjects : ce que l'outil fait, ses règles, et comment organiser le transfert.
 
 ## Faits clés
 
