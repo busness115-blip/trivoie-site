@@ -11,7 +11,7 @@
 - [x] Lumira Designer et Design Studio : quel avenir (fait le 16/11/2026 : lumira-designer-design-studio-avenir)
 - [x] Promotion Management et LCM : déplacer des contenus pendant un projet de montée de version (fait le 17/11/2026 : promotion-management-lcm-businessobjects-montee-de-version)
 - [x] Plateformes BI et RGPD : données personnelles dans les rapports, sous-traitance (fait le 18/11/2026 : rgpd-plateforme-bi-donnees-personnelles-businessobjects)
-- [ ] Secteur santé et collectivités : calendrier budgétaire et marchés publics pour traiter la fin de maintenance
+- [x] Secteur santé et collectivités : calendrier budgétaire et marchés publics pour traiter la fin de maintenance (fait le 19/11/2026 : collectivites-budget-marches-publics-fin-maintenance-businessobjects ; volet santé limité à un renvoi, calendrier EPRD non recoupé)
 - [ ] Maintenance spécifique client : checklist pour le DAF (budget, contrat, échéances)
 - [ ] Double exploitation : comment organiser la période de transition
 - [ ] Univers UNX : bonnes pratiques de conception après conversion
