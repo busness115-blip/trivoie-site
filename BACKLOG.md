@@ -13,7 +13,7 @@
 - [x] Plateformes BI et RGPD : données personnelles dans les rapports, sous-traitance (fait le 18/11/2026 : rgpd-plateforme-bi-donnees-personnelles-businessobjects)
 - [x] Secteur santé et collectivités : calendrier budgétaire et marchés publics pour traiter la fin de maintenance (fait le 19/11/2026 : collectivites-budget-marches-publics-fin-maintenance-businessobjects ; volet santé limité à un renvoi, calendrier EPRD non recoupé)
 - [x] Maintenance spécifique client : checklist pour le DAF (fait le 21/11/2026 : checklist-daf-maintenance-specifique-client-businessobjects ; frais, souscription et facturation du conseil attribués à C. Vosloo, source unique)
-- [ ] Double exploitation : comment organiser la période de transition
+- [x] Double exploitation : comment organiser la période de transition (fait le 22/11/2026 : double-exploitation-businessobjects-periode-transition ; durée 30 à 90 jours attribuée à Microsoft, source unique)
 - [ ] Univers UNX : bonnes pratiques de conception après conversion
 - [ ] Scan gratuit : comment lire son niveau de risque (explication de la page d'accueil)
 
