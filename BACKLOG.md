@@ -14,7 +14,7 @@
 - [x] Secteur santé et collectivités : calendrier budgétaire et marchés publics pour traiter la fin de maintenance (fait le 19/11/2026 : collectivites-budget-marches-publics-fin-maintenance-businessobjects ; volet santé limité à un renvoi, calendrier EPRD non recoupé)
 - [x] Maintenance spécifique client : checklist pour le DAF (fait le 21/11/2026 : checklist-daf-maintenance-specifique-client-businessobjects ; frais, souscription et facturation du conseil attribués à C. Vosloo, source unique)
 - [x] Double exploitation : comment organiser la période de transition (fait le 22/11/2026 : double-exploitation-businessobjects-periode-transition ; durée 30 à 90 jours attribuée à Microsoft, source unique)
-- [ ] Univers UNX : bonnes pratiques de conception après conversion
+- [x] Univers UNX : bonnes pratiques de conception après conversion (fait le 23/11/2026 : univers-unx-bonnes-pratiques-apres-conversion-businessobjects ; fonctions @ et univers JavaBean : sources divergentes, attribuées nommément ou omises)
 - [ ] Scan gratuit : comment lire son niveau de risque (explication de la page d'accueil)
 
 ## Autres leviers de visibilité (à faire par AB, manuel, faible volume)
