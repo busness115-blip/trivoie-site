@@ -36,6 +36,7 @@
 - [Maintenance spécifique client SAP BusinessObjects : checklist pour le DAF (budget, contrat, échéances)](https://trivoie.fr/checklist-daf-maintenance-specifique-client-businessobjects/): Budget, contrat, échéances : la checklist du DAF pour décider avant le 31/12/2026 entre maintenance spécifique client, BI 2025 ou sortie de BusinessObjects.
 - [Double exploitation pendant une migration BusinessObjects : comment organiser la période de transition](https://trivoie.fr/double-exploitation-businessobjects-periode-transition/): BusinessObjects et nouvelle plateforme en parallèle : objectifs, durée, comparaison des chiffres et critères d'arrêt de l'ancien système.
 - [Univers UNX : bonnes pratiques de conception après la conversion depuis UNV](https://trivoie.fr/univers-unx-bonnes-pratiques-apres-conversion-businessobjects/): Après la conversion UNV vers UNX dans SAP BusinessObjects : ce qui ne se convertit pas, quoi vérifier, repointer les documents, alléger l'univers.
+- [Comment lire le niveau de risque du scan SAP BusinessObjects](https://trivoie.fr/lire-niveau-risque-scan-sap-businessobjects/): Comment lire le résultat du scan gratuit Trivoie sur SAP BusinessObjects : niveau de risque, points retirés, exemple chiffré et suites possibles.
 
 ## Faits clés
 

@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cloud.umami.is https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.googletagmanager.com https://*.google.com https://*.google.fr https://*.doubleclick.net https://*.googleadservices.com; font-src 'self'; connect-src 'self' https://gateway.umami.is https://*.googletagmanager.com https://*.google.com https://*.google.fr https://*.doubleclick.net https://*.googleadservices.com https://*.google-analytics.com; frame-src https://td.doubleclick.net; base-uri 'self'; form-action 'none'">
+<title>Scan BusinessObjects : comment lire son niveau de risque | Trivoie</title>
+<meta name="description" content="Comment lire le résultat du scan gratuit Trivoie sur SAP BusinessObjects : niveau de risque, points retirés, exemple chiffré et suites possibles.">
+<link rel="canonical" href="https://trivoie.fr/lire-niveau-risque-scan-sap-businessobjects/">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:site_name" content="Trivoie">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Scan BusinessObjects : comment lire son niveau de risque">
+<meta property="og:description" content="Comment lire le résultat du scan gratuit Trivoie sur SAP BusinessObjects : niveau de risque, points retirés, exemple chiffré et suites possibles.">
+<meta property="og:url" content="https://trivoie.fr/lire-niveau-risque-scan-sap-businessobjects/">
+<meta property="og:image" content="https://trivoie.fr/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Trivoie : la fin de maintenance de SAP BusinessObjects 4.3, trois voies">
+<link rel="alternate" hreflang="fr" href="https://trivoie.fr/lire-niveau-risque-scan-sap-businessobjects/">
+<link rel="alternate" hreflang="x-default" href="https://trivoie.fr/lire-niveau-risque-scan-sap-businessobjects/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Scan BusinessObjects : comment lire son niveau de risque">
+<meta name="twitter:description" content="Comment lire le résultat du scan gratuit Trivoie sur SAP BusinessObjects : niveau de risque, points retirés, exemple chiffré et suites possibles.">
+<meta name="twitter:image" content="https://trivoie.fr/og.png">
+<meta name="theme-color" content="#15212a">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/archivo-wdth.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/plex-sans-400.woff2" as="font" type="font/woff2" crossorigin>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="4396576b-6679-48bc-9158-52b20910a3ea"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"ProfessionalService","@id":"https://trivoie.fr/#org","name":"Trivoie","legalName":"AM DATA","url":"https://trivoie.fr/","email":"contact@trivoie.fr","taxID":"939 133 781","description":"Diagnostic indépendant et à prix fixe de la sortie de SAP BusinessObjects 4.3, avant la fin de maintenance du 31 décembre 2026.","address":{"@type":"PostalAddress","streetAddress":"32 rue Boyer","postalCode":"75020","addressLocality":"Paris","addressCountry":"FR"},"areaServed":"FR","founder":{"@type":"Person","name":"Abderrahim Mouloud"},"knowsLanguage":"fr","knowsAbout":["SAP BusinessObjects","Web Intelligence","Crystal Reports","Migration BI","Maintenance logicielle"]},{"@type":"Article","@id":"https://trivoie.fr/lire-niveau-risque-scan-sap-businessobjects/#article","headline":"Comment lire le niveau de risque du scan SAP BusinessObjects","description":"Comment lire le résultat du scan gratuit Trivoie sur SAP BusinessObjects : niveau de risque, points retirés, exemple chiffré et suites possibles.","inLanguage":"fr-FR","datePublished":"2026-11-24","dateModified":"2026-11-24","mainEntityOfPage":"https://trivoie.fr/lire-niveau-risque-scan-sap-businessobjects/","author":{"@id":"https://trivoie.fr/#org"},"publisher":{"@id":"https://trivoie.fr/#org"},"image":"https://trivoie.fr/og.png"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Trivoie","item":"https://trivoie.fr/"},{"@type":"ListItem","position":2,"name":"Comment lire le niveau de risque du scan SAP BusinessObjects","item":"https://trivoie.fr/lire-niveau-risque-scan-sap-businessobjects/"}]},{"@type":"FAQPage","@id":"https://trivoie.fr/lire-niveau-risque-scan-sap-businessobjects/#faq","mainEntity":[{"@type":"Question","name":"Le niveau de risque du scan est-il un audit ?","acceptedAnswer":{"@type":"Answer","text":"Non. Il est calculé par une règle publique sur les chiffres que vous saisissez ou importez. Il oriente les priorités ; l'inventaire détaillé relève d'un diagnostic."}},{"@type":"Question","name":"Pourquoi mon niveau reste-t-il élevé alors que mon parc est propre ?","acceptedAnswer":{"@type":"Answer","text":"Parce qu'une plateforme en version 4.x a une échéance de maintenance fixe : le scan ne l'affiche jamais en dessous de « élevé ». Un parc propre réduit le travail, pas l'échéance."}},{"@type":"Question","name":"Comment faire baisser rapidement mon niveau de risque ?","acceptedAnswer":{"@type":"Answer","text":"En activant la base d'audit et en identifiant les documents non ouverts depuis 12 mois, en désactivant les comptes inutilisés et en commençant la conversion des univers UNV."}},{"@type":"Question","name":"Mes données sont-elles envoyées quelque part pendant le scan ?","acceptedAnswer":{"@type":"Answer","text":"Non. Le calcul se fait dans votre navigateur et rien n'est transmis. Vous ne nous envoyez le résumé que si vous le décidez, et il ne contient que des nombres."}}]}]}</script>
+<style>
+@font-face{font-family:"Archivo";font-style:normal;font-weight:100 900;font-stretch:62% 125%;font-display:swap;src:url(/fonts/archivo-wdth.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-style:normal;font-weight:400;font-display:swap;src:url(/fonts/plex-sans-400.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-style:normal;font-weight:500;font-display:swap;src:url(/fonts/plex-sans-500.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-style:normal;font-weight:600;font-display:swap;src:url(/fonts/plex-sans-600.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:400;font-display:swap;src:url(/fonts/plex-mono-400.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:500;font-display:swap;src:url(/fonts/plex-mono-500.woff2) format("woff2")}
+
+:root {
+  --bg: #eef2f1; --surface: #ffffff; --ink: #15212a; --muted: #56636c; --line: #d3dbda;
+  --accent: #0c5a6b; --accent-ink: #ffffff; --accent-soft: #dcebee;
+  --ok: #226a3f; --warn: #875608; --crit: #b0372b; --info: #375aa6;
+  --ok-soft: #e1f0e6; --warn-soft: #f6ead6; --crit-soft: #f6e0dd; --info-soft: #e2e8f5;
+  --call-ink: #ffffff; --call-ring: rgba(34, 106, 63, 0.42);
+  --board: #15212a; --board-ink: #f2c94c;
+  --f-display: "Archivo", "Arial Narrow", Arial, sans-serif;
+  --f-body: "IBM Plex Sans", "Segoe UI", Roboto, Arial, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --radius: 6px;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0e1418; --surface: #162027; --ink: #e5ecee; --muted: #9aa8af; --line: #2a3742;
+  --accent: #56b6c8; --accent-ink: #0b1418; --accent-soft: #173640;
+  --ok: #5fbf84; --warn: #e3ab4e; --crit: #e57a68; --info: #8aa6e6;
+  --ok-soft: #173326; --warn-soft: #3a2c13; --crit-soft: #3d1d19; --info-soft: #1c2742;
+  --call-ink: #0b1418; --call-ring: rgba(95, 191, 132, 0.40);
+  --board: #070b0e; --board-ink: #f2c94c; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0e1418; --surface: #162027; --ink: #e5ecee; --muted: #9aa8af; --line: #2a3742;
+  --accent: #56b6c8; --accent-ink: #0b1418; --accent-soft: #173640;
+  --ok: #5fbf84; --warn: #e3ab4e; --crit: #e57a68; --info: #8aa6e6;
+  --ok-soft: #173326; --warn-soft: #3a2c13; --crit-soft: #3d1d19; --info-soft: #1c2742;
+  --call-ink: #0b1418; --call-ring: rgba(95, 191, 132, 0.40);
+  --board: #070b0e; --board-ink: #f2c94c; color-scheme: dark }
+
+
+
+.gloss dt { font-weight: 600; margin-top: 16px; }
+.gloss dd { margin: 4px 0 0; color: var(--muted); }
+.steps li { margin: 10px 0; }
+.hub-list { list-style: none; padding: 0; display: grid; gap: 12px; }
+.hub-list li { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; }
+.hub-list a { font-weight: 600; }
+.hub-list p { margin: 6px 0 0; color: var(--muted); }
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 17px; line-height: 1.65; }
+a { color: var(--accent); }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.wrap { max-width: 780px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+header.top { background: var(--board); color: #fff; }
+header.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 14px; flex-wrap: wrap; }
+.brand { font-family: var(--f-display); font-stretch: 85%; font-weight: 800; font-size: 1.5rem; color: #fff; text-decoration: none; letter-spacing: .01em; }
+.brand span { color: var(--board-ink); }
+header.top nav { display: flex; gap: 16px; flex-wrap: wrap; }
+header.top nav a { color: #dbe6ea; text-decoration: none; font-size: .95rem; }
+header.top nav a:hover { text-decoration: underline; }
+main { padding-block: 40px 56px; }
+.crumbs { font-size: .9rem; color: var(--muted); margin: 0 0 18px; }
+.crumbs a { color: var(--muted); }
+h1, h2, h3 { font-family: var(--f-display); font-stretch: 88%; line-height: 1.15; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(1.9rem, 5vw, 2.7rem); font-weight: 800; }
+h2 { font-size: 1.55rem; font-weight: 750; margin-top: 2.2em; }
+h3 { font-size: 1.15rem; font-weight: 700; margin-top: 1.4em; }
+p, li { max-width: 68ch; }
+.lead { font-size: 1.15rem; color: var(--muted); margin: 18px 0 0; }
+.meta { font-size: .88rem; color: var(--muted); margin-top: 14px; }
+ul, ol { padding-left: 1.3em; }
+li { margin: .35em 0; }
+code { font-family: var(--f-mono); font-size: .86em; background: var(--accent-soft); padding: 1px 5px; border-radius: 4px; overflow-wrap: anywhere; }
+.tbl { overflow-x: auto; margin: 16px 0; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+table { border-collapse: collapse; width: 100%; min-width: 520px; font-size: .95rem; }
+th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-family: var(--f-display); font-stretch: 90%; background: var(--accent-soft); }
+tr:last-child td { border-bottom: 0; }
+.cta { margin: 44px 0 0; padding: 22px; background: var(--board); color: #fff; border-radius: var(--radius); }
+.cta h2 { margin: 0 0 8px; font-size: 1.4rem; color: #fff; }
+.cta p { margin: 0 0 14px; color: #dbe6ea; }
+.btn { display: inline-block; padding: 12px 20px; background: var(--board-ink); color: #15212a; font-weight: 700; border-radius: var(--radius); text-decoration: none; }
+.btn:hover { filter: brightness(1.05); }
+.faq details { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 16px; margin: 8px 0; }
+.faq summary { cursor: pointer; font-weight: 600; }
+.faq p { margin: 8px 0 0; color: var(--muted); }
+.related ul { list-style: none; padding: 0; }
+.related li { margin: 8px 0; }
+.sources { margin-top: 2.2em; font-size: .92rem; color: var(--muted); }
+.sources h2 { font-size: 1.1rem; margin-top: 0; }
+footer.site { border-top: 1px solid var(--line); background: var(--surface); }
+footer.site .wrap { padding-block: 24px; font-size: .88rem; color: var(--muted); }
+footer.site nav { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 10px; }
+footer.site p { margin: 6px 0; max-width: none; }
+@media (max-width: 600px) { body { font-size: 16px; } main { padding-block: 28px 40px; } }
+
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap"><a class="brand" href="/">Tri<span>voie</span></a>
+<nav aria-label="Navigation"><a href="/#scan">Scan gratuit</a><a href="/fin-maintenance-sap-businessobjects-4-3/">Fin de maintenance</a><a href="/diagnostic-sortie-businessobjects/">Diagnostic</a></nav></div></header>
+<main><div class="wrap"><p class="crumbs"><a href="/">Trivoie</a> &rsaquo; Scan BusinessObjects : comment lire son niveau de risque</p><h1>Comment lire le niveau de risque du scan SAP BusinessObjects</h1><p class="lead">Le scan gratuit de la page d&#x27;accueil donne un niveau de risque de 0 à 100 et une liste de constats. Cette page explique ce que ces chiffres représentent, comment ils sont calculés et ce qu&#x27;il est raisonnable d&#x27;en faire. Le scan est une aide à la décision calculée sur vos chiffres, pas un audit : il ne remplace pas l&#x27;inventaire détaillé d&#x27;un &lt;a href=&quot;/diagnostic-sortie-businessobjects/&quot;&gt;diagnostic&lt;/a&gt;.</p><p class="meta">Par AM DATA, expert SAP BusinessObjects. Mis à jour le 24 novembre 2026.</p>
+<h2>Ce que mesure le niveau de risque</h2>
+<p>Le scan part d'un indice de 100 et retire des points pour chaque constat. Le niveau de risque affiché est 100 moins cet indice. Plus il est élevé, plus la plateforme demande de travail ou d'attention avant et après l'échéance de la version 4.3. Quatre niveaux sont utilisés :</p>
+<div class="tbl" tabindex="0" role="region" aria-label="Tableau 1 (défilement horizontal)"><table>
+<thead><tr><th>Risque (0 à 100)</th><th>Niveau affiché</th></tr></thead>
+<tbody>
+<tr><td>Moins de 25</td><td>Faible</td></tr>
+<tr><td>25 à 44</td><td>Modéré</td></tr>
+<tr><td>45 à 69</td><td>Élevé</td></tr>
+<tr><td>70 et plus</td><td>Critique</td></tr>
+</tbody></table></div>
+<p>Pour une plateforme en version 4.1, 4.2 ou 4.3, le niveau n'est jamais présenté en dessous de « élevé », car l'échéance de la version est la même quel que soit l'état du parc.</p>
+
+<h2>D'où viennent les points retirés</h2>
+<p>Chaque constat a un identifiant et une pénalité, calculée sur les chiffres saisis ou importés depuis le fichier du script de collecte.</p>
+<div class="tbl" tabindex="0" role="region" aria-label="Tableau 2 (défilement horizontal)"><table>
+<thead><tr><th>Constat</th><th>Points retirés</th></tr></thead>
+<tbody>
+<tr><td>Version 4.3 (maintenance spécifique client dès le 1er janvier 2027)</td><td>25</td></tr>
+<tr><td>Version 4.1 ou 4.2</td><td>35</td></tr>
+<tr><td>Version BI 2025</td><td>10</td></tr>
+<tr><td>Univers UNV à convertir</td><td>4 pour un univers, plus 0,3 par univers supplémentaire, plafonné à 20, réduit jusqu'à 3 points si des UNX existent déjà</td></tr>
+<tr><td>Contenus obsolètes (Dashboards, Desktop Intelligence, Explorer, Flash)</td><td>2 pour un contenu, plus 0,06 par contenu supplémentaire, plafonné à 8</td></tr>
+<tr><td>Applications ou documents Lumira</td><td>2 pour un, plus 0,3 par supplémentaire, plafonné à 5</td></tr>
+<tr><td>Base d'audit inactive (usage non mesurable)</td><td>10</td></tr>
+<tr><td>Comptes sans connexion depuis 12 mois (à partir de 20 % des comptes, versions 4.x)</td><td>de 2 à 5</td></tr>
+<tr><td>Volume de documents à traiter</td><td>1 point par tranche de 500 documents, plafonné à 20</td></tr>
+</tbody></table></div>
+<p>Les documents non ouverts depuis 12 mois, lus dans la base d'audit, sont retirés du volume à traiter : ils ne coûtent aucun point et apparaissent comme une opportunité de décommissionnement.</p>
+
+<h2>Un exemple chiffré</h2>
+<p>Prenons une plateforme 4.3 de 500 utilisateurs, dont 350 actifs, avec 1 523 documents, 40 univers UNV dont 10 déjà convertis en UNX, 20 contenus obsolètes, 3 contenus Lumira et aucune base d'audit active. Les pénalités sont : 25 (version), 14,9 (univers), 10 (audit), 3,1 (contenus obsolètes), 3 (comptes inactifs), 3 (volume) et 2,6 (Lumira). L'indice est de 38 et le niveau de risque de 62 : « élevé ».</p>
+<p>Si la même plateforme active l'audit et y relève 500 documents non ouverts depuis 12 mois, la pénalité d'audit disparaît et le volume tombe à 1 023 documents. Le niveau de risque passe à 51, toujours « élevé » parce que la version 4.3 impose ce plancher. Ce qui change, c'est le travail réel : moins de documents à migrer, et un usage enfin mesuré.</p>
+
+<h2>Les faits d'échéance derrière les constats</h2>
+<p>Les constats de version reposent sur des faits publiés par plusieurs sources. La fin de la maintenance standard de BI 4.3 au 31 décembre 2026 est donnée par <a href="https://nttdata-solutions.com/uk/blog/preparing-for-the-end-of-life-of-sap-businessobjects-4-3-what-should-your-business-do/" rel="noopener">NTT DATA</a>, <a href="https://www.riministreet.com/blog/sap-end-of-mainstream-maintenance-deadlines-are-looming-for-gts-bobj-bpc-bw-hybris/" rel="noopener">Rimini Street</a> et <a href="https://wiiisdom.com/blog/sap-bi-end-of-life-stages/" rel="noopener">Wiiisdom</a>. NTT DATA indique que des correctifs de sécurité restent fournis une année supplémentaire, puis que le support passe par la maintenance spécifique client ; Rimini Street précise que ces correctifs concernent les failles notées CVSS 7.0 ou plus. Wiiisdom écrit que SAP ne livre ni mises à jour ni correctifs au-delà de cette première année de correctifs de sécurité.</p>
+<p>Pour la version suivante, Rimini Street et Wiiisdom situent la fin de la maintenance standard de BI 2025 fin 2027. Wiiisdom et NTT DATA indiquent que les univers UNV ne sont plus pris en charge après BI 4.3 : les univers doivent être convertis en UNX pour passer en BI 2025. Pour Lumira, NTT DATA écrit que Lumira Discovery est retiré de BI 2025 et que Lumira Designer reste pris en charge. Voir aussi la <a href="/fin-maintenance-sap-businessobjects-4-3/">page sur la fin de maintenance de la 4.3</a>.</p>
+
+<h2>Que faire de son résultat</h2>
+<ol>
+<li>Lire d'abord les trois constats qui retirent le plus de points : ce sont les chantiers qui pèseront le plus sur le budget.</li>
+<li>Activer ou exploiter la base d'audit si elle ne l'est pas : c'est le seul constat qui se corrige en quelques jours et qui améliore tous les autres chiffres.</li>
+<li>Trier le contenu avant toute décision, avec la page <a href="/trier-rapports-web-intelligence-migrer-refaire-supprimer/">trier les rapports</a> et celle sur le <a href="/nettoyer-parc-businessobjects-documents-inutilises/">nettoyage du parc</a>.</li>
+<li>Choisir ensuite un chemin : rester chez SAP en montant en BI 2025, ou migrer. Les deux sont légitimes et se chiffrent avec les mêmes données.</li>
+</ol>
+<p>La taille de plateforme affichée (S, M ou L) sert uniquement à orienter vers la formule du Diagnostic Sortie BO : 2 900, 4 900 ou 7 900 € HT, en 10 jours ouvrés. AM DATA n'est revendeur ni de SAP ni de Microsoft.</p>
+
+<h2>Sources</h2>
+<ul>
+<li><a href="https://nttdata-solutions.com/uk/blog/preparing-for-the-end-of-life-of-sap-businessobjects-4-3-what-should-your-business-do/" rel="noopener">NTT DATA : Preparing for the end of life of SAP BusinessObjects 4.3</a></li>
+<li><a href="https://www.riministreet.com/blog/sap-end-of-mainstream-maintenance-deadlines-are-looming-for-gts-bobj-bpc-bw-hybris/" rel="noopener">Rimini Street : SAP end of mainstream maintenance deadlines</a></li>
+<li><a href="https://wiiisdom.com/blog/sap-bi-end-of-life-stages/" rel="noopener">Wiiisdom : SAP BI end of life stages</a></li>
+<li><a href="https://wiiisdom.com/blog/sap-businessobjects-bi-2025/" rel="noopener">Wiiisdom : SAP BusinessObjects BI 2025</a></li>
+</ul>
+<section class="faq"><h2>Questions fréquentes</h2><details><summary>Le niveau de risque du scan est-il un audit ?</summary><p>Non. Il est calculé par une règle publique sur les chiffres que vous saisissez ou importez. Il oriente les priorités ; l&#x27;inventaire détaillé relève d&#x27;un diagnostic.</p></details><details><summary>Pourquoi mon niveau reste-t-il élevé alors que mon parc est propre ?</summary><p>Parce qu&#x27;une plateforme en version 4.x a une échéance de maintenance fixe : le scan ne l&#x27;affiche jamais en dessous de « élevé ». Un parc propre réduit le travail, pas l&#x27;échéance.</p></details><details><summary>Comment faire baisser rapidement mon niveau de risque ?</summary><p>En activant la base d&#x27;audit et en identifiant les documents non ouverts depuis 12 mois, en désactivant les comptes inutilisés et en commençant la conversion des univers UNV.</p></details><details><summary>Mes données sont-elles envoyées quelque part pendant le scan ?</summary><p>Non. Le calcul se fait dans votre navigateur et rien n&#x27;est transmis. Vous ne nous envoyez le résumé que si vous le décidez, et il ne contient que des nombres.</p></details></section><section class="sources"><h2>Sources</h2><ul>
+<li><a href="https://clintvosloo.com/sap-customer-specific-maintenance-bi-43-ds-43-what-it-means" rel="noopener">notes SAP 3486924 et 3763590, résumées par C. Vosloo</a></li><li><a href="https://wiiisdom.com/blog/sap-bi-end-of-life-stages/" rel="noopener">dates de fin de maintenance SAP BI (Wiiisdom)</a></li><li><a href="https://wiiisdom.com/blog/sap-businessobjects-bi-2025/" rel="noopener">SAP BusinessObjects BI 2025 : composants et univers (Wiiisdom)</a></li><li><a href="https://wiiisdom.com/fr/blog/sap-bi-dates-de-fin-de-vie/" rel="noopener">dates de fin de vie SAP BI (Wiiisdom)</a> et <a href="https://dallasmarks.com/toy-story-5-and-bi-2027/" rel="noopener">annonce de BI 2027 (Dallas Marks)</a></li><li><a href="https://dallasmarks.com/getting-ready-for-sap-businessobjects-4-3-support-pack-4/" rel="noopener">notes SAP 2801797 et 2914654 (Dallas Marks)</a></li><li><a href="https://support.sap.com/en/release-upgrade-maintenance.html" rel="noopener">Product Availability Matrix SAP</a></li></ul>
+<p>Les dates et règles de maintenance peuvent évoluer. Vérifiez-les dans le portail SAP (Product Availability Matrix et notes citées) avant toute décision.</p></section><aside class="cta"><h2>Mesurez votre risque en 5 minutes</h2><p>Le scan est gratuit, sans inscription. Il calcule dans votre navigateur un niveau de risque et la taille de votre plateforme.</p><a class="btn" href="/#scan">Mesurer mon risque</a></aside><section class="related"><h2>À lire aussi</h2><ul><li><a href="/diagnostic-sortie-businessobjects/">Diagnostic Sortie BO : une décision chiffrée en 10 jours ouvrés</a></li><li><a href="/fin-maintenance-sap-businessobjects-4-3/">Fin de maintenance de SAP BusinessObjects 4.3 : ce qui change le 31 décembre 2026</a></li><li><a href="/nettoyer-parc-businessobjects-documents-inutilises/">Nettoyer son parc BusinessObjects avant de migrer : repérer l&#x27;inutilisé</a></li></ul></section></div></main>
+<footer class="site"><div class="wrap"><nav aria-label="Guides"><a href="/guides/">Tous les guides</a><a href="/fin-maintenance-sap-businessobjects-4-3/">Fin de maintenance 4.3</a><a href="/bi-2025-ou-sortir-de-businessobjects/">BI 2025 ou sortie</a><a href="/diagnostic-sortie-businessobjects/">Diagnostic Sortie BO</a><a href="/compter-documents-sap-businessobjects-query-builder/">Query Builder</a><a href="/maintenance-specifique-client-sap-businessobjects/">Maintenance spécifique client</a><a href="/risque-securite-sap-businessobjects-4-3/">Risque de sécurité 4.3</a><a href="/convertir-univers-unv-en-unx/">Convertir UNV en UNX</a><a href="/contenus-obsoletes-xcelsius-desktop-intelligence-explorer/">Contenus obsolètes</a><a href="/nettoyer-parc-businessobjects-documents-inutilises/">Nettoyer son parc</a><a href="/checklist-migration-sap-businessobjects/">Checklist de migration</a><a href="/questions-a-poser-prestataire-migration-businessobjects/">Choisir son prestataire</a><a href="/diagnostic-businessobjects-secteur-public-marche-60000-euros/">Secteur public</a><a href="/glossaire-sap-businessobjects/">Glossaire</a><a href="/checklist-daf-maintenance-specifique-client-businessobjects/">Checklist DAF : maintenance spécifique</a><a href="/double-exploitation-businessobjects-periode-transition/">Double exploitation : transition</a><a href="/univers-unx-bonnes-pratiques-apres-conversion-businessobjects/">Univers UNX : après la conversion</a><a href="/lire-niveau-risque-scan-sap-businessobjects/">Lire son niveau de risque</a><a href="/migration-businessobjects-power-bi/">Migrer vers Power BI</a><a href="/sap-businessobjects-bi-2027/">BI 2027</a><a href="/consultant-sap-businessobjects/">Consultant SAP BusinessObjects</a><a href="/audit-sap-businessobjects/">Audit SAP BusinessObjects</a><a href="/alternatives-sap-businessobjects/">Alternatives à BusinessObjects</a><a href="/calendrier-fin-maintenance-sap-businessobjects-versions/">Calendrier des versions</a><a href="/crystal-reports-fin-maintenance-4-3-options/">Crystal Reports</a><a href="/duree-migration-sap-businessobjects-facteurs/">Durée de migration</a><a href="/trier-rapports-web-intelligence-migrer-refaire-supprimer/">Trier Web Intelligence</a><a href="/securite-plateforme-bi-droits-comptes-audit-businessobjects/">Droits et comptes BI</a><a href="/lumira-designer-design-studio-avenir/">Lumira Designer</a><a href="/promotion-management-lcm-businessobjects-montee-de-version/">Promotion Management</a><a href="/rgpd-plateforme-bi-donnees-personnelles-businessobjects/">RGPD et plateforme BI</a><a href="/collectivites-budget-marches-publics-fin-maintenance-businessobjects/">Collectivités : budget et marchés</a></nav><nav aria-label="Informations"><a href="/mentions-legales/">Mentions légales</a><a href="/confidentialite/">Confidentialité</a></nav><p><strong>Trivoie</strong> est un service d'AM DATA, entreprise individuelle, SIREN 939 133 781, 32 rue Boyer, 75020 Paris. Contact : contact@trivoie.fr</p><p>SAP, BusinessObjects, Crystal Reports, Lumira et Power BI sont des marques de leurs propriétaires respectifs. Trivoie n'est affilié ni à SAP, ni à Microsoft.</p></div></footer>
+<script src="/consent.js" defer></script>
+</body>
+</html>
