@@ -15,7 +15,8 @@
 - [x] Maintenance spécifique client : checklist pour le DAF (fait le 21/11/2026 : checklist-daf-maintenance-specifique-client-businessobjects ; frais, souscription et facturation du conseil attribués à C. Vosloo, source unique)
 - [x] Double exploitation : comment organiser la période de transition (fait le 22/11/2026 : double-exploitation-businessobjects-periode-transition ; durée 30 à 90 jours attribuée à Microsoft, source unique)
 - [x] Univers UNX : bonnes pratiques de conception après conversion (fait le 23/11/2026 : univers-unx-bonnes-pratiques-apres-conversion-businessobjects ; fonctions @ et univers JavaBean : sources divergentes, attribuées nommément ou omises)
-- [ ] Scan gratuit : comment lire son niveau de risque (explication de la page d'accueil)
+- [x] Scan gratuit : comment lire son niveau de risque (fait le 24/11/2026 : lire-niveau-risque-scan-sap-businessobjects ; faits d'échéance recoupés NTT DATA, Rimini Street, Wiiisdom ; seuil CVSS 7 attribué à Rimini Street ; date de sortie de BI 2027 omise car les sources divergent)
+- [ ] Lumira Discovery et Lumira Designer dans BI 2025 : que devient chaque outil (à sourcer)
 
 ## Autres leviers de visibilité (à faire par AB, manuel, faible volume)
 - [ ] Page entreprise LinkedIn AM DATA / Trivoie, avec lien vers trivoie.fr
