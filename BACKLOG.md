@@ -16,7 +16,9 @@
 - [x] Double exploitation : comment organiser la période de transition (fait le 22/11/2026 : double-exploitation-businessobjects-periode-transition ; durée 30 à 90 jours attribuée à Microsoft, source unique)
 - [x] Univers UNX : bonnes pratiques de conception après conversion (fait le 23/11/2026 : univers-unx-bonnes-pratiques-apres-conversion-businessobjects ; fonctions @ et univers JavaBean : sources divergentes, attribuées nommément ou omises)
 - [x] Scan gratuit : comment lire son niveau de risque (fait le 24/11/2026 : lire-niveau-risque-scan-sap-businessobjects ; faits d'échéance recoupés NTT DATA, Rimini Street, Wiiisdom ; seuil CVSS 7 attribué à Rimini Street ; date de sortie de BI 2027 omise car les sources divergent)
-- [ ] Lumira Discovery et Lumira Designer dans BI 2025 : que devient chaque outil (à sourcer)
+- [x] Lumira Discovery et Lumira Designer dans BI 2025 : déjà couvert par lumira-designer-design-studio-avenir ; remplacé le 25/11/2026 par une page sur les composants absents de BI 2025 (composants-absents-bi-2025-inventaire-parc-businessobjects ; univers UNV et multi-sources recoupés Wiiisdom et NEED4VIZ ; Live Office, Crystal for Enterprise, Mobile, AIX/Solaris, WebSphere Liberty, SAML attribués à NEED4VIZ, source unique)
+- [ ] Analysis for Microsoft Office dans BI 2025 : ce qui est maintenu et ce que cela change (à sourcer)
+- [ ] Prérequis techniques BI 2025 : systèmes, serveur d'applications, authentification (à sourcer sur la documentation SAP)
 
 ## Autres leviers de visibilité (à faire par AB, manuel, faible volume)
 - [ ] Page entreprise LinkedIn AM DATA / Trivoie, avec lien vers trivoie.fr
