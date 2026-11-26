@@ -17,7 +17,7 @@
 - [x] Univers UNX : bonnes pratiques de conception après conversion (fait le 23/11/2026 : univers-unx-bonnes-pratiques-apres-conversion-businessobjects ; fonctions @ et univers JavaBean : sources divergentes, attribuées nommément ou omises)
 - [x] Scan gratuit : comment lire son niveau de risque (fait le 24/11/2026 : lire-niveau-risque-scan-sap-businessobjects ; faits d'échéance recoupés NTT DATA, Rimini Street, Wiiisdom ; seuil CVSS 7 attribué à Rimini Street ; date de sortie de BI 2027 omise car les sources divergent)
 - [x] Lumira Discovery et Lumira Designer dans BI 2025 : déjà couvert par lumira-designer-design-studio-avenir ; remplacé le 25/11/2026 par une page sur les composants absents de BI 2025 (composants-absents-bi-2025-inventaire-parc-businessobjects ; univers UNV et multi-sources recoupés Wiiisdom et NEED4VIZ ; Live Office, Crystal for Enterprise, Mobile, AIX/Solaris, WebSphere Liberty, SAML attribués à NEED4VIZ, source unique)
-- [ ] Analysis for Microsoft Office dans BI 2025 : ce qui est maintenu et ce que cela change (à sourcer)
+- [x] Analysis for Microsoft Office dans BI 2025 (fait le 26/11/2026 : analysis-for-microsoft-office-bi-2025-maintenu-changements ; présence dans BI 2025 attribuée à Wiiisdom, maintenance sans nouvelle fonction à NEED4VIZ, mode maintenance et SAC add-in à Nextlytics 2024 ; aucune date de fin propre à AO trouvée ; pages SAP Community non lisibles automatiquement)
 - [ ] Prérequis techniques BI 2025 : systèmes, serveur d'applications, authentification (à sourcer sur la documentation SAP)
 
 ## Autres leviers de visibilité (à faire par AB, manuel, faible volume)
