@@ -38,6 +38,7 @@
 - [Univers UNX : bonnes pratiques de conception après la conversion depuis UNV](https://trivoie.fr/univers-unx-bonnes-pratiques-apres-conversion-businessobjects/): Après la conversion UNV vers UNX dans SAP BusinessObjects : ce qui ne se convertit pas, quoi vérifier, repointer les documents, alléger l'univers.
 - [Comment lire le niveau de risque du scan SAP BusinessObjects](https://trivoie.fr/lire-niveau-risque-scan-sap-businessobjects/): Comment lire le résultat du scan gratuit Trivoie sur SAP BusinessObjects : niveau de risque, points retirés, exemple chiffré et suites possibles.
 - [Composants absents de BI 2025 : comment inventorier votre parc BusinessObjects](https://trivoie.fr/composants-absents-bi-2025-inventaire-parc-businessobjects/): Quels outils BusinessObjects 4.3 ne sont pas livrés dans BI 2025 : univers UNV, Live Office, Crystal Enterprise, Mobile. Méthode d'inventaire et sources.
+- [Analysis for Microsoft Office dans BI 2025 : ce qui est maintenu, ce que cela change](https://trivoie.fr/analysis-for-microsoft-office-bi-2025-maintenu-changements/): Analysis for Microsoft Office est repris dans BI 2025, sans nouvelles fonctions. Ce que disent les analyses publiées et comment auditer vos classeurs.
 
 ## Faits clés
 
