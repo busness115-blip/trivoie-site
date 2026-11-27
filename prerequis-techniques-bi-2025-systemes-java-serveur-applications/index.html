@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cloud.umami.is https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.googletagmanager.com https://*.google.com https://*.google.fr https://*.doubleclick.net https://*.googleadservices.com; font-src 'self'; connect-src 'self' https://gateway.umami.is https://*.googletagmanager.com https://*.google.com https://*.google.fr https://*.doubleclick.net https://*.googleadservices.com https://*.google-analytics.com; frame-src https://td.doubleclick.net; base-uri 'self'; form-action 'none'">
+<title>Prérequis techniques de BI 2025 : OS, Java, bases | Trivoie</title>
+<meta name="description" content="Systèmes, Java 17, Tomcat, bases du CMS, AIX et Solaris retirés : ce que publie la matrice de disponibilité de BI 2025 et comment préparer votre parc.">
+<link rel="canonical" href="https://trivoie.fr/prerequis-techniques-bi-2025-systemes-java-serveur-applications/">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:site_name" content="Trivoie">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Prérequis techniques de BI 2025 : OS, Java, bases">
+<meta property="og:description" content="Systèmes, Java 17, Tomcat, bases du CMS, AIX et Solaris retirés : ce que publie la matrice de disponibilité de BI 2025 et comment préparer votre parc.">
+<meta property="og:url" content="https://trivoie.fr/prerequis-techniques-bi-2025-systemes-java-serveur-applications/">
+<meta property="og:image" content="https://trivoie.fr/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Trivoie : la fin de maintenance de SAP BusinessObjects 4.3, trois voies">
+<link rel="alternate" hreflang="fr" href="https://trivoie.fr/prerequis-techniques-bi-2025-systemes-java-serveur-applications/">
+<link rel="alternate" hreflang="x-default" href="https://trivoie.fr/prerequis-techniques-bi-2025-systemes-java-serveur-applications/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Prérequis techniques de BI 2025 : OS, Java, bases">
+<meta name="twitter:description" content="Systèmes, Java 17, Tomcat, bases du CMS, AIX et Solaris retirés : ce que publie la matrice de disponibilité de BI 2025 et comment préparer votre parc.">
+<meta name="twitter:image" content="https://trivoie.fr/og.png">
+<meta name="theme-color" content="#15212a">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/archivo-wdth.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/plex-sans-400.woff2" as="font" type="font/woff2" crossorigin>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="4396576b-6679-48bc-9158-52b20910a3ea"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"ProfessionalService","@id":"https://trivoie.fr/#org","name":"Trivoie","legalName":"AM DATA","url":"https://trivoie.fr/","email":"contact@trivoie.fr","taxID":"939 133 781","description":"Diagnostic indépendant et à prix fixe de la sortie de SAP BusinessObjects 4.3, avant la fin de maintenance du 31 décembre 2026.","address":{"@type":"PostalAddress","streetAddress":"32 rue Boyer","postalCode":"75020","addressLocality":"Paris","addressCountry":"FR"},"areaServed":"FR","founder":{"@type":"Person","name":"Abderrahim Mouloud"},"knowsLanguage":"fr","knowsAbout":["SAP BusinessObjects","Web Intelligence","Crystal Reports","Migration BI","Maintenance logicielle"]},{"@type":"Article","@id":"https://trivoie.fr/prerequis-techniques-bi-2025-systemes-java-serveur-applications/#article","headline":"Prérequis techniques de SAP BusinessObjects BI 2025 : systèmes, Java, serveur d'applications","description":"Systèmes, Java 17, Tomcat, bases du CMS, AIX et Solaris retirés : ce que publie la matrice de disponibilité de BI 2025 et comment préparer votre parc.","inLanguage":"fr-FR","datePublished":"2026-11-27","dateModified":"2026-11-27","mainEntityOfPage":"https://trivoie.fr/prerequis-techniques-bi-2025-systemes-java-serveur-applications/","author":{"@id":"https://trivoie.fr/#org"},"publisher":{"@id":"https://trivoie.fr/#org"},"image":"https://trivoie.fr/og.png"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Trivoie","item":"https://trivoie.fr/"},{"@type":"ListItem","position":2,"name":"Prérequis techniques de SAP BusinessObjects BI 2025 : systèmes, Java, serveur d'applications","item":"https://trivoie.fr/prerequis-techniques-bi-2025-systemes-java-serveur-applications/"}]},{"@type":"FAQPage","@id":"https://trivoie.fr/prerequis-techniques-bi-2025-systemes-java-serveur-applications/#faq","mainEntity":[{"@type":"Question","name":"BI 2025 fonctionne-t-il sous AIX ou Solaris ?","acceptedAnswer":{"@type":"Answer","text":"Non. La matrice de BI 2025 range AIX et Solaris parmi les supports retirés, et NEED4VIZ comme Clint Vosloo le confirment. Les systèmes pris en charge sont Windows Server et certaines distributions Linux."}},{"@type":"Question","name":"Quelle version de Java faut-il pour BI 2025 ?","acceptedAnswer":{"@type":"Answer","text":"La matrice indique que BI 2025 est livré avec SapMachine JRE 17, basé sur Java 17, et ne prend en charge que celui-ci. La 4.3 est livrée avec SAP JVM 8."}},{"@type":"Question","name":"Quel serveur d'applications utiliser avec BI 2025 ?","acceptedAnswer":{"@type":"Answer","text":"La matrice de mai 2025 certifie Apache Tomcat 9.x. NEED4VIZ écrit que seul WebSphere Liberty 25 est pris en charge comme serveur externe, et que seul Tomcat intégré subsiste à partir de BI 2027. Vérifiez la version en vigueur de la matrice."}},{"@type":"Question","name":"Quelles bases de données pour le CMS de BI 2025 ?","acceptedAnswer":{"@type":"Answer","text":"La matrice cite Db2, SQL Server 2019 et 2022, MySQL 8.0, Oracle 19c et 21c, SAP HANA, SAP ASE 16 et SQL Anywhere 17, avec des restrictions selon le système d'exploitation."}}]}]}</script>
+<style>
+@font-face{font-family:"Archivo";font-style:normal;font-weight:100 900;font-stretch:62% 125%;font-display:swap;src:url(/fonts/archivo-wdth.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-style:normal;font-weight:400;font-display:swap;src:url(/fonts/plex-sans-400.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-style:normal;font-weight:500;font-display:swap;src:url(/fonts/plex-sans-500.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-style:normal;font-weight:600;font-display:swap;src:url(/fonts/plex-sans-600.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:400;font-display:swap;src:url(/fonts/plex-mono-400.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:500;font-display:swap;src:url(/fonts/plex-mono-500.woff2) format("woff2")}
+
+:root {
+  --bg: #eef2f1; --surface: #ffffff; --ink: #15212a; --muted: #56636c; --line: #d3dbda;
+  --accent: #0c5a6b; --accent-ink: #ffffff; --accent-soft: #dcebee;
+  --ok: #226a3f; --warn: #875608; --crit: #b0372b; --info: #375aa6;
+  --ok-soft: #e1f0e6; --warn-soft: #f6ead6; --crit-soft: #f6e0dd; --info-soft: #e2e8f5;
+  --call-ink: #ffffff; --call-ring: rgba(34, 106, 63, 0.42);
+  --board: #15212a; --board-ink: #f2c94c;
+  --f-display: "Archivo", "Arial Narrow", Arial, sans-serif;
+  --f-body: "IBM Plex Sans", "Segoe UI", Roboto, Arial, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --radius: 6px;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0e1418; --surface: #162027; --ink: #e5ecee; --muted: #9aa8af; --line: #2a3742;
+  --accent: #56b6c8; --accent-ink: #0b1418; --accent-soft: #173640;
+  --ok: #5fbf84; --warn: #e3ab4e; --crit: #e57a68; --info: #8aa6e6;
+  --ok-soft: #173326; --warn-soft: #3a2c13; --crit-soft: #3d1d19; --info-soft: #1c2742;
+  --call-ink: #0b1418; --call-ring: rgba(95, 191, 132, 0.40);
+  --board: #070b0e; --board-ink: #f2c94c; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0e1418; --surface: #162027; --ink: #e5ecee; --muted: #9aa8af; --line: #2a3742;
+  --accent: #56b6c8; --accent-ink: #0b1418; --accent-soft: #173640;
+  --ok: #5fbf84; --warn: #e3ab4e; --crit: #e57a68; --info: #8aa6e6;
+  --ok-soft: #173326; --warn-soft: #3a2c13; --crit-soft: #3d1d19; --info-soft: #1c2742;
+  --call-ink: #0b1418; --call-ring: rgba(95, 191, 132, 0.40);
+  --board: #070b0e; --board-ink: #f2c94c; color-scheme: dark }
+
+
+
+.gloss dt { font-weight: 600; margin-top: 16px; }
+.gloss dd { margin: 4px 0 0; color: var(--muted); }
+.steps li { margin: 10px 0; }
+.hub-list { list-style: none; padding: 0; display: grid; gap: 12px; }
+.hub-list li { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; }
+.hub-list a { font-weight: 600; }
+.hub-list p { margin: 6px 0 0; color: var(--muted); }
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 17px; line-height: 1.65; }
+a { color: var(--accent); }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.wrap { max-width: 780px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+header.top { background: var(--board); color: #fff; }
+header.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 14px; flex-wrap: wrap; }
+.brand { font-family: var(--f-display); font-stretch: 85%; font-weight: 800; font-size: 1.5rem; color: #fff; text-decoration: none; letter-spacing: .01em; }
+.brand span { color: var(--board-ink); }
+header.top nav { display: flex; gap: 16px; flex-wrap: wrap; }
+header.top nav a { color: #dbe6ea; text-decoration: none; font-size: .95rem; }
+header.top nav a:hover { text-decoration: underline; }
+main { padding-block: 40px 56px; }
+.crumbs { font-size: .9rem; color: var(--muted); margin: 0 0 18px; }
+.crumbs a { color: var(--muted); }
+h1, h2, h3 { font-family: var(--f-display); font-stretch: 88%; line-height: 1.15; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(1.9rem, 5vw, 2.7rem); font-weight: 800; }
+h2 { font-size: 1.55rem; font-weight: 750; margin-top: 2.2em; }
+h3 { font-size: 1.15rem; font-weight: 700; margin-top: 1.4em; }
+p, li { max-width: 68ch; }
+.lead { font-size: 1.15rem; color: var(--muted); margin: 18px 0 0; }
+.meta { font-size: .88rem; color: var(--muted); margin-top: 14px; }
+ul, ol { padding-left: 1.3em; }
+li { margin: .35em 0; }
+code { font-family: var(--f-mono); font-size: .86em; background: var(--accent-soft); padding: 1px 5px; border-radius: 4px; overflow-wrap: anywhere; }
+.tbl { overflow-x: auto; margin: 16px 0; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+table { border-collapse: collapse; width: 100%; min-width: 520px; font-size: .95rem; }
+th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-family: var(--f-display); font-stretch: 90%; background: var(--accent-soft); }
+tr:last-child td { border-bottom: 0; }
+.cta { margin: 44px 0 0; padding: 22px; background: var(--board); color: #fff; border-radius: var(--radius); }
+.cta h2 { margin: 0 0 8px; font-size: 1.4rem; color: #fff; }
+.cta p { margin: 0 0 14px; color: #dbe6ea; }
+.btn { display: inline-block; padding: 12px 20px; background: var(--board-ink); color: #15212a; font-weight: 700; border-radius: var(--radius); text-decoration: none; }
+.btn:hover { filter: brightness(1.05); }
+.faq details { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 16px; margin: 8px 0; }
+.faq summary { cursor: pointer; font-weight: 600; }
+.faq p { margin: 8px 0 0; color: var(--muted); }
+.related ul { list-style: none; padding: 0; }
+.related li { margin: 8px 0; }
+.sources { margin-top: 2.2em; font-size: .92rem; color: var(--muted); }
+.sources h2 { font-size: 1.1rem; margin-top: 0; }
+footer.site { border-top: 1px solid var(--line); background: var(--surface); }
+footer.site .wrap { padding-block: 24px; font-size: .88rem; color: var(--muted); }
+footer.site nav { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 10px; }
+footer.site p { margin: 6px 0; max-width: none; }
+@media (max-width: 600px) { body { font-size: 16px; } main { padding-block: 28px 40px; } }
+
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap"><a class="brand" href="/">Tri<span>voie</span></a>
+<nav aria-label="Navigation"><a href="/#scan">Scan gratuit</a><a href="/fin-maintenance-sap-businessobjects-4-3/">Fin de maintenance</a><a href="/diagnostic-sortie-businessobjects/">Diagnostic</a></nav></div></header>
+<main><div class="wrap"><p class="crumbs"><a href="/">Trivoie</a> &rsaquo; Prérequis techniques de BI 2025 : OS, Java, bases</p><h1>Prérequis techniques de SAP BusinessObjects BI 2025 : systèmes, Java, serveur d&#x27;applications</h1><p class="lead">Passer de la 4.3 à BI 2025 est aussi un projet d&#x27;infrastructure : système d&#x27;exploitation, version de Java, serveur d&#x27;applications et base du CMS changent ou se resserrent. Cette page reprend la matrice de disponibilité (PAM) de BI 2025 telle que publiée en mai 2025, la recoupe avec deux analyses indépendantes, et propose une liste de contrôle à passer sur votre parc avant de choisir BI 2025 ou une autre voie.</p><p class="meta">Par AM DATA, expert SAP BusinessObjects. Mis à jour le 27 novembre 2026.</p>
+<h2>D'où viennent ces informations</h2>
+<p>La source principale est la matrice de disponibilité des produits (PAM) de BI 2025, document SAP dont la dernière mise à jour porte la date du 22 mai 2025, consultée dans la copie publiée par Seenovate. Elle est recoupée par deux analyses du Statement of Direction : celle de Clint Vosloo, consultant, et celle de NEED4VIZ, éditeur d'une solution concurrente. Une matrice évolue avec les correctifs : relisez la version en vigueur sur le portail de SAP avant tout engagement.</p>
+
+<h2>Ce que la matrice indique pour BI 2025</h2>
+<div class="tbl" tabindex="0" role="region" aria-label="Tableau 1 (défilement horizontal)"><table>
+<thead><tr><th>Sujet</th><th>Ce qui est publié</th></tr></thead>
+<tbody>
+<tr><td>Architecture</td><td>Serveur 64 bits, architecture x86_64. Clint Vosloo écrit de même que seuls les systèmes 64 bits sont pris en charge.</td></tr>
+<tr><td>Windows</td><td>Windows Server 2022 comme minimum, Windows Server 2025 comme dernière version certifiée.</td></tr>
+<tr><td>Linux</td><td>SUSE SLES 15 SP03 à 15 SP06 ; Red Hat Enterprise Linux 8.8 et 9.2 à 8.10 et 9.5 ; Oracle Linux 8.8 et 9.2 à 8.8 et 9.4.</td></tr>
+<tr><td>Java</td><td>La matrice indique que BI 2025 est livré avec SapMachine JRE 17 (Java 17) et ne prend en charge que celui-ci, là où la 4.3 est livrée avec SAP JVM 8 (Java 8). Clint Vosloo cite aussi Java 17.</td></tr>
+<tr><td>Serveur d'applications</td><td>Apache Tomcat 9.x certifié avec Java 17, pris en charge depuis BI 2025.</td></tr>
+<tr><td>Base du CMS et d'audit</td><td>Db2 11.5 et 12.1, SQL Server 2019 et 2022, MySQL 8.0, Oracle 19c et 21c, SAP HANA 2.0 SPS 06 et 07, SAP ASE 16, SQL Anywhere 17. SQL Server 2019 n'est pas pris en charge sous Linux.</td></tr>
+<tr><td>Navigateurs</td><td>Chrome, Edge, Firefox ESR et Safari, en 64 bits, avec des versions minimales publiées dans la matrice.</td></tr>
+</tbody></table></div>
+
+<h2>Ce qui disparaît par rapport à la 4.3</h2>
+<p>La matrice contient un tableau des supports retirés entre la 4.3 et BI 2025 : IBM AIX et Oracle Solaris, SAP NetWeaver Java Application Server, SAP WACS, les portails SAP NetWeaver Enterprise Portal, IBM WebSphere Portal et Microsoft SharePoint, ainsi que les kits d'intégration d'authentification pour Oracle E-Business Suite, JD Edwards EnterpriseOne Tools et Siebel. NEED4VIZ et Clint Vosloo confirment tous deux le retrait d'AIX et de Solaris. Clint Vosloo ajoute que les architectures ARM et Power ne sont pas prises en charge.</p>
+<p>Conséquence pratique : un parc sous AIX ou Solaris ne se met pas à niveau en place. Il demande de recréer la plateforme sur Windows ou Linux, ce qui rapproche le projet d'une migration que d'une simple mise à jour.</p>
+
+<h2>Points où les sources se distinguent</h2>
+<p>Nous citons séparément ce qui n'est pas strictement concordant.</p>
+<ul>
+<li><strong>Serveurs d'applications externes.</strong> La matrice de mai 2025 liste WebSphere Liberty et JBoss EAP 8 dans une feuille de route de certification, sans les déclarer certifiés à cette date. NEED4VIZ écrit, en citant le Statement of Direction, que BI 2025 ne prend en charge que WebSphere Liberty 25 comme serveur externe et que seul Tomcat intégré reste à partir de BI 2027. Si vous utilisez WebSphere, JBoss ou WebLogic, ce point conditionne votre projet.</li>
+<li><strong>Authentification SAML.</strong> La matrice indique que SAML est pris en charge par défaut dans BI 2025 et cite trois fournisseurs certifiés : Google, Microsoft Entra et SAP Identity Authentication Service. NEED4VIZ écrit que SAML est déprécié en 2025 et retiré en 2027, avec OAuth 2.0 et OpenID Connect pour suite. Les deux lectures se cumulent : SAML fonctionne en BI 2025 mais n'est pas, selon NEED4VIZ, une base pour la durée.</li>
+<li><strong>Annuaires LDAP.</strong> La matrice cite notamment Microsoft Active Directory 2019 et 2022. Vérifiez la ligne qui correspond à votre annuaire.</li>
+</ul>
+
+<h2>Liste de contrôle avant de décider</h2>
+<h3>1. Relever l'existant</h3>
+<p>Système et version, architecture, version de Java, serveur d'applications, type et version de la base du CMS et de la base d'audit, annuaire, mode d'authentification. Un tableau d'une ligne par serveur suffit.</p>
+<h3>2. Comparer ligne à ligne avec la matrice</h3>
+<p>Marquez chaque élément en trois états : déjà conforme, à mettre à niveau, à remplacer. Les bases de données et les annuaires sont les éléments qui ralentissent le plus souvent un calendrier, car ils relèvent d'autres équipes.</p>
+<h3>3. Traiter les composants applicatifs</h3>
+<p>Les univers .unv, Live Office, Crystal Reports for Enterprise et Mobile ne sont pas repris : voir notre <a href="/composants-absents-bi-2025-inventaire-parc-businessobjects/">inventaire des composants absents</a>.</p>
+<h3>4. Prévoir la coexistence</h3>
+<p>Une plateforme BI 2025 se construit à côté de la 4.3 pendant la transition : voir la <a href="/double-exploitation-businessobjects-periode-transition/">double exploitation</a> et la <a href="/checklist-migration-sap-businessobjects/">checklist de migration</a>.</p>
+<h3>5. Décider avec le calendrier</h3>
+<p>La maintenance standard de la 4.3 se termine le 31 décembre 2026. Le <a href="/calendrier-fin-maintenance-sap-businessobjects-versions/">calendrier des versions</a> remet les échéances en face de votre charge d'infrastructure.</p>
+
+<h2>Quelle suite donner</h2>
+<p>Que vous restiez chez SAP ou que vous étudiiez une autre plateforme, ce relevé sert dans les deux cas : il chiffre l'effort d'infrastructure de BI 2025 et documente ce qu'il faudrait refaire ailleurs. AM DATA n'est revendeur ni de SAP ni de Microsoft. Le <a href="/diagnostic-sortie-businessobjects/">Diagnostic Sortie BO</a> peut réaliser ce relevé et le rapprochement avec votre parc de contenus.</p>
+
+<h2>Sources</h2>
+<ul>
+<li><a href="https://www.seenovate.com/wp-content/uploads/2025/06/SBOP_BI_2025-20250522.pdf" rel="noopener">SAP BusinessObjects BI platform 2025, Product Availability Matrix, mise à jour du 22 mai 2025 (copie hébergée par Seenovate)</a></li>
+<li><a href="https://clintvosloo.com/bi-2025-sap-october-statement-of-direction-is-out" rel="noopener">SAP BusinessObjects BI 2025: Key Updates &amp; Changes (Clint Vosloo)</a></li>
+<li><a href="https://www.need4viz.com/businessobjects-en/understanding-saps-latest-analytics-bi-statement-of-direction/" rel="noopener">Understanding SAP's Latest Analytics BI Statement of Direction (NEED4VIZ)</a></li>
+</ul>
+<section class="faq"><h2>Questions fréquentes</h2><details><summary>BI 2025 fonctionne-t-il sous AIX ou Solaris ?</summary><p>Non. La matrice de BI 2025 range AIX et Solaris parmi les supports retirés, et NEED4VIZ comme Clint Vosloo le confirment. Les systèmes pris en charge sont Windows Server et certaines distributions Linux.</p></details><details><summary>Quelle version de Java faut-il pour BI 2025 ?</summary><p>La matrice indique que BI 2025 est livré avec SapMachine JRE 17, basé sur Java 17, et ne prend en charge que celui-ci. La 4.3 est livrée avec SAP JVM 8.</p></details><details><summary>Quel serveur d&#x27;applications utiliser avec BI 2025 ?</summary><p>La matrice de mai 2025 certifie Apache Tomcat 9.x. NEED4VIZ écrit que seul WebSphere Liberty 25 est pris en charge comme serveur externe, et que seul Tomcat intégré subsiste à partir de BI 2027. Vérifiez la version en vigueur de la matrice.</p></details><details><summary>Quelles bases de données pour le CMS de BI 2025 ?</summary><p>La matrice cite Db2, SQL Server 2019 et 2022, MySQL 8.0, Oracle 19c et 21c, SAP HANA, SAP ASE 16 et SQL Anywhere 17, avec des restrictions selon le système d&#x27;exploitation.</p></details></section><section class="sources"><h2>Sources</h2><ul>
+<li><a href="https://clintvosloo.com/sap-customer-specific-maintenance-bi-43-ds-43-what-it-means" rel="noopener">notes SAP 3486924 et 3763590, résumées par C. Vosloo</a></li><li><a href="https://wiiisdom.com/blog/sap-bi-end-of-life-stages/" rel="noopener">dates de fin de maintenance SAP BI (Wiiisdom)</a></li><li><a href="https://wiiisdom.com/blog/sap-businessobjects-bi-2025/" rel="noopener">SAP BusinessObjects BI 2025 : composants et univers (Wiiisdom)</a></li><li><a href="https://wiiisdom.com/fr/blog/sap-bi-dates-de-fin-de-vie/" rel="noopener">dates de fin de vie SAP BI (Wiiisdom)</a> et <a href="https://dallasmarks.com/toy-story-5-and-bi-2027/" rel="noopener">annonce de BI 2027 (Dallas Marks)</a></li><li><a href="https://dallasmarks.com/getting-ready-for-sap-businessobjects-4-3-support-pack-4/" rel="noopener">notes SAP 2801797 et 2914654 (Dallas Marks)</a></li><li><a href="https://support.sap.com/en/release-upgrade-maintenance.html" rel="noopener">Product Availability Matrix SAP</a></li></ul>
+<p>Les dates et règles de maintenance peuvent évoluer. Vérifiez-les dans le portail SAP (Product Availability Matrix et notes citées) avant toute décision.</p></section><aside class="cta"><h2>Mesurez votre risque en 5 minutes</h2><p>Le scan est gratuit, sans inscription. Il calcule dans votre navigateur un niveau de risque et la taille de votre plateforme.</p><a class="btn" href="/#scan">Mesurer mon risque</a></aside><section class="related"><h2>À lire aussi</h2><ul><li><a href="/composants-absents-bi-2025-inventaire-parc-businessobjects/">Composants absents de BI 2025 : comment inventorier votre parc BusinessObjects</a></li><li><a href="/bi-2025-ou-sortir-de-businessobjects/">BI 2025 ou sortir de BusinessObjects : comment choisir</a></li><li><a href="/calendrier-fin-maintenance-sap-businessobjects-versions/">Calendrier de fin de maintenance de SAP BusinessObjects : 4.1, 4.2, 4.3, BI 2025 et BI 2027</a></li></ul></section></div></main>
+<footer class="site"><div class="wrap"><nav aria-label="Guides"><a href="/guides/">Tous les guides</a><a href="/fin-maintenance-sap-businessobjects-4-3/">Fin de maintenance 4.3</a><a href="/bi-2025-ou-sortir-de-businessobjects/">BI 2025 ou sortie</a><a href="/diagnostic-sortie-businessobjects/">Diagnostic Sortie BO</a><a href="/compter-documents-sap-businessobjects-query-builder/">Query Builder</a><a href="/maintenance-specifique-client-sap-businessobjects/">Maintenance spécifique client</a><a href="/risque-securite-sap-businessobjects-4-3/">Risque de sécurité 4.3</a><a href="/convertir-univers-unv-en-unx/">Convertir UNV en UNX</a><a href="/contenus-obsoletes-xcelsius-desktop-intelligence-explorer/">Contenus obsolètes</a><a href="/nettoyer-parc-businessobjects-documents-inutilises/">Nettoyer son parc</a><a href="/checklist-migration-sap-businessobjects/">Checklist de migration</a><a href="/questions-a-poser-prestataire-migration-businessobjects/">Choisir son prestataire</a><a href="/diagnostic-businessobjects-secteur-public-marche-60000-euros/">Secteur public</a><a href="/glossaire-sap-businessobjects/">Glossaire</a><a href="/checklist-daf-maintenance-specifique-client-businessobjects/">Checklist DAF : maintenance spécifique</a><a href="/double-exploitation-businessobjects-periode-transition/">Double exploitation : transition</a><a href="/univers-unx-bonnes-pratiques-apres-conversion-businessobjects/">Univers UNX : après la conversion</a><a href="/lire-niveau-risque-scan-sap-businessobjects/">Lire son niveau de risque</a><a href="/composants-absents-bi-2025-inventaire-parc-businessobjects/">Composants absents de BI 2025</a><a href="/analysis-for-microsoft-office-bi-2025-maintenu-changements/">Analysis for Office et BI 2025</a><a href="/prerequis-techniques-bi-2025-systemes-java-serveur-applications/">Prérequis techniques BI 2025</a><a href="/migration-businessobjects-power-bi/">Migrer vers Power BI</a><a href="/sap-businessobjects-bi-2027/">BI 2027</a><a href="/consultant-sap-businessobjects/">Consultant SAP BusinessObjects</a><a href="/audit-sap-businessobjects/">Audit SAP BusinessObjects</a><a href="/alternatives-sap-businessobjects/">Alternatives à BusinessObjects</a><a href="/calendrier-fin-maintenance-sap-businessobjects-versions/">Calendrier des versions</a><a href="/crystal-reports-fin-maintenance-4-3-options/">Crystal Reports</a><a href="/duree-migration-sap-businessobjects-facteurs/">Durée de migration</a><a href="/trier-rapports-web-intelligence-migrer-refaire-supprimer/">Trier Web Intelligence</a><a href="/securite-plateforme-bi-droits-comptes-audit-businessobjects/">Droits et comptes BI</a><a href="/lumira-designer-design-studio-avenir/">Lumira Designer</a><a href="/promotion-management-lcm-businessobjects-montee-de-version/">Promotion Management</a><a href="/rgpd-plateforme-bi-donnees-personnelles-businessobjects/">RGPD et plateforme BI</a><a href="/collectivites-budget-marches-publics-fin-maintenance-businessobjects/">Collectivités : budget et marchés</a></nav><nav aria-label="Informations"><a href="/mentions-legales/">Mentions légales</a><a href="/confidentialite/">Confidentialité</a></nav><p><strong>Trivoie</strong> est un service d'AM DATA, entreprise individuelle, SIREN 939 133 781, 32 rue Boyer, 75020 Paris. Contact : contact@trivoie.fr</p><p>SAP, BusinessObjects, Crystal Reports, Lumira et Power BI sont des marques de leurs propriétaires respectifs. Trivoie n'est affilié ni à SAP, ni à Microsoft.</p></div></footer>
+<script src="/consent.js" defer></script>
+</body>
+</html>

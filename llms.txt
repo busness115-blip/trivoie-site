@@ -39,6 +39,7 @@
 - [Comment lire le niveau de risque du scan SAP BusinessObjects](https://trivoie.fr/lire-niveau-risque-scan-sap-businessobjects/): Comment lire le résultat du scan gratuit Trivoie sur SAP BusinessObjects : niveau de risque, points retirés, exemple chiffré et suites possibles.
 - [Composants absents de BI 2025 : comment inventorier votre parc BusinessObjects](https://trivoie.fr/composants-absents-bi-2025-inventaire-parc-businessobjects/): Quels outils BusinessObjects 4.3 ne sont pas livrés dans BI 2025 : univers UNV, Live Office, Crystal Enterprise, Mobile. Méthode d'inventaire et sources.
 - [Analysis for Microsoft Office dans BI 2025 : ce qui est maintenu, ce que cela change](https://trivoie.fr/analysis-for-microsoft-office-bi-2025-maintenu-changements/): Analysis for Microsoft Office est repris dans BI 2025, sans nouvelles fonctions. Ce que disent les analyses publiées et comment auditer vos classeurs.
+- [Prérequis techniques de SAP BusinessObjects BI 2025 : systèmes, Java, serveur d'applications](https://trivoie.fr/prerequis-techniques-bi-2025-systemes-java-serveur-applications/): Systèmes, Java 17, Tomcat, bases du CMS, AIX et Solaris retirés : ce que publie la matrice de disponibilité de BI 2025 et comment préparer votre parc.
 
 ## Faits clés
 
