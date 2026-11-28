@@ -40,6 +40,7 @@
 - [Composants absents de BI 2025 : comment inventorier votre parc BusinessObjects](https://trivoie.fr/composants-absents-bi-2025-inventaire-parc-businessobjects/): Quels outils BusinessObjects 4.3 ne sont pas livrés dans BI 2025 : univers UNV, Live Office, Crystal Enterprise, Mobile. Méthode d'inventaire et sources.
 - [Analysis for Microsoft Office dans BI 2025 : ce qui est maintenu, ce que cela change](https://trivoie.fr/analysis-for-microsoft-office-bi-2025-maintenu-changements/): Analysis for Microsoft Office est repris dans BI 2025, sans nouvelles fonctions. Ce que disent les analyses publiées et comment auditer vos classeurs.
 - [Prérequis techniques de SAP BusinessObjects BI 2025 : systèmes, Java, serveur d'applications](https://trivoie.fr/prerequis-techniques-bi-2025-systemes-java-serveur-applications/): Systèmes, Java 17, Tomcat, bases du CMS, AIX et Solaris retirés : ce que publie la matrice de disponibilité de BI 2025 et comment préparer votre parc.
+- [Sauvegarde et restauration d'une plateforme BusinessObjects avant une montée de version](https://trivoie.fr/sauvegarde-restauration-businessobjects-avant-montee-de-version/): CMS, FileStore, base d'audit, clé de cluster, test de restauration : ce que recommandent les sources avant de monter de version une plateforme BusinessObjects.
 
 ## Faits clés
 
